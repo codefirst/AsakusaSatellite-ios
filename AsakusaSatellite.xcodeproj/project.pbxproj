@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		20F78F457E64979411F392C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3241AB7161400CF5691 /* AppDelegate.swift */; };
-		EA01F3271AB7161400CF5691 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3261AB7161400CF5691 /* ViewController.swift */; };
 		EA01F32C1AB7161400CF5691 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA01F32B1AB7161400CF5691 /* Images.xcassets */; };
 		EA01F32F1AB7161400CF5691 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA01F32D1AB7161400CF5691 /* LaunchScreen.xib */; };
 		EA01F33B1AB7161400CF5691 /* AsakusaSatelliteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F33A1AB7161400CF5691 /* AsakusaSatelliteTests.swift */; };
+		EA01F3471AB7186400CF5691 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */; };
+		EA01F3491AB7188200CF5691 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3481AB7188200CF5691 /* Appearance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,12 +33,13 @@
 		EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsakusaSatellite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA01F3231AB7161400CF5691 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA01F3241AB7161400CF5691 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EA01F3261AB7161400CF5691 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EA01F32B1AB7161400CF5691 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EA01F32E1AB7161400CF5691 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		EA01F3341AB7161400CF5691 /* AsakusaSatelliteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsakusaSatelliteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA01F3391AB7161400CF5691 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA01F33A1AB7161400CF5691 /* AsakusaSatelliteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsakusaSatelliteTests.swift; sourceTree = "<group>"; };
+		EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		EA01F3481AB7188200CF5691 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				EA01F3241AB7161400CF5691 /* AppDelegate.swift */,
-				EA01F3261AB7161400CF5691 /* ViewController.swift */,
+				EA01F3481AB7188200CF5691 /* Appearance.swift */,
+				EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */,
 				EA01F32B1AB7161400CF5691 /* Images.xcassets */,
 				EA01F32D1AB7161400CF5691 /* LaunchScreen.xib */,
 				EA01F3221AB7161400CF5691 /* Supporting Files */,
@@ -283,8 +286,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA01F3271AB7161400CF5691 /* ViewController.swift in Sources */,
 				EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */,
+				EA01F3491AB7188200CF5691 /* Appearance.swift in Sources */,
+				EA01F3471AB7186400CF5691 /* WelcomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
