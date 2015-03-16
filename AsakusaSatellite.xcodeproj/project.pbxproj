@@ -14,6 +14,7 @@
 		EA01F33B1AB7161400CF5691 /* AsakusaSatelliteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F33A1AB7161400CF5691 /* AsakusaSatelliteTests.swift */; };
 		EA01F3471AB7186400CF5691 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */; };
 		EA01F3491AB7188200CF5691 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3481AB7188200CF5691 /* Appearance.swift */; };
+		EA01F34B1AB71E0100CF5691 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		EA01F33A1AB7161400CF5691 /* AsakusaSatelliteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsakusaSatelliteTests.swift; sourceTree = "<group>"; };
 		EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		EA01F3481AB7188200CF5691 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		EA01F34A1AB71E0100CF5691 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				EA01F3241AB7161400CF5691 /* AppDelegate.swift */,
 				EA01F3481AB7188200CF5691 /* Appearance.swift */,
 				EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */,
+				EA01F34A1AB71E0100CF5691 /* Utilities.swift */,
 				EA01F32B1AB7161400CF5691 /* Images.xcassets */,
 				EA01F32D1AB7161400CF5691 /* LaunchScreen.xib */,
 				EA01F3221AB7161400CF5691 /* Supporting Files */,
@@ -288,6 +291,7 @@
 			files = (
 				EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */,
 				EA01F3491AB7188200CF5691 /* Appearance.swift in Sources */,
+				EA01F34B1AB71E0100CF5691 /* Utilities.swift in Sources */,
 				EA01F3471AB7186400CF5691 /* WelcomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

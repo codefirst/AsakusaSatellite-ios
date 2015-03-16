@@ -20,5 +20,19 @@ private func RGB(r: UInt8, g: UInt8, b: UInt8) -> UIColor {
 
 struct Appearance {
     private static let asakusaRed = RGB(200, 2, 2)
-    static let tintColor = asakusaRed
+    static let barTintColor = asakusaRed
+    static let tintColor = UIColor.whiteColor()
+    static let highlightedColor = RGB(100, 1, 1)
+    
+    static func roundRectButton(title: String) -> UIButton {
+        return UIButton().tap { (b: UIButton) in
+            b.clipsToBounds = true
+            b.layer.cornerRadius = 4
+            b.setTitle(title, forState: .Normal)
+            b.setTitleColor(self.barTintColor, forState: .Normal)
+            b.setBackgroundImage(UIImage.colorImage(self.tintColor, size: CGSizeMake(1, 1)), forState: .Normal)
+            b.setBackgroundImage(UIImage.colorImage(self.highlightedColor, size: CGSizeMake(1, 1)), forState: .Highlighted)
+            b.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+        }
+    }
 }
