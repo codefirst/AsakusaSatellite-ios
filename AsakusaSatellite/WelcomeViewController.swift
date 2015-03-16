@@ -12,6 +12,8 @@ class WelcomeViewController: UIViewController {
     let logoView = UIImageView(image: UIImage(named: "Logo"))
     let signinButton = Appearance.roundRectButton("Sign in with Twitter")
     
+    var displayLink: CADisplayLink?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,12 +36,44 @@ class WelcomeViewController: UIViewController {
         view.addCenterXConstraint(logoView)
         view.addCenterXConstraint(signinButton)
         view.addEqualConstraint(.Width, view: signinButton, toView: logoView)
-        autolayout("V:|-p-[spacerT][logo]-p-[signin][spacerB(==spacerT)]-p-|")
+        autolayout("V:|-p-[spacerT][logo]-p-[signin(==44)][spacerB(==spacerT)]-p-|")
         logoView.setContentHuggingPriorityHigh(.Vertical)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        startAnimation()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    // MARK: -
+    
+    private func startAnimation() {
+        stopAnimation()
+        displayLink = CADisplayLink(target: self, selector: "displayLink:")
+        displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+    }
+    
+    private func stopAnimation() {
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+    
+    func displayLink(sender: CADisplayLink) {
+        let time = CGFloat(NSDate().timeIntervalSince1970)
+        let periodInSeconds = CGFloat(5)
+        let amplitude = CGFloat(8)
+        let offset = amplitude * sin(time * 2 * CGFloat(M_PI) / periodInSeconds)
+        
+        logoView.transform = CGAffineTransformMakeTranslation(0, offset)
     }
     
     func signin(sender: AnyObject?) {
