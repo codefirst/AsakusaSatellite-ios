@@ -13,9 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        Appearance.install()
+        
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window?.tintColor = Appearance.tintColor
-        window?.rootViewController = WelcomeViewController()
+        window?.rootViewController = UINavigationController(rootViewController: WelcomeViewController())
         window?.makeKeyAndVisible()
         return true
     }

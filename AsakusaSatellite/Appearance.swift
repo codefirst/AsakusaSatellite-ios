@@ -24,6 +24,13 @@ struct Appearance {
     static let tintColor = UIColor.whiteColor()
     static let highlightedColor = RGB(100, 1, 1)
     
+    static func install() {
+        UINavigationBar.appearance().barTintColor = barTintColor
+        UINavigationBar.appearance().tintColor = tintColor
+        UIToolbar.appearance().barTintColor = barTintColor
+        UIToolbar.appearance().tintColor = tintColor
+    }
+    
     static func roundRectButton(title: String) -> UIButton {
         return UIButton().tap { (b: UIButton) in
             b.clipsToBounds = true

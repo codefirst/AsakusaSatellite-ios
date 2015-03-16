@@ -13,12 +13,14 @@ import AsakusaSatellite
 class WelcomeViewController: UIViewController {
     let logoView = UIImageView(image: UIImage(named: "Logo"))
     let signinButton = Appearance.roundRectButton("Sign in with Twitter")
+    var signinVC: TwitterAuthViewController?
     
     var displayLink: CADisplayLink?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        edgesForExtendedLayout = nil
         view.backgroundColor = Appearance.barTintColor
         
         let alpha = CGFloat(0.9)
@@ -26,6 +28,8 @@ class WelcomeViewController: UIViewController {
         logoView.alpha = alpha
         signinButton.alpha = alpha
         signinButton.addTarget(self, action: "signin:", forControlEvents: .TouchUpInside)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""), style: .Plain, target: self, action: "cancelSignin:")
         
         let autolayout = view.autolayoutFormat([
             "p": 20,
@@ -49,11 +53,15 @@ class WelcomeViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
         startAnimation()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        stopAnimation()
     }
     
     // MARK: -
@@ -79,10 +87,47 @@ class WelcomeViewController: UIViewController {
     }
     
     func signin(sender: AnyObject?) {
-        let vc = TwitterAuthViewController(rootURL: NSURL(string: Client(apiKey: nil).rootURL)!) { apiKey in
+        
+        signinVC = TwitterAuthViewController(rootURL: NSURL(string: Client(apiKey: nil).rootURL)!) { apiKey in
             NSLog("apiKey: \(apiKey)")
+            self.closeSigninViewController()
         }
         
-        presentViewController(vc, animated: true, completion: nil)
+        
+        addChildViewController(signinVC!)
+        view.addSubview(signinVC!.view)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        signinVC!.view.frame = CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height)
+        signinVC!.view.alpha = 0.5
+        UIView.animateWithDuration(
+            0.5,
+            delay: 0,
+            usingSpringWithDamping: 1.0,
+            initialSpringVelocity: 0.0,
+            options: nil,
+            animations: { [weak self] in
+                if let s = self {
+                    s.signinVC?.view.frame = s.view.bounds
+                    s.signinVC?.view.alpha = 1.0
+                    s.signinVC?.didMoveToParentViewController(self)
+                    s.stopAnimation()
+                }
+                return
+        }, completion: nil)
+    }
+    
+    func cancelSignin(sender: AnyObject?) {
+        closeSigninViewController()
+    }
+    
+    func closeSigninViewController() {
+        if let vc = signinVC {
+            vc.willMoveToParentViewController(nil)
+            vc.view.removeFromSuperview()
+            vc.removeFromParentViewController()
+        }
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        startAnimation()
     }
 }
