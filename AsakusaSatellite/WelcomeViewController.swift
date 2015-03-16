@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AsakusaSatellite
+
 
 class WelcomeViewController: UIViewController {
     let logoView = UIImageView(image: UIImage(named: "Logo"))
@@ -77,6 +79,10 @@ class WelcomeViewController: UIViewController {
     }
     
     func signin(sender: AnyObject?) {
-        NSLog("hoge")
+        let vc = TwitterAuthViewController(rootURL: NSURL(string: Client(apiKey: nil).rootURL)!) { apiKey in
+            NSLog("apiKey: \(apiKey)")
+        }
+        
+        presentViewController(vc, animated: true, completion: nil)
     }
 }
