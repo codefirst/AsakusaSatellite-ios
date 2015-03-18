@@ -54,6 +54,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         view.backgroundColor = Appearance.backgroundColor
         roomsView.backgroundColor = view.backgroundColor
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Sign Out", comment: ""), style: .Plain, target: self, action: "signout:")
+        
         let autolayout = view.autolayoutFormat(nil, ["rooms": roomsView])
         autolayout("H:|[rooms]|")
         autolayout("V:|[rooms]|")
@@ -62,6 +64,10 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        reloadRoomList()
+    }
+    
+    func reloadRoomList() {
         client = Client(apiKey: UserDefaults.apiKey)
         client?.roomList() { response in
             switch response {
@@ -72,6 +78,13 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                 self.presentViewController(ac, animated: true, completion: nil)
             }
         }
+    }
+    
+    // MARK: - Actions
+    
+    func signout(sender: AnyObject?) {
+        UserDefaults.apiKey = nil
+        reloadRoomList()
     }
     
     // MARK: - Collection View
