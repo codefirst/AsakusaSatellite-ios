@@ -107,6 +107,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                 nameLabel.text = room?.name
             }
         }
+        let sat = SatelliteImageView(frame: CGRectZero)
         let nameLabel = UILabel()
         
         override init(frame: CGRect) {
@@ -118,9 +119,10 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             nameLabel.textAlignment = .Center
             nameLabel.lineBreakMode = .ByWordWrapping
             
-            let autolayout = contentView.autolayoutFormat(["p": 8], ["name": nameLabel])
+            let autolayout = contentView.autolayoutFormat(["p": 8], ["sat": sat, "name": nameLabel])
+            autolayout("H:|[sat]|")
             autolayout("H:|[name]|")
-            autolayout("V:[name]|")
+            autolayout("V:|[sat][name]|")
         }
  
         required init(coder aDecoder: NSCoder) {
