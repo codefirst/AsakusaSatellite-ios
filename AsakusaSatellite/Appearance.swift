@@ -19,15 +19,23 @@ private func RGB(r: UInt8, g: UInt8, b: UInt8) -> UIColor {
 
 
 struct Appearance {
-    private static let asakusaRed = RGB(200, 2, 2)
-    static let barTintColor = asakusaRed
-    static let tintColor = UIColor.whiteColor()
+    static let asakusaRed = RGB(200, 2, 2)
+    static let navBarColor = asakusaRed
+    static let tintColor = asakusaRed
+    static let textColorOnTintColor = UIColor.whiteColor()
     static let highlightedColor = RGB(100, 1, 1)
+    static let backgroundColor = UIColor.whiteColor()
     
     static func install() {
-        UINavigationBar.appearance().barTintColor = barTintColor
-        UINavigationBar.appearance().tintColor = tintColor
-        UIToolbar.appearance().barTintColor = barTintColor
+        UINavigationBar.appearance().barTintColor = navBarColor
+        UINavigationBar.appearance().tintColor = textColorOnTintColor
+        UINavigationBar.appearance().titleTextAttributes = [
+            NSForegroundColorAttributeName: textColorOnTintColor,
+        ]
+        UINavigationBar.appearance().setBackgroundImage(UIImage.colorImage(navBarColor, size: CGSizeMake(1, 1)), forBarPosition: .Any, barMetrics: .Default) // no shadow
+        UINavigationBar.appearance().shadowImage = UIImage() // no shadow
+        
+        UIToolbar.appearance().barTintColor = backgroundColor
         UIToolbar.appearance().tintColor = tintColor
     }
     
@@ -36,8 +44,8 @@ struct Appearance {
             b.clipsToBounds = true
             b.layer.cornerRadius = 4
             b.setTitle(title, forState: .Normal)
-            b.setTitleColor(self.barTintColor, forState: .Normal)
-            b.setBackgroundImage(UIImage.colorImage(self.tintColor, size: CGSizeMake(1, 1)), forState: .Normal)
+            b.setTitleColor(self.tintColor, forState: .Normal)
+            b.setBackgroundImage(UIImage.colorImage(self.backgroundColor, size: CGSizeMake(1, 1)), forState: .Normal)
             b.setBackgroundImage(UIImage.colorImage(self.highlightedColor, size: CGSizeMake(1, 1)), forState: .Highlighted)
             b.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         }

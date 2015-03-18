@@ -21,7 +21,7 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
         
         edgesForExtendedLayout = nil
-        view.backgroundColor = Appearance.barTintColor
+        view.backgroundColor = Appearance.asakusaRed
         
         let alpha = CGFloat(0.9)
         logoView.contentMode = .ScaleAspectFit
@@ -87,9 +87,10 @@ class WelcomeViewController: UIViewController {
     }
     
     func signin(sender: AnyObject?) {
+        UserDefaults.apiKey = nil
         
         signinVC = TwitterAuthViewController(rootURL: NSURL(string: Client(apiKey: nil).rootURL)!) { apiKey in
-            NSLog("apiKey: \(apiKey)")
+            UserDefaults.apiKey = apiKey
             self.closeSigninViewController()
         }
         
@@ -122,6 +123,12 @@ class WelcomeViewController: UIViewController {
     }
     
     func closeSigninViewController() {
+        if UserDefaults.apiKey != nil {
+            // signed in
+            navigationController?.popViewControllerAnimated(true)
+            return
+        }
+        
         if let vc = signinVC {
             vc.willMoveToParentViewController(nil)
             vc.view.removeFromSuperview()
