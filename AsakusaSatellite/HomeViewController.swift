@@ -76,6 +76,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                 self.rooms = many().items
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
+                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
                 self.presentViewController(ac, animated: true, completion: nil)
             }
         }
