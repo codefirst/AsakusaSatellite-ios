@@ -33,6 +33,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         
         backgroundColor = UIColor.whiteColor()
         collectionView.backgroundColor = backgroundColor
+        collectionView.userInteractionEnabled = false // through taps
         
         collectionView.dataSource = self
         collectionView.delegate = self

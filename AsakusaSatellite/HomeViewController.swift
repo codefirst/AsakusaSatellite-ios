@@ -100,6 +100,14 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let room = rooms[indexPath.item]
+        if let c = client {
+            let vc = RoomViewController(client: Client(rootURL: c.rootURL, apiKey: UserDefaults.apiKey), room: room)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     // MARK: - RoomCell
     
     private class RoomCell: UICollectionViewCell {

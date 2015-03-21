@@ -39,6 +39,14 @@ struct Appearance {
         UIToolbar.appearance().tintColor = tintColor
     }
     
+    static func hiraginoW3(size: CGFloat) -> UIFont {
+        return UIFont(name: "HiraKakuProN-W3", size: size) ?? UIFont.systemFontOfSize(size)
+    }
+    
+    static func hiraginoW6(size: CGFloat) -> UIFont {
+        return UIFont(name: "HiraKakuProN-W6", size: size) ?? UIFont.boldSystemFontOfSize(size)
+    }
+    
     static func roundRectButton(title: String) -> UIButton {
         return UIButton().tap { (b: UIButton) in
             b.clipsToBounds = true
