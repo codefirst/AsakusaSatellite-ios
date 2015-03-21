@@ -16,13 +16,21 @@ private let kCellID = "Cell"
 class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     var imageURLs: [NSURL] = [] {
         didSet {
+            stopAnimation()
+            
             layout.invalidateLayout()
             collectionView.reloadData()
+            
+            if imageURLs.count > 0 {
+                startAnimation()
+            }
         }
     }
     
     let collectionView: UICollectionView
     private let layout = Layout()
+    
+    private var displayLink: CADisplayLink?
     
     // MARK: - init
     
@@ -31,6 +39,8 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: kCellID)
         super.init(frame: frame)
         
+        clipsToBounds = false
+        collectionView.clipsToBounds = false
         backgroundColor = UIColor.whiteColor()
         collectionView.backgroundColor = backgroundColor
         collectionView.userInteractionEnabled = false // through taps
@@ -47,6 +57,11 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func removeFromSuperview() {
+        super.removeFromSuperview()
+        stopAnimation()
+    }
+    
     // MARK: - CollectionView
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -59,6 +74,10 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         cell.imageView.hnk_cancelSetImage()
         cell.imageView.image = nil
         cell.imageView.hnk_setImageFromURL(url)
+        
+        // for layer animation
+        cell.layer.rasterizationScale = UIScreen.mainScreen().scale
+        
         return cell
     }
     
@@ -87,6 +106,47 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         }
     }
     
+    // MARK: - Animations
+    
+    private func startAnimation() {
+        stopAnimation()
+        displayLink = CADisplayLink(target: self, selector: "displayLink:")
+        displayLink?.frameInterval = 2
+        displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+    }
+    
+    private func stopAnimation() {
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+    
+    func displayLink(sender: CADisplayLink) {
+        let time = CGFloat(NSDate().timeIntervalSince1970)
+        let periodInSeconds = CGFloat(30)
+        let offset = time * 2 * CGFloat(M_PI) / periodInSeconds
+        
+        // NOTE:
+        // invalidateLayout consume high cpu (> 60% on iPhone 6)
+        // updating transform does consume less than it (~ 5% on iPhone 6)
+        for i in 0..<imageURLs.count {
+            let indexPath = NSIndexPath(forItem: i, inSection: 0)
+            if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+                var t = CGAffineTransformIdentity
+                
+                let animatedCenter = layout.centerForItemAt(percentage: time / periodInSeconds + CGFloat(i) / CGFloat(imageURLs.count), radiusScale: 1.25)
+                t = CGAffineTransformTranslate(t, animatedCenter.x - cell.center.x, animatedCenter.y - cell.center.y)
+                
+                let xScale = CGFloat(0.20)
+                let yScale = CGFloat(0.25)
+                let xOffset = animatedCenter.x - layout.contentSizeSide / 2
+                let yOffset = animatedCenter.y - layout.contentSizeSide / 2
+                t = CGAffineTransformTranslate(t, 0, -(xOffset * xScale + yOffset * yScale))
+                cell.layer.zPosition = animatedCenter.x * xScale + animatedCenter.y * yScale
+                cell.transform = t
+            }
+        }
+    }
+    
     // MARK: - Layout
     
     private class Layout: UICollectionViewLayout {
@@ -99,28 +159,30 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             contentSizeSide = min(contentSize.width, contentSize.height)
         }
         
+        func centerForItemAt(#percentage: CGFloat, radiusScale: CGFloat = 1.0) -> CGPoint {
+            let section = 0
+            let numberOfItems = collectionView?.numberOfItemsInSection(section) ?? 0
+            
+            let radius = numberOfItems > 1 ? (contentSizeSide - itemSide) / 2 : 0
+            let contentSize = collectionView?.bounds.size ?? CGSizeZero
+            let center = CGPointMake(contentSize.width / 2, contentSize.height / 2)
+            
+            let angle = CGFloat(-M_PI_2 + 2 * M_PI * Double(percentage))
+            return CGPointMake(
+                center.x + radius * radiusScale * cos(angle),
+                center.y + radius * radiusScale * sin(angle))
+        }
+        
         private override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
             let section = 0
             let numberOfItems = collectionView?.numberOfItemsInSection(section) ?? 0
             
-            let radius = (contentSizeSide - itemSide) / 2
-            let contentSize = collectionView?.bounds.size ?? CGSizeZero
-            let center = CGPointMake(contentSize.width / 2, contentSize.height / 2)
-            
             return [Int](0..<numberOfItems).map { n in
                 let la = UICollectionViewLayoutAttributes(forCellWithIndexPath: NSIndexPath(forItem: n, inSection: section))
-                let angle = CGFloat(-M_PI_2 + 2 * M_PI * Double(n) / Double(numberOfItems))
-                la.center = CGPointMake(
-                    center.x + radius * cos(angle),
-                    center.y + radius * sin(angle))
+                la.center = self.centerForItemAt(percentage: CGFloat(n) / CGFloat(numberOfItems ))
                 la.size = self.itemSize
                 return la
             }
-        }
-        
-        private override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
-            indexPath
-            return nil
         }
         
         private override func collectionViewContentSize() -> CGSize {
