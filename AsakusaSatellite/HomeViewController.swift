@@ -24,6 +24,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     let roomsView: UICollectionView
     let roomsLayout = UICollectionViewFlowLayout()
     
+    private var displayLink: CADisplayLink?
+    
     // MARK: - init
     
     override init() {
@@ -66,7 +68,16 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewDidAppear(animated)
         
         reloadRoomList()
+        startAnimation()
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        stopAnimation()
+    }
+    
+    // MARK: -
     
     func reloadRoomList() {
         client = Client(apiKey: UserDefaults.apiKey)
@@ -87,6 +98,29 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     func signout(sender: AnyObject?) {
         UserDefaults.apiKey = nil
         reloadRoomList()
+    }
+    
+    // MARK: - Animations
+    
+    private func startAnimation() {
+        stopAnimation()
+        
+        displayLink = CADisplayLink(target: self, selector: "displayLink:")
+        displayLink?.frameInterval = 2
+        displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+    }
+    
+    private func stopAnimation() {
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+    
+    func displayLink(sender: CADisplayLink) {
+        for i in 0..<rooms.count {
+            if let cell = roomsView.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RoomCell {
+                cell.sat.displayLink(sender)
+            }
+        }
     }
     
     // MARK: - Collection View

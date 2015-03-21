@@ -16,21 +16,15 @@ private let kCellID = "Cell"
 class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     var imageURLs: [NSURL] = [] {
         didSet {
-            stopAnimation()
-            
             layout.invalidateLayout()
             collectionView.reloadData()
             orbitView.hidden = imageURLs.count < 2
-            
-            startAnimation()
         }
     }
     
     let collectionView: UICollectionView
     private let layout = Layout()
     private let orbitView = OrbitView(frame: CGRectZero)
-    
-    private var displayLink: CADisplayLink?
     
     // MARK: - init
     
@@ -58,11 +52,6 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func removeFromSuperview() {
-        super.removeFromSuperview()
-        stopAnimation()
     }
     
     // MARK: - CollectionView
@@ -111,24 +100,11 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     
     // MARK: - Animations
     
-    private func startAnimation() {
-        stopAnimation()
-        if imageURLs.count > 0 {
-            layout.invalidateLayout()
-            collectionView.layoutIfNeeded()
-            orbitView.radius = layout.radius * 1.25
-            displayLink = CADisplayLink(target: self, selector: "displayLink:")
-            displayLink?.frameInterval = 2
-            displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
-        }
-    }
-    
-    private func stopAnimation() {
-        displayLink?.invalidate()
-        displayLink = nil
-    }
-    
     func displayLink(sender: CADisplayLink) {
+        if imageURLs.count <= 1 { return }
+        
+        orbitView.radius = layout.radius * 1.25
+        
         let time = CGFloat(NSDate().timeIntervalSince1970)
         let periodInSeconds = CGFloat(30)
         let offset = time * 2 * CGFloat(M_PI) / periodInSeconds
@@ -215,7 +191,9 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     private class OrbitView: ShapeLayerView {
         var radius: CGFloat = 0 {
             didSet {
-                layoutSubviews()
+                if oldValue != radius {
+                    layoutSubviews()
+                }
             }
         }
         
