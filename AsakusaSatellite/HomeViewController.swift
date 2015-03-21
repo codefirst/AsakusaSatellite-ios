@@ -11,6 +11,7 @@ import AsakusaSatellite
 
 
 private let kCellID = "Room"
+private let kDefaultProfileImageURL = NSURL(string: "data:image/gif;base64,R0lGODlhEAAQAMQfAFWApnCexR4xU1SApaJ3SlB5oSg9ZrOVcy1HcURok/Lo3iM2XO/i1lJ8o2eVu011ncmbdSc8Zc6lg4212DZTgC5Hcmh3f8OUaDhWg7F2RYlhMunXxqrQ8n6s1f///////yH5BAEAAB8ALAAAAAAQABAAAAVz4CeOXumNKOpprHampAZltAt/q0Tvdrpmm+Am01MRGJpgkvBSXRSHYPTSJFkuws0FU8UBOJiLeAtuer6dDmaN6Uw4iNeZk653HIFORD7gFOhpARwGHQJ8foAdgoSGJA1/HJGRC40qHg8JGBQVe10kJiUpIQA7")! // FIXME: haneke cannot read data: scheme
 
 
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -36,10 +37,10 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         roomsView.delegate = self
         
         roomsLayout.scrollDirection = .Vertical
-        roomsLayout.itemSize = CGSizeMake(148, 148)
-        roomsLayout.minimumInteritemSpacing = 8
-        roomsLayout.minimumLineSpacing = 8
-        roomsLayout.sectionInset = UIEdgeInsetsMake(0, 8, 0, 8)
+        roomsLayout.itemSize = CGSizeMake(150, 150)
+        roomsLayout.minimumInteritemSpacing = 0
+        roomsLayout.minimumLineSpacing = 22
+        roomsLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -105,10 +106,14 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         var room: Room? {
             didSet {
                 nameLabel.text = room?.name
+                let urls = (room?.ownerAndMembers ?? []).map{NSURL(string: $0.profileImageURL) ?? kDefaultProfileImageURL}
+                sat.imageURLs = (urls.count > 0 ? urls : [kDefaultProfileImageURL]) // default image for public room with no owner
             }
         }
         let sat = SatelliteImageView(frame: CGRectZero)
         let nameLabel = UILabel()
+        
+        private let defaultImageURL = ""
         
         override init(frame: CGRect) {
             super.init(frame: frame)
@@ -122,7 +127,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             let autolayout = contentView.autolayoutFormat(["p": 8], ["sat": sat, "name": nameLabel])
             autolayout("H:|[sat]|")
             autolayout("H:|[name]|")
-            autolayout("V:|[sat][name]|")
+            autolayout("V:|-p-[sat]-p-[name]|")
         }
  
         required init(coder aDecoder: NSCoder) {

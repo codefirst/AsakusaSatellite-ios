@@ -45,6 +45,7 @@
 		EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		EA01F3481AB7188200CF5691 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		EA01F34A1AB71E0100CF5691 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		EA1FA4DE1ABD3FCB00BA1D68 /* AsakusaSatellite.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = AsakusaSatellite.playground; sourceTree = SOURCE_ROOT; };
 		EA64C7781AB9AD6F00282113 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		EA64C77A1AB9B29D00282113 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SatelliteImageView.swift; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 		EA01F3161AB7161400CF5691 = {
 			isa = PBXGroup;
 			children = (
+				EA1FA4DE1ABD3FCB00BA1D68 /* AsakusaSatellite.playground */,
 				EA01F3211AB7161400CF5691 /* AsakusaSatellite */,
 				EA01F3371AB7161400CF5691 /* AsakusaSatelliteTests */,
 				EA01F3201AB7161400CF5691 /* Products */,
@@ -112,10 +114,9 @@
 				EA01F3241AB7161400CF5691 /* AppDelegate.swift */,
 				EA01F3481AB7188200CF5691 /* Appearance.swift */,
 				EA64C77A1AB9B29D00282113 /* UserDefaults.swift */,
-				EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */,
-				EA64C7781AB9AD6F00282113 /* HomeViewController.swift */,
-				EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */,
 				EA01F34A1AB71E0100CF5691 /* Utilities.swift */,
+				EA1FA4DF1ABD565C00BA1D68 /* ViewControllers */,
+				EA1FA4E01ABD567200BA1D68 /* Views */,
 				EA01F32B1AB7161400CF5691 /* Images.xcassets */,
 				EA01F32D1AB7161400CF5691 /* LaunchScreen.xib */,
 				EA01F3221AB7161400CF5691 /* Supporting Files */,
@@ -146,6 +147,23 @@
 				EA01F3391AB7161400CF5691 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EA1FA4DF1ABD565C00BA1D68 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */,
+				EA64C7781AB9AD6F00282113 /* HomeViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EA1FA4E01ABD567200BA1D68 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
