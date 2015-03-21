@@ -56,6 +56,8 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as Cell
         let url = imageURLs[indexPath.item]
+        cell.imageView.hnk_cancelSetImage()
+        cell.imageView.image = nil
         cell.imageView.hnk_setImageFromURL(url)
         return cell
     }
