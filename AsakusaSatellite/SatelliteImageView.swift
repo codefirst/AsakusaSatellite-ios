@@ -20,15 +20,15 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             
             layout.invalidateLayout()
             collectionView.reloadData()
+            orbitView.hidden = imageURLs.count < 2
             
-            if imageURLs.count > 0 {
-                startAnimation()
-            }
+            startAnimation()
         }
     }
     
     let collectionView: UICollectionView
     private let layout = Layout()
+    private let orbitView = OrbitView(frame: CGRectZero)
     
     private var displayLink: CADisplayLink?
     
@@ -41,9 +41,12 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         
         clipsToBounds = false
         collectionView.clipsToBounds = false
-        backgroundColor = UIColor.whiteColor()
-        collectionView.backgroundColor = backgroundColor
+        backgroundColor = Appearance.backgroundColor
         collectionView.userInteractionEnabled = false // through taps
+        
+        orbitView.backgroundColor = backgroundColor
+        collectionView.backgroundColor = backgroundColor
+        collectionView.backgroundView = orbitView
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -110,9 +113,14 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     
     private func startAnimation() {
         stopAnimation()
-        displayLink = CADisplayLink(target: self, selector: "displayLink:")
-        displayLink?.frameInterval = 2
-        displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+        if imageURLs.count > 0 {
+            layout.invalidateLayout()
+            collectionView.layoutIfNeeded()
+            orbitView.radius = layout.radius * 1.25
+            displayLink = CADisplayLink(target: self, selector: "displayLink:")
+            displayLink?.frameInterval = 2
+            displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+        }
     }
     
     private func stopAnimation() {
@@ -128,6 +136,8 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         // NOTE:
         // invalidateLayout consume high cpu (> 60% on iPhone 6)
         // updating transform does consume less than it (~ 5% on iPhone 6)
+        let xScale = CGFloat(0.20)
+        let yScale = CGFloat(0.25)
         for i in 0..<imageURLs.count {
             let indexPath = NSIndexPath(forItem: i, inSection: 0)
             if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
@@ -136,8 +146,6 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
                 let animatedCenter = layout.centerForItemAt(percentage: time / periodInSeconds + CGFloat(i) / CGFloat(imageURLs.count), radiusScale: 1.25)
                 t = CGAffineTransformTranslate(t, animatedCenter.x - cell.center.x, animatedCenter.y - cell.center.y)
                 
-                let xScale = CGFloat(0.20)
-                let yScale = CGFloat(0.25)
                 let xOffset = animatedCenter.x - layout.contentSizeSide / 2
                 let yOffset = animatedCenter.y - layout.contentSizeSide / 2
                 t = CGAffineTransformTranslate(t, 0, -(xOffset * xScale + yOffset * yScale))
@@ -145,14 +153,22 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
                 cell.transform = t
             }
         }
+        
+        var t = CGAffineTransformIdentity
+        t = CGAffineTransformRotate(t, -CGFloat(M_PI_2) * xScale)
+        t = CGAffineTransformScale(t, 1, 2.5 * yScale)
+        orbitView.transform = t
     }
     
     // MARK: - Layout
     
     private class Layout: UICollectionViewLayout {
-        private var contentSizeSide = CGFloat(0)
-        private var itemSide: CGFloat { return contentSizeSide / 3 }
-        private var itemSize: CGSize { return CGSizeMake(itemSide, itemSide) }
+        var contentSizeSide = CGFloat(0)
+        var itemSide: CGFloat { return contentSizeSide / 3 }
+        var itemSize: CGSize { return CGSizeMake(itemSide, itemSide) }
+        let section = 0
+        var numberOfItems: Int { return collectionView?.numberOfItemsInSection(section) ?? 0 }
+        var radius: CGFloat { return numberOfItems > 1 ? (contentSizeSide - itemSide) / 2 : 0 }
         
         private override func prepareLayout() {
             let contentSize = collectionView?.bounds.size ?? CGSizeZero
@@ -160,10 +176,6 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         }
         
         func centerForItemAt(#percentage: CGFloat, radiusScale: CGFloat = 1.0) -> CGPoint {
-            let section = 0
-            let numberOfItems = collectionView?.numberOfItemsInSection(section) ?? 0
-            
-            let radius = numberOfItems > 1 ? (contentSizeSide - itemSide) / 2 : 0
             let contentSize = collectionView?.bounds.size ?? CGSizeZero
             let center = CGPointMake(contentSize.width / 2, contentSize.height / 2)
             
@@ -187,6 +199,39 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         
         private override func collectionViewContentSize() -> CGSize {
             return CGSizeMake(contentSizeSide, contentSizeSide)
+        }
+    }
+    
+    // MARK: - ShapeLayerView
+    
+    private class ShapeLayerView: UIView {
+        var shapeLayer: CAShapeLayer { return layer as CAShapeLayer }
+        override class func layerClass() -> AnyClass {
+            return CAShapeLayer.self
+        }
+        
+    }
+    
+    private class OrbitView: ShapeLayerView {
+        var radius: CGFloat = 0 {
+            didSet {
+                layoutSubviews()
+            }
+        }
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            shapeLayer.lineWidth = 1.0 / UIScreen.mainScreen().scale
+            shapeLayer.strokeColor = Appearance.asakusaRed.colorWithAlphaComponent(0.25).CGColor
+            shapeLayer.fillColor = nil
+        }
+        
+        private override func layoutSubviews() {
+            super.layoutSubviews()
+            
+            let center = CGPointMake(bounds.width / 2, bounds.height / 2)
+            shapeLayer.path = UIBezierPath(ovalInRect: CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2)).CGPath
         }
     }
 }
