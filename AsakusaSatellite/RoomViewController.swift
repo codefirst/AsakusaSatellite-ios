@@ -20,6 +20,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     let tableView = UITableView(frame: CGRectZero, style: .Plain)
     let refreshView = RefreshView()
+    let postView = PostView()
     
     // MARK: - init
     
@@ -44,7 +45,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         view.backgroundColor = Appearance.backgroundColor
         tableView.backgroundColor = view.backgroundColor
         tableView.backgroundView = refreshView
-
+        
         tableView.registerClass(TableCell.self, forCellReuseIdentifier: kCellID)
         tableView.dataSource = self
         tableView.delegate = self
@@ -52,15 +53,34 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.estimatedRowHeight = 120 // requires at least minimum height for autolayout cells http://stackoverflow.com/questions/26100053/uitableviewcells-contentview-gets-unwanted-height-44-constraint
         tableView.separatorStyle = .None
         
+        postView.onPost = { (text, completion) in
+            self.postMessage(text) { success in
+                completion(clearField: success)
+            }
+        }
+        
+        tableView.tableFooterView = postView
+        
         refreshView.onRefresh = { completion in
             self.reloadMessages(completion)
         }
         
+        let keyboardSpacer = KeyboardSpacerView()
         let autolayout = view.autolayoutFormat(["p": 8], [
             "table": tableView,
+            "keyboard": keyboardSpacer
             ])
         autolayout("H:|[table]|")
-        autolayout("V:|[table]|")
+        autolayout("V:|[table][keyboard]|")
+        keyboardSpacer.installKeyboardHeightConstraint()
+        keyboardSpacer.onHeightChange = { [weak self] _ in
+            dispatch_async(dispatch_get_main_queue()) {
+                if let s = self {
+                    s.view.layoutIfNeeded()
+                    s.tableView.scrollRectToVisible(s.tableView.tableFooterView!.frame, animated: true)
+                }
+            }
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -90,6 +110,21 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.presentViewController(ac, animated: true, completion: nil)
             }
             completion?()
+        }
+    }
+    
+    private func postMessage(text: String, completion: (Bool -> Void)?) {
+        client.postMessage(text, roomID: room.id, files: []) { r in
+            switch r {
+            case .Success(let postMessage):
+                self.reloadMessages(completion: nil)
+                completion?(true)
+            case .Failure(let error):
+                let ac = UIAlertController(title: NSLocalizedString("Cannot Send Message", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(ac, animated: true, completion: nil)
+                completion?(false)
+            }
         }
     }
     

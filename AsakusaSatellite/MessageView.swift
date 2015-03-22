@@ -64,13 +64,13 @@ class MessageView: UIView {
             "sp": 4,
             "p": 8,
             "iconSize": iconSize,
-            "onepx": 1 / UIScreen.mainScreen().scale,
+            "onepx": Appearance.onepx,
             ], [
                 "icon": iconView,
                 "name": nameLabel,
                 "date": dateLabel,
                 "body": bodyLabel,
-                "separator": UIView().tap{$0.backgroundColor = UIColor(white: 0.9, alpha: 1.0)},
+                "separator": Appearance.separatorView()
             ])
         autolayout("H:|-p-[icon(==iconSize)]-p-[name][date]-p-|")
         autolayout("H:|-p-[body]-p-|")

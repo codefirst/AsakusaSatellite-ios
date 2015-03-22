@@ -12,7 +12,7 @@ import AsakusaSatellite
 
 class WelcomeViewController: UIViewController {
     let logoView = UIImageView(image: UIImage(named: "Logo"))
-    let signinButton = Appearance.roundRectButton("Sign in with Twitter")
+    let signinButton = Appearance.roundRectButtonOnTintColor("Sign in with Twitter")
     var signinVC: TwitterAuthViewController?
     
     var displayLink: CADisplayLink?

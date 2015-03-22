@@ -29,9 +29,11 @@ struct Appearance {
     static let textColorOnTintColor = UIColor.whiteColor()
     static let highlightedColor = RGB(100, 1, 1)
     static let backgroundColor = UIColor.whiteColor()
+    static let lightBackgroundColor = GRAY(250)
     static let lightDarkBackgroundColor = GRAY(222)
     static let textColorOnLightDarkBackgroundColor = GRAY(128)
     static let darkBackgroundColor = GRAY(96)
+    static let onepx = 1 / UIScreen.mainScreen().scale
     
     static func install() {
         UINavigationBar.appearance().barTintColor = navBarColor
@@ -54,15 +56,27 @@ struct Appearance {
         return UIFont(name: "HiraKakuProN-W6", size: size) ?? UIFont.boldSystemFontOfSize(size)
     }
     
-    static func roundRectButton(title: String) -> UIButton {
+    static func roundRectButtonOnTintColor(title: String) -> UIButton {
+        return roundRectButton(title, titleColor: self.tintColor, backgroundColor: self.backgroundColor, highlightedColor: self.highlightedColor)
+    }
+    
+    static func roundRectButtonOnBackgroundColor(title: String) -> UIButton {
+        return roundRectButton(title, titleColor: self.textColorOnTintColor, backgroundColor: self.tintColor, highlightedColor: self.highlightedColor)
+    }
+    
+    static func roundRectButton(title: String, titleColor: UIColor, backgroundColor: UIColor, highlightedColor: UIColor) -> UIButton {
         return UIButton().tap { (b: UIButton) in
             b.clipsToBounds = true
             b.layer.cornerRadius = 4
             b.setTitle(title, forState: .Normal)
-            b.setTitleColor(self.tintColor, forState: .Normal)
-            b.setBackgroundImage(UIImage.colorImage(self.backgroundColor, size: CGSizeMake(1, 1)), forState: .Normal)
-            b.setBackgroundImage(UIImage.colorImage(self.highlightedColor, size: CGSizeMake(1, 1)), forState: .Highlighted)
+            b.setTitleColor(titleColor, forState: .Normal)
+            b.setBackgroundImage(UIImage.colorImage(backgroundColor, size: CGSizeMake(1, 1)), forState: .Normal)
+            b.setBackgroundImage(UIImage.colorImage(highlightedColor, size: CGSizeMake(1, 1)), forState: .Highlighted)
             b.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
         }
+    }
+    
+    static func separatorView() -> UIView {
+        return UIView().tap{$0.backgroundColor = UIColor(white: 0.9, alpha: 1.0)}
     }
 }
