@@ -125,6 +125,7 @@ class WelcomeViewController: UIViewController {
     func closeSigninViewController() {
         if UserDefaults.apiKey != nil {
             // signed in
+            appDelegate.registerPushNotification()
             navigationController?.popViewControllerAnimated(true)
             return
         }

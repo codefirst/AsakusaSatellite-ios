@@ -68,6 +68,15 @@ extension UIImage {
 }
 
 
+extension UIAlertController {
+    class func presentSimpleAlert(onViewController vc: UIViewController, title: String, error: NSError?) {
+        let ac = UIAlertController(title: title, message: error?.localizedDescription, preferredStyle: .Alert)
+        ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
+        vc.presentViewController(ac, animated: true, completion: nil)
+    }
+}
+
+
 class AutolayoutMinView: UIView {
     override func intrinsicContentSize() -> CGSize {
         return CGSizeZero
@@ -108,5 +117,21 @@ class KeyboardSpacerView : UIView {
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
+}
+
+
+func hwmachine() -> String? {
+    let name = NSString(string: "hw.machine")
+    
+    var size: UInt = 0
+    if sysctlbyname(name.UTF8String, nil, &size, nil, 0) != 0 {
+        return nil
+    }
+    
+    if let data = NSMutableData(length: Int(size)) {
+        sysctlbyname(name.UTF8String, data.mutableBytes, &size, nil, 0)
+        return NSString(data: data, encoding: NSUTF8StringEncoding)
+    }
+    return nil
 }
 

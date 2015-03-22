@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import AsakusaSatellite
 
 
 let AppFullName = "AsakusaSatellite"
+var appDelegate: AppDelegate { return UIApplication.sharedApplication().delegate as AppDelegate }
 
 
 @UIApplicationMain
@@ -39,7 +41,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         window?.backgroundColor = Appearance.asakusaRed
         window?.rootViewController = root
         window?.makeKeyAndVisible()
+        
         return true
+    }
+    
+    // MARK: - Push Notification
+    
+    func registerPushNotification() {
+        let settings = UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+    }
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        if let apiKey = UserDefaults.apiKey {
+            Client(apiKey: apiKey).addDevice(deviceToken, name: hwmachine() ?? UIDevice.currentDevice().model) { r in
+                switch r {
+                case .Success(_):
+                    break
+                case .Failure(let error):
+                    UIAlertController.presentSimpleAlert(onViewController: self.root.topViewController, title: NSLocalizedString("Cannot Register for Notifications", comment: ""), error: error)
+                }
+            }
+        }
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        UIAlertController.presentSimpleAlert(onViewController: root.topViewController, title: NSLocalizedString("Cannot Register for Notifications", comment: ""), error: error)
     }
     
     // MARK: - Custom Navigation Animation
