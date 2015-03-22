@@ -13,12 +13,13 @@ import AsakusaSatellite
 private let kCellID = "Cell"
 
 
-class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     let client: Client
     var room: Room
     var messages = [Message]()
 
     let tableView = UITableView(frame: CGRectZero, style: .Plain)
+    let refreshView = RefreshView()
     
     // MARK: - init
     
@@ -42,6 +43,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         view.backgroundColor = Appearance.backgroundColor
         tableView.backgroundColor = view.backgroundColor
+        tableView.backgroundView = refreshView
 
         tableView.registerClass(TableCell.self, forCellReuseIdentifier: kCellID)
         tableView.dataSource = self
@@ -49,6 +51,10 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120 // requires at least minimum height for autolayout cells http://stackoverflow.com/questions/26100053/uitableviewcells-contentview-gets-unwanted-height-44-constraint
         tableView.separatorStyle = .None
+        
+        refreshView.onRefresh = { completion in
+            self.reloadMessages(completion)
+        }
         
         let autolayout = view.autolayoutFormat(["p": 8], [
             "table": tableView,
@@ -60,23 +66,30 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        reloadMessages()
+        refreshView.refresh()
     }
     
     // MARK: -
     
-    private func reloadMessages() {
+    private func reloadMessages(completion: (Void -> Void)? = nil) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         client.messageList(room.id, count: 20, sinceID: messages.last?.id, untilID: nil, order: .Desc) { r in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             switch r {
             case .Success(let many):
-                let messages = many().items
-                self.messages += messages.reverse()
+                let ids = self.messages.map{$0.id}
+                for m in many().items.reverse() {
+                    if find(ids, m.id) == nil {
+                        self.messages.append(m)
+                    }
+                }
                 self.tableView.reloadData()
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
                 self.presentViewController(ac, animated: true, completion: nil)
             }
+            completion?()
         }
     }
     
@@ -90,6 +103,16 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as TableCell
         cell.message = messages[indexPath.row]
         return cell
+    }
+    
+    // MARK: - ScrollView
+
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        refreshView.scrollViewDidScroll(scrollView)
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        refreshView.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
     // MARK: - Custom Cell

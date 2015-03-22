@@ -17,6 +17,10 @@ private func RGB(r: UInt8, g: UInt8, b: UInt8) -> UIColor {
     return RGBA(r, g, b, 255)
 }
 
+private func GRAY(y: UInt8) -> UIColor {
+    return RGB(y, y, y)
+}
+
 
 struct Appearance {
     static let asakusaRed = RGB(200, 2, 2)
@@ -25,6 +29,9 @@ struct Appearance {
     static let textColorOnTintColor = UIColor.whiteColor()
     static let highlightedColor = RGB(100, 1, 1)
     static let backgroundColor = UIColor.whiteColor()
+    static let lightDarkBackgroundColor = GRAY(222)
+    static let textColorOnLightDarkBackgroundColor = GRAY(128)
+    static let darkBackgroundColor = GRAY(96)
     
     static func install() {
         UINavigationBar.appearance().barTintColor = navBarColor
