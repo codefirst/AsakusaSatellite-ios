@@ -50,7 +50,6 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setToolbarHidden(false, animated: true)
     }
     
     func updateToolbar() {
@@ -76,6 +75,9 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     // MARK: - WebView
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == .LinkClicked {
+            navigationController?.setToolbarHidden(false, animated: true)
+        }
         updateToolbar()
         return true
     }
