@@ -167,6 +167,11 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row]), animated: true)
+    }
+    
     // MARK: - ScrollView
 
     func scrollViewDidScroll(scrollView: UIScrollView) {

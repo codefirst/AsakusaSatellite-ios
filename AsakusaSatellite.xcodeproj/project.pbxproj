@@ -22,6 +22,7 @@
 		EA64C7791AB9AD6F00282113 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C7781AB9AD6F00282113 /* HomeViewController.swift */; };
 		EA64C77B1AB9B29D00282113 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C77A1AB9B29D00282113 /* UserDefaults.swift */; };
 		EA64C77D1AB9DA3A00282113 /* SatelliteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */; };
+		EA69FE901ABF0A8F00F5EF54 /* MessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA69FE8F1ABF0A8F00F5EF54 /* MessageDetailViewController.swift */; };
 		EA7C95C11ABEA37C00CD2641 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C95C01ABEA37C00CD2641 /* PostView.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		EA64C7781AB9AD6F00282113 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		EA64C77A1AB9B29D00282113 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SatelliteImageView.swift; sourceTree = "<group>"; };
+		EA69FE8F1ABF0A8F00F5EF54 /* MessageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailViewController.swift; sourceTree = "<group>"; };
 		EA7C95C01ABEA37C00CD2641 /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +168,7 @@
 				EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */,
 				EA64C7781AB9AD6F00282113 /* HomeViewController.swift */,
 				EA1FA4E11ABD580200BA1D68 /* RoomViewController.swift */,
+				EA69FE8F1ABF0A8F00F5EF54 /* MessageDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				EA64C77B1AB9B29D00282113 /* UserDefaults.swift in Sources */,
 				EA2615D71ABD60600011DB1B /* MessageView.swift in Sources */,
 				EA01F3491AB7188200CF5691 /* Appearance.swift in Sources */,
+				EA69FE901ABF0A8F00F5EF54 /* MessageDetailViewController.swift in Sources */,
 				EA01F34B1AB71E0100CF5691 /* Utilities.swift in Sources */,
 				EA2615D91ABE4FE20011DB1B /* RefreshView.swift in Sources */,
 				EA64C77D1AB9DA3A00282113 /* SatelliteImageView.swift in Sources */,

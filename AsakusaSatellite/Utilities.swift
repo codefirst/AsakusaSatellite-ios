@@ -135,3 +135,8 @@ func hwmachine() -> String? {
     return nil
 }
 
+
+func flexibleBarButtonItem() -> UIBarButtonItem {
+    return UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+}
+
