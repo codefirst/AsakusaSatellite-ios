@@ -76,6 +76,7 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == .LinkClicked {
+            webview.scalesPageToFit = true
             navigationController?.setToolbarHidden(false, animated: true)
         }
         updateToolbar()
