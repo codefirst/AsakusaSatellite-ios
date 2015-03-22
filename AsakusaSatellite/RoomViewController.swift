@@ -15,6 +15,7 @@ private let kCellID = "Cell"
 
 class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     let client: Client
+    var pusher: MessagePusherClient?
     var room: Room
     var messages = [Message]()
 
@@ -91,22 +92,18 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: -
     
     private func reloadMessages(completion: (Void -> Void)? = nil) {
+        client.messagePusher(room.id) { pusher in
+            self.pusher = pusher
+            pusher?.onMessageCreate = self.onMessageCreate
+            pusher?.connect()
+        }
+        
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         client.messageList(room.id, count: 20, sinceID: messages.last?.id, untilID: nil, order: .Desc) { r in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             switch r {
             case .Success(let many):
-                UIView.setAnimationsEnabled(false) // disable automatic animation
-                
-                let ids = self.messages.map{$0.id}
-                for m in many().items.reverse() {
-                    if find(ids, m.id) == nil {
-                        self.messages.append(m)
-                        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.messages.count - 1, inSection: 0)], withRowAnimation: .None)
-                    }
-                }
-                // self.tableView.reloadData() // no need to reloadData when only appending cells
-                UIView.setAnimationsEnabled(true)
+                self.appendMessages(many().items.reverse())
                 dispatch_async(dispatch_get_main_queue()) {
                     self.scrollToBottom()
                 }
@@ -117,6 +114,22 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             completion?()
         }
+    }
+    
+    private func onMessageCreate(message: Message) {
+        self.appendMessages([message])
+    }
+    
+    private func appendMessages(messages: [Message]) {
+        UIView.setAnimationsEnabled(false) // disable automatic animation
+        let ids = self.messages.map{$0.id}
+        for m in messages {
+            if find(ids, m.id) == nil {
+                self.messages.append(m)
+                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.messages.count - 1, inSection: 0)], withRowAnimation: .None)
+            }
+        }
+        UIView.setAnimationsEnabled(true)
     }
     
     private func scrollToBottom() {
