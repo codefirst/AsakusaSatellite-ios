@@ -8,6 +8,7 @@
 
 import UIKit
 import AsakusaSatellite
+import TUSafariActivity
 
 
 class MessageDetailViewController: UIViewController, UIWebViewDelegate {
@@ -67,7 +68,7 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     
     func share(sender: AnyObject?) {
         if let url = webview.request?.URL {
-            let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
+            let vc = UIActivityViewController(activityItems: [url], applicationActivities: [TUSafariActivity()])
             presentViewController(vc, animated: true, completion: nil)
         }
     }
