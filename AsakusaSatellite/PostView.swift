@@ -53,6 +53,7 @@ class PostView: UIView, UITextFieldDelegate {
     }
     
     func updateViews() {
+        textField.enabled = true
         sendButton.enabled = !textField.text.isEmpty
     }
     
@@ -61,10 +62,15 @@ class PostView: UIView, UITextFieldDelegate {
     }
     
     func post(sender: AnyObject?) {
+        endEditing(true)
+        textField.enabled = false
+        sendButton.enabled = false
+        
         onPost?(text: textField.text) { (clearField: Bool) -> Void in
             if clearField {
                 self.textField.text = ""
             }
+            self.updateViews()
         }
     }
 }

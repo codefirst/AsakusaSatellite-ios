@@ -59,8 +59,6 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         
-        tableView.tableFooterView = postView
-        
         refreshView.onRefresh = { completion in
             self.reloadMessages(completion)
         }
@@ -87,6 +85,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidAppear(animated)
         
         refreshView.refresh()
+        tableView.tableFooterView = postView
     }
     
     // MARK: -
@@ -97,13 +96,20 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             switch r {
             case .Success(let many):
+                UIView.setAnimationsEnabled(false) // disable automatic animation
+                
                 let ids = self.messages.map{$0.id}
                 for m in many().items.reverse() {
                     if find(ids, m.id) == nil {
                         self.messages.append(m)
+                        self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.messages.count - 1, inSection: 0)], withRowAnimation: .None)
                     }
                 }
-                self.tableView.reloadData()
+                // self.tableView.reloadData() // no need to reloadData when only appending cells
+                UIView.setAnimationsEnabled(true)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.scrollToBottom()
+                }
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
@@ -113,8 +119,16 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    private func scrollToBottom() {
+        // UITableViewAutomaticDimension does not support valid contentSize calculation before loading
+        // http://stackoverflow.com/questions/25686490/ios-8-auto-cell-height-cant-scroll-to-last-row
+        // tableView.setContentOffset(CGPointMake(0, max(0, tableView.contentSize.height - tableView.frame.height)), animated: true)
+    }
+    
     private func postMessage(text: String, completion: (Bool -> Void)?) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         client.postMessage(text, roomID: room.id, files: []) { r in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             switch r {
             case .Success(let postMessage):
                 self.reloadMessages(completion: nil)
@@ -144,6 +158,12 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
         refreshView.scrollViewDidScroll(scrollView)
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        if scrollView.panGestureRecognizer.velocityInView(scrollView).y > 0 {
+            postView.endEditing(true)
+        }
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
