@@ -83,4 +83,11 @@ class MessageView: UIView {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    class func layoutSize(forMessage m: Message, forWidth w: CGFloat) -> CGSize {
+        struct LayoutStatic { static let view = MessageView(frame: CGRectZero) }
+        let v = LayoutStatic.view
+        v.bodyLabel.text = m.body // only body affects the layout size
+        return v.systemLayoutSizeFittingSize(CGSizeMake(w, 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50)
+    }
 }

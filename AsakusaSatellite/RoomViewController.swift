@@ -50,8 +50,6 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.registerClass(TableCell.self, forCellReuseIdentifier: kCellID)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 120 // requires at least minimum height for autolayout cells http://stackoverflow.com/questions/26100053/uitableviewcells-contentview-gets-unwanted-height-44-constraint
         tableView.separatorStyle = .None
         
         postView.onPost = { (text, completion) in
@@ -164,6 +162,10 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return MessageView.layoutSize(forMessage: messages[indexPath.row], forWidth: tableView.frame.width).height
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
