@@ -97,7 +97,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
             ])
         autolayout("H:|-p-[icon(==iconSize)]-p-[name][date]-p-|")
         autolayout("H:|-p-[body]-p-|")
-        autolayout("H:|-p-[attachments]-p-|")
+        autolayout("H:|[attachments]|")
         autolayout("H:|[separator]|")
         autolayout("V:|-p-[icon(==iconSize)]-p-[body]-p-[attachments][separator(==onepx)]|")
         autolayout("V:|-sp-[date]")
