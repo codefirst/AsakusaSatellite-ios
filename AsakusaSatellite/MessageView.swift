@@ -77,7 +77,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         
         attachmentsView.dataSource = self
         attachmentsView.delegate = self
-        attachmentsView.registerClass(ImageCell.self, forCellWithReuseIdentifier: kCellID)
+        attachmentsView.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: kCellID)
         attachmentsView.backgroundColor = Appearance.backgroundColor
         attachmentsView.showsHorizontalScrollIndicator = false
         attachmentsView.showsVerticalScrollIndicator = false
@@ -129,11 +129,11 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
     // MARK: - CollectionView
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return attachments.count ?? 0
+        return attachments.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as ImageCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as ImageCollectionViewCell
 
         if let url = NSURL(string: attachments[indexPath.item].url) {
             cell.imageView.hnk_setImageFromURL(url)
@@ -143,25 +143,5 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         }
         
         return cell
-    }
-    
-    private class ImageCell: UICollectionViewCell {
-        let imageView = UIImageView(frame: CGRectMake(0, 0, kAttachmentsSize.width, kAttachmentsSize.height))
-        
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            
-            imageView.contentMode = .ScaleAspectFill
-            imageView.clipsToBounds = true
-            imageView.layer.cornerRadius = 4
-            
-            let autolayout = contentView.autolayoutFormat(nil, ["v" : imageView])
-            autolayout("H:|[v]|")
-            autolayout("V:|[v]|")
-        }
-
-        required init(coder aDecoder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
     }
 }
