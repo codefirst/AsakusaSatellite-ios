@@ -52,8 +52,9 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.delegate = self
         tableView.separatorStyle = .None
         
-        postView.onPost = { (text, completion) in
-            self.postMessage(text) { success in
+        postView.containigViewController = self
+        postView.onPost = { (text, attachments, completion) in
+            self.postMessage(text, attachments: attachments) { success in
                 completion(clearField: success)
             }
         }
@@ -141,10 +142,29 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // tableView.setContentOffset(CGPointMake(0, max(0, tableView.contentSize.height - tableView.frame.height)), animated: true)
     }
     
-    private func postMessage(text: String, completion: (Bool -> Void)?) {
+    private func postMessage(text: String, attachments: [PostView.Attachment], completion: (Bool -> Void)?) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        client.postMessage(text, roomID: room.id, files: []) { r in
+        
+        let tmpFolder = NSTemporaryDirectory()
+        var filenameIndex = 0
+        var tmpFiles = [String]()
+        for a in attachments {
+            var file = ""
+            do {
+                file = tmpFolder.stringByAppendingPathComponent("upload-\(filenameIndex).\(a.ext)")
+                ++filenameIndex
+            } while NSFileManager.defaultManager().fileExistsAtPath(file)
+            a.data.writeToFile(file, atomically: true)
+            tmpFiles.append(file)
+        }
+        
+        client.postMessage(text, roomID: room.id, files: tmpFiles) { r in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+            for file in tmpFiles {
+                NSFileManager.defaultManager().removeItemAtPath(file, error: nil)
+            }
+            
             switch r {
             case .Success(let postMessage):
                 self.reloadMessages(completion: nil)

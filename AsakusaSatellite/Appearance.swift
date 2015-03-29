@@ -46,6 +46,8 @@ struct Appearance {
         
         UIToolbar.appearance().barTintColor = backgroundColor
         UIToolbar.appearance().tintColor = tintColor
+        
+        UIButton.appearance().tintColor = tintColor
 
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.BlackOpaque
     }
