@@ -45,7 +45,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
     let attachmentsView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout().tap { (l: UICollectionViewFlowLayout) in
         l.scrollDirection = .Horizontal
         l.itemSize = kAttachmentsSize
-        l.sectionInset = UIEdgeInsetsMake(0, kPadding, kPadding, 0)
+        l.sectionInset = UIEdgeInsetsMake(0, kPadding, kPadding, kPadding)
     })
     let attachmentsViewConstraint: NSLayoutConstraint
     

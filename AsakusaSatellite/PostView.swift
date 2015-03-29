@@ -18,7 +18,12 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     let sendButton = Appearance.roundRectButtonOnBackgroundColor(NSLocalizedString("Send", comment: ""))
     
     typealias Attachment = (data: NSData, ext: String)
-    var attachments: [Attachment] = []
+    var attachments: [Attachment] = [] {
+        didSet {
+            postAccessoryView.attachmentsView.reloadData()
+            updateViews()
+        }
+    }
     
     var onPost: ((text: String, attachments: [Attachment], completion: (clearField: Bool) -> Void) -> Void)?
     weak var containigViewController: UIViewController?
@@ -69,7 +74,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     func updateViews() {
         textField.enabled = true
-        sendButton.enabled = !textField.text.isEmpty
+        sendButton.enabled = !textField.text.isEmpty || attachments.count > 0
     }
     
     func textChanged(sender: AnyObject?) {
@@ -104,7 +109,6 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         picker.dismissViewControllerAnimated(true) {
             if let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage {
                 self.attachments += [(data: image.jpegData(1 * 1024 * 1024), ext: "jpg")]
-                self.postAccessoryView.attachmentsView.reloadData()
                 self.textField.becomeFirstResponder()
             }
         }
@@ -131,7 +135,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         let ac = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         ac.addAction(UIAlertAction(title: NSLocalizedString("Remove", comment: ""), style: .Destructive) { _ -> Void in
             self.attachments.removeAtIndex(indexPath.item)
-            self.postAccessoryView.attachmentsView.reloadData()
+            ()
         })
         ac.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: nil))
         containigViewController?.presentViewController(ac, animated: true, completion: nil)
