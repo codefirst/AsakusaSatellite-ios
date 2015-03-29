@@ -144,4 +144,11 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         
         return cell
     }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if let url = NSURL(string: attachments[indexPath.item].url) {
+            let vc = HeadUpImageViewController(imageURL: url)
+            appDelegate.root.topViewController.presentViewController(vc, animated: true, completion: nil)
+        }
+    }
 }
