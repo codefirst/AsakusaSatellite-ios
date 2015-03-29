@@ -16,6 +16,8 @@
 		EA01F3471AB7186400CF5691 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */; };
 		EA01F3491AB7188200CF5691 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3481AB7188200CF5691 /* Appearance.swift */; };
 		EA01F34B1AB71E0100CF5691 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
+		EA0757131AC82F7500535BB5 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0757121AC82F7500535BB5 /* ImageCollectionViewCell.swift */; };
+		EA0757151AC839E500535BB5 /* HeadUpImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0757141AC839E500535BB5 /* HeadUpImageViewController.swift */; };
 		EA1FA4E21ABD580200BA1D68 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1FA4E11ABD580200BA1D68 /* RoomViewController.swift */; };
 		EA2615D71ABD60600011DB1B /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2615D61ABD60600011DB1B /* MessageView.swift */; };
 		EA2615D91ABE4FE20011DB1B /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2615D81ABE4FE20011DB1B /* RefreshView.swift */; };
@@ -52,6 +54,8 @@
 		EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		EA01F3481AB7188200CF5691 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		EA01F34A1AB71E0100CF5691 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		EA0757121AC82F7500535BB5 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		EA0757141AC839E500535BB5 /* HeadUpImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadUpImageViewController.swift; sourceTree = "<group>"; };
 		EA1FA4DE1ABD3FCB00BA1D68 /* AsakusaSatellite.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = AsakusaSatellite.playground; sourceTree = SOURCE_ROOT; };
 		EA1FA4E11ABD580200BA1D68 /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		EA2615D61ABD60600011DB1B /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
@@ -169,6 +173,7 @@
 				EA64C7781AB9AD6F00282113 /* HomeViewController.swift */,
 				EA1FA4E11ABD580200BA1D68 /* RoomViewController.swift */,
 				EA69FE8F1ABF0A8F00F5EF54 /* MessageDetailViewController.swift */,
+				EA0757141AC839E500535BB5 /* HeadUpImageViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -178,6 +183,7 @@
 			children = (
 				EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */,
 				EA2615D61ABD60600011DB1B /* MessageView.swift */,
+				EA0757121AC82F7500535BB5 /* ImageCollectionViewCell.swift */,
 				EA7C95C01ABEA37C00CD2641 /* PostView.swift */,
 				EA2615D81ABE4FE20011DB1B /* RefreshView.swift */,
 			);
@@ -337,6 +343,7 @@
 			files = (
 				EA64C7791AB9AD6F00282113 /* HomeViewController.swift in Sources */,
 				EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */,
+				EA0757131AC82F7500535BB5 /* ImageCollectionViewCell.swift in Sources */,
 				EA64C77B1AB9B29D00282113 /* UserDefaults.swift in Sources */,
 				EA2615D71ABD60600011DB1B /* MessageView.swift in Sources */,
 				EA01F3491AB7188200CF5691 /* Appearance.swift in Sources */,
@@ -345,6 +352,7 @@
 				EA2615D91ABE4FE20011DB1B /* RefreshView.swift in Sources */,
 				EA64C77D1AB9DA3A00282113 /* SatelliteImageView.swift in Sources */,
 				EA01F3471AB7186400CF5691 /* WelcomeViewController.swift in Sources */,
+				EA0757151AC839E500535BB5 /* HeadUpImageViewController.swift in Sources */,
 				EA1FA4E21ABD580200BA1D68 /* RoomViewController.swift in Sources */,
 				EA7C95C11ABEA37C00CD2641 /* PostView.swift in Sources */,
 			);

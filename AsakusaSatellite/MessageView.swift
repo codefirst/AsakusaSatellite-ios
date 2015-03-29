@@ -11,15 +11,14 @@ import AsakusaSatellite
 
 
 private let dateFormatter: NSDateFormatter = NSDateFormatter().tap{$0.dateFormat = "yyyy-MM-dd HH:mm"}
+private let kCellID = "Cell"
+private let kPadding = CGFloat(8)
+private let kAttachmentsSize = CGSizeMake(256, 64)
 
 
-class MessageView: UIView {
+class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     var message: Message? {
         didSet {
-            // clear for reusing MessageView, for example, contained in a cell
-            iconView.hnk_cancelSetImage()
-            iconView.image = nil
-            
             if let u: NSURL = (message.map{NSURL(string: $0.profileImageURL)} ?? nil)  {
                 if CGRectIsEmpty(iconView.frame) {
                     iconView.frame = CGRectMake(iconView.frame.origin.x, iconView.frame.origin.y, 44, 44) // haneke requires non-zero imageview
@@ -30,14 +29,30 @@ class MessageView: UIView {
             nameLabel.text = message?.name
             dateLabel.text = message.map{dateFormatter.stringFromDate($0.createdAt)}
             bodyLabel.text = message?.body
+            attachments = message?.imageAttachments ?? []
+        }
+    }
+    var attachments: [Attachment] = [] {
+        didSet {
+            attachmentsViewConstraint.constant = attachments.count > 0 ? kAttachmentsSize.height + kPadding : 0
+            attachmentsView.reloadData()
         }
     }
     let iconView = UIImageView(frame: CGRectZero)
     let nameLabel = UILabel()
     let dateLabel = UILabel()
     let bodyLabel = UILabel()
+    let attachmentsView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout().tap { (l: UICollectionViewFlowLayout) in
+        l.scrollDirection = .Horizontal
+        l.itemSize = kAttachmentsSize
+        l.sectionInset = UIEdgeInsetsMake(0, kPadding, kPadding, kPadding)
+    })
+    let attachmentsViewConstraint: NSLayoutConstraint
     
     override init(frame: CGRect) {
+        attachmentsViewConstraint = NSLayoutConstraint(item: attachmentsView, attribute: .Height, relatedBy: .Equal, toItem: attachmentsView, attribute: .Height, multiplier: 0, constant: 0)
+        attachmentsView.addConstraint(attachmentsViewConstraint)
+        
         super.init(frame: frame)
         
         let iconSize = CGFloat(32)
@@ -60,9 +75,16 @@ class MessageView: UIView {
         bodyLabel.textColor = UIColor.blackColor()
         bodyLabel.setContentCompressionResistancePriorityHigh(.Vertical)
         
+        attachmentsView.dataSource = self
+        attachmentsView.delegate = self
+        attachmentsView.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: kCellID)
+        attachmentsView.backgroundColor = Appearance.backgroundColor
+        attachmentsView.showsHorizontalScrollIndicator = false
+        attachmentsView.showsVerticalScrollIndicator = false
+        
         let autolayout = autolayoutFormat([
-            "sp": 4,
-            "p": 8,
+            "sp": kPadding / 2,
+            "p": kPadding,
             "iconSize": iconSize,
             "onepx": Appearance.onepx,
             ], [
@@ -70,12 +92,14 @@ class MessageView: UIView {
                 "name": nameLabel,
                 "date": dateLabel,
                 "body": bodyLabel,
+                "attachments": attachmentsView,
                 "separator": Appearance.separatorView()
             ])
         autolayout("H:|-p-[icon(==iconSize)]-p-[name][date]-p-|")
         autolayout("H:|-p-[body]-p-|")
+        autolayout("H:|[attachments]|")
         autolayout("H:|[separator]|")
-        autolayout("V:|-p-[icon(==iconSize)]-p-[body]-p-[separator(==onepx)]|")
+        autolayout("V:|-p-[icon(==iconSize)]-p-[body]-p-[attachments][separator(==onepx)]|")
         autolayout("V:|-sp-[date]")
         addEqualConstraint(.CenterY, view: nameLabel, toView: iconView)
     }
@@ -87,7 +111,44 @@ class MessageView: UIView {
     class func layoutSize(forMessage m: Message, forWidth w: CGFloat) -> CGSize {
         struct LayoutStatic { static let view = MessageView(frame: CGRectZero) }
         let v = LayoutStatic.view
-        v.bodyLabel.text = m.body // only body affects the layout size
+        // only body and attachments affects the layout size
+        v.bodyLabel.text = m.body
+        v.attachments = m.attachments
         return v.systemLayoutSizeFittingSize(CGSizeMake(w, 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50)
+    }
+    
+    func prepareForReuse() {
+        // clear for reusing MessageView, for example, contained in a cell
+        
+        iconView.hnk_cancelSetImage()
+        iconView.image = nil
+        
+        attachmentsViewConstraint.constant = 0 // UITableView.dequeue cause layout before contents set that may result in autolayout error
+    }
+    
+    // MARK: - CollectionView
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return attachments.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as ImageCollectionViewCell
+
+        if let url = NSURL(string: attachments[indexPath.item].url) {
+            cell.imageView.hnk_setImageFromURL(url)
+        } else {
+            cell.imageView.hnk_cancelSetImage()
+            cell.imageView.image = nil
+        }
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if let url = NSURL(string: attachments[indexPath.item].url) {
+            let vc = HeadUpImageViewController(imageURL: url)
+            appDelegate.root.topViewController.presentViewController(vc, animated: true, completion: nil)
+        }
     }
 }

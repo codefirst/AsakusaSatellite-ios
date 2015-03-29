@@ -64,6 +64,16 @@ extension UIImage {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
+    }    
+    
+    func jpegData(maxSize: Int) -> NSData {
+        var quality = CGFloat(0.9)
+        var jpg = UIImageJPEGRepresentation(self, quality)
+        while (jpg.length > maxSize && quality > 0.1) {
+            quality -= 0.1
+            jpg = UIImageJPEGRepresentation(self, quality)
+        }
+        return jpg
     }
 }
 
