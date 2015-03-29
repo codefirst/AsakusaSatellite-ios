@@ -48,6 +48,8 @@ struct Appearance {
         UIToolbar.appearance().tintColor = tintColor
         
         UIButton.appearance().tintColor = tintColor
+
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
     static func hiraginoW3(size: CGFloat) -> UIFont {
