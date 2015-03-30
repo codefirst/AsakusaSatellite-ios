@@ -13,6 +13,11 @@ import AsakusaSatellite
 private let kCellID = "Cell"
 
 
+extension Message {
+    var hasHTML: Bool {return body != htmlBody}
+}
+
+
 class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     let client: Client
     var pusher: MessagePusherClient?
@@ -190,13 +195,17 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as TableCell
-        cell.message = messages[indexPath.row]
+        let message = messages[indexPath.row]
+        cell.message = message
+        cell.selectionStyle = (message.hasHTML ? .Default : .None)
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row], baseURL: client.rootURL), animated: true)
+        if messages[indexPath.row].hasHTML {
+            navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row], baseURL: client.rootURL), animated: true)
+        }
     }
     
     // MARK: - ScrollView
