@@ -13,14 +13,18 @@ import TUSafariActivity
 
 class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     let message: Message
+    let baseURL: NSURL
+    var messageURL: NSURL? { return NSURL(string: "message?id=\(message.id)", relativeToURL: baseURL)}
     let webview = UIWebView()
     var prevButton: UIBarButtonItem!
     var nextButton: UIBarButtonItem!
     var reloadButton: UIBarButtonItem!
     var shareButton: UIBarButtonItem!
     
-    init(message: Message) {
+    init(message: Message, baseURL: NSURL) {
         self.message = message
+        self.baseURL = baseURL
+        
         super.init(nibName: nil, bundle:nil)
         
         title = message.name
@@ -90,6 +94,11 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     func webViewDidFinishLoad(webView: UIWebView) {
         if let title = webview.stringByEvaluatingJavaScriptFromString("document.title") {
             self.title = title
+        }
+        if let url = webView.request?.URL {
+            userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
+            userActivity?.webpageURL = (url.absoluteString != "about:blank" ? url : messageURL)
+            userActivity?.becomeCurrent()
         }
         updateToolbar()
     }

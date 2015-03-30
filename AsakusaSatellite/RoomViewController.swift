@@ -16,7 +16,8 @@ private let kCellID = "Cell"
 class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     let client: Client
     var pusher: MessagePusherClient?
-    var room: Room
+    let room: Room
+    var roomURL: NSURL? { return NSURL(string: client.rootURL).map{NSURL(string: "chat/room/\(self.room.id)", relativeToURL: $0)} ?? nil }
     var messages = [Message]()
 
     let tableView = UITableView(frame: CGRectZero, style: .Plain)
@@ -91,6 +92,10 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         refreshView.refresh()
         tableView.tableFooterView = postView
+        
+        userActivity = NSUserActivity(activityType: NSUserActivityTypeBrowsingWeb)
+        userActivity?.webpageURL = roomURL
+        userActivity?.becomeCurrent()
     }
     
     // MARK: -
@@ -196,7 +201,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row]), animated: true)
+        navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row], baseURL: NSURL(string: client.rootURL)!), animated: true)
     }
     
     // MARK: - ScrollView
