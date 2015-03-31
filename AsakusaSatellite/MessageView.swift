@@ -16,7 +16,7 @@ private let kPadding = CGFloat(8)
 private let kAttachmentsSize = CGSizeMake(256, 64)
 
 
-class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
+class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIWebViewDelegate {
     var message: Message? {
         didSet {
             if let u: NSURL = (message.map{NSURL(string: $0.profileImageURL)} ?? nil)  {
@@ -66,6 +66,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         didSet {
             webView.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
             webView.onContentSizeChange = self.cacheWebViewContentSize
+            webView.delegate = self
         }
     }
     var baseURL: NSURL? {
@@ -76,6 +77,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         }
     }
     var onLayoutChange: (MessageView -> Void)?
+    var onLinkTapped: ((MessageView, NSURL) -> Void)?
     
     override init(frame: CGRect) {
         attachmentsViewConstraint = NSLayoutConstraint(item: attachmentsView, attribute: .Height, relatedBy: .Equal, toItem: attachmentsView, attribute: .Height, multiplier: 0, constant: 0)
@@ -186,6 +188,16 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         
         webView.message = nil // clear content
         webView.removeFromSuperview() // remove constraints
+    }
+    
+    // MARK: - WebView
+    
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if navigationType == .LinkClicked {
+            onLinkTapped?(self, request.URL)
+            return false
+        }
+        return true
     }
     
     // MARK: - CollectionView

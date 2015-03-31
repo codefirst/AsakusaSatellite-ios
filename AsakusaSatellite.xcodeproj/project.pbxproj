@@ -185,10 +185,10 @@
 			children = (
 				EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */,
 				EA2615D61ABD60600011DB1B /* MessageView.swift */,
+				EA11E92F1ACA79FB00046CCB /* InlineMessageWebView.swift */,
 				EA0757121AC82F7500535BB5 /* ImageCollectionViewCell.swift */,
 				EA7C95C01ABEA37C00CD2641 /* PostView.swift */,
 				EA2615D81ABE4FE20011DB1B /* RefreshView.swift */,
-				EA11E92F1ACA79FB00046CCB /* InlineMessageWebView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";

@@ -12,22 +12,30 @@ import TUSafariActivity
 
 
 class MessageDetailViewController: UIViewController, UIWebViewDelegate {
-    let message: Message
-    let baseURL: String
+    let message: Message?
+    let baseURL: NSURL?
+    let initialURL: NSURL?
     let webview = UIWebView(frame: CGRectZero)
     var prevButton: UIBarButtonItem!
     var nextButton: UIBarButtonItem!
     var reloadButton: UIBarButtonItem!
     var shareButton: UIBarButtonItem!
     
-    init(message: Message, baseURL: String) {
+    private init(message: Message?, baseURL: NSURL?, initialURL: NSURL?) {
         self.message = message
         self.baseURL = baseURL
-        
-        super.init(nibName: nil, bundle:nil)
-        
-        title = message.name
+        self.initialURL = initialURL
+        super.init(nibName: nil, bundle: nil)
         webview.delegate = self
+    }
+    
+    convenience init(message: Message, baseURL: String) {
+        self.init(message: message, baseURL: NSURL(string: baseURL), initialURL: nil)
+        title = message.name
+    }
+    
+    convenience init (URL: NSURL) {
+        self.init(message: nil, baseURL: nil, initialURL: URL)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -48,7 +56,13 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
             reloadButton, flexibleBarButtonItem(),
             shareButton]
         
-        webview.loadHTMLString(message.html, baseURL: NSURL(string: baseURL))
+        if let u = initialURL {
+            navigationController?.setToolbarHidden(false, animated: true)
+            webview.scalesPageToFit = true
+            webview.loadRequest(NSURLRequest(URL: u))
+        } else {
+            webview.loadHTMLString(message?.html, baseURL: baseURL)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -92,7 +106,9 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     
     func webViewDidFinishLoad(webView: UIWebView) {
         if let title = webview.stringByEvaluatingJavaScriptFromString("document.title") {
-            self.title = title
+            if !title.isEmpty {
+                self.title = title
+            }
         }
         updateToolbar()
     }

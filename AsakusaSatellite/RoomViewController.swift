@@ -207,8 +207,9 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let message = messages[indexPath.row]
         cell.messageView.baseURL = NSURL(string: client.rootURL)
         cell.message = message
-        cell.selectionStyle = (message.hasHTML ? .Default : .None)
+        cell.selectionStyle = .None
         cell.messageView.onLayoutChange = onLayoutChange
+        cell.messageView.onLinkTapped = onLinkTapped
         return cell
     }
     
@@ -217,6 +218,10 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }
+    }
+    
+    func onLinkTapped(messageView: MessageView, url: NSURL) {
+        navigationController?.pushViewController(MessageDetailViewController(URL: url), animated: true)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
