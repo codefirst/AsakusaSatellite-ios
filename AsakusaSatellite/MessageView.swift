@@ -30,6 +30,20 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
             dateLabel.text = message.map{dateFormatter.stringFromDate($0.createdAt)}
             bodyLabel.text = message?.body
             attachments = message?.imageAttachments ?? []
+
+            if message?.hasHTML == .Some(true) {
+                let autolayout = autolayoutFormat(["p": kPadding], [
+                    "icon": iconView,
+                    "web": webView,
+                    "attachments": attachmentsView,
+                    ])
+                autolayout("H:|[web]|")
+                autolayout("V:[icon][web(>=1)][attachments]")
+                webView.message = message
+                bringSubviewToFront(webView)
+            } else {
+                webView.message = nil
+            }
         }
     }
     var attachments: [Attachment] = [] {
@@ -48,6 +62,20 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         l.sectionInset = UIEdgeInsetsMake(0, kPadding, kPadding, kPadding)
     })
     let attachmentsViewConstraint: NSLayoutConstraint
+    var webView: InlineMessageWebView = InlineMessageWebView(frame: CGRectMake(0, 0, 1, 1), baseURL: nil) {
+        didSet {
+            webView.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
+            webView.onContentSizeChange = self.cacheWebViewContentSize
+        }
+    }
+    var baseURL: NSURL? {
+        didSet {
+            if oldValue != baseURL {
+                webView = InlineMessageWebView(frame: CGRectMake(0, 0, 1, 1), baseURL: baseURL)
+            }
+        }
+    }
+    var onLayoutChange: (MessageView -> Void)?
     
     override init(frame: CGRect) {
         attachmentsViewConstraint = NSLayoutConstraint(item: attachmentsView, attribute: .Height, relatedBy: .Equal, toItem: attachmentsView, attribute: .Height, multiplier: 0, constant: 0)
@@ -93,14 +121,15 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
                 "date": dateLabel,
                 "body": bodyLabel,
                 "attachments": attachmentsView,
+                "web": webView,
                 "separator": Appearance.separatorView()
             ])
         autolayout("H:|-p-[icon(==iconSize)]-p-[name][date]-p-|")
         autolayout("H:|-p-[body]-p-|")
         autolayout("H:|[attachments]|")
         autolayout("H:|[separator]|")
-        autolayout("V:|-p-[icon(==iconSize)]-p-[body]-p-[attachments][separator(==onepx)]|")
         autolayout("V:|-sp-[date]")
+        autolayout("V:|-p-[icon(==iconSize)]-p-[body]-p-[attachments][separator(==onepx)]|")
         addEqualConstraint(.CenterY, view: nameLabel, toView: iconView)
     }
 
@@ -108,13 +137,43 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Layout Size
+    
+    struct LayoutStatic {
+        static let view = MessageView(frame: CGRectZero)
+        static var webViewHeightsCache = [String: CGFloat]() // map: message.id -> height
+    }
+    
     class func layoutSize(forMessage m: Message, forWidth w: CGFloat) -> CGSize {
-        struct LayoutStatic { static let view = MessageView(frame: CGRectZero) }
         let v = LayoutStatic.view
-        // only body and attachments affects the layout size
         v.bodyLabel.text = m.body
         v.attachments = m.attachments
-        return v.systemLayoutSizeFittingSize(CGSizeMake(w, 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50)
+        
+        // we cannot calculate webview height synchronously.
+        // add webview height after once loaded and cached the webview height
+        let size = v.systemLayoutSizeFittingSize(CGSizeMake(w, 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50)
+        if let h = LayoutStatic.webViewHeightsCache[m.id] {
+            // NSLog("%@", "cache hit for \(m.body), height = \(h)")
+            let bodyLabelHeight = v.bodyLabel.systemLayoutSizeFittingSize(CGSizeMake(w - 2 * kPadding, 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50).height
+            let increments: CGFloat = h - bodyLabelHeight - 2 * kPadding
+            return CGSizeMake(size.width, size.height + max(0, increments))
+        }
+        
+        return size
+    }
+    
+    func cacheWebViewContentSize(contentSize: CGSize) {
+        let height = contentSize.height
+        if height > 0 {
+            if let key = webView.message?.id {
+                let oldHeight = LayoutStatic.webViewHeightsCache[key]
+                if oldHeight != height {
+                    // NSLog("%@", "caching height = \(height) for \(message?.body)")
+                    LayoutStatic.webViewHeightsCache[key] = height
+                    onLayoutChange?(self)
+                }
+            }
+        }
     }
     
     func prepareForReuse() {
@@ -124,6 +183,9 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         iconView.image = nil
         
         attachmentsViewConstraint.constant = 0 // UITableView.dequeue cause layout before contents set that may result in autolayout error
+        
+        webView.message = nil // clear content
+        webView.removeFromSuperview() // remove constraints
     }
     
     // MARK: - CollectionView
@@ -152,3 +214,4 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         }
     }
 }
+

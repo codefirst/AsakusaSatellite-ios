@@ -15,10 +15,19 @@ private let kCellID = "Cell"
 
 extension Message {
     var hasHTML: Bool {return body != htmlBody}
+    var html: String { return "<!DOCTYPE html>"
+        + "<html>"
+        + "<head>"
+        + "<meta content=\"width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes\" name=\"viewport\">"
+        + "<link href=\"assets/application.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\">"
+        + "<style>body{margin:0; padding:0; background-color: white;} iframe{margin-left:-5px;}</style>"
+        + "</head>"
+        + "<body><div id=\"AsakusaSatMessageContent\" style=\"padding: 8px;\">\(htmlBody)</div></body>"
+        + "</html>" }
 }
 
 
-class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIWebViewDelegate {
     let client: Client
     var pusher: MessagePusherClient?
     var room: Room
@@ -196,9 +205,18 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as TableCell
         let message = messages[indexPath.row]
+        cell.messageView.baseURL = NSURL(string: client.rootURL)
         cell.message = message
         cell.selectionStyle = (message.hasHTML ? .Default : .None)
+        cell.messageView.onLayoutChange = onLayoutChange
         return cell
+    }
+    
+    func onLayoutChange(messageView: MessageView) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -207,6 +225,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row], baseURL: client.rootURL), animated: true)
         }
     }
+    
+    // MARK: - WebView
     
     // MARK: - ScrollView
 

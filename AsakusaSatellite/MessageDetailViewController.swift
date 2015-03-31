@@ -14,7 +14,7 @@ import TUSafariActivity
 class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     let message: Message
     let baseURL: String
-    let webview = UIWebView()
+    let webview = UIWebView(frame: CGRectZero)
     var prevButton: UIBarButtonItem!
     var nextButton: UIBarButtonItem!
     var reloadButton: UIBarButtonItem!
@@ -47,17 +47,8 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
             nextButton, flexibleBarButtonItem(),
             reloadButton, flexibleBarButtonItem(),
             shareButton]
-    
-        let html: String = "<!DOCTYPE html>"
-        + "<html>"
-        + "<head>"
-        + "<meta content=\"width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes\" name=\"viewport\">"
-        + "<link href=\"assets/application.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\">"
-        + "<style>iframe{margin-left:-5px;}</style>"
-        + "</head>"
-        + "<body>\(message.htmlBody)</body>"
-        + "</html>"
-        webview.loadHTMLString(html, baseURL: NSURL(string: baseURL))
+        
+        webview.loadHTMLString(message.html, baseURL: NSURL(string: baseURL))
     }
     
     override func viewWillAppear(animated: Bool) {
