@@ -1,38 +1,45 @@
 PODS:
-  - Alamofire (1.1.4)
-  - AsakusaSatellite (0.2.0):
+  - Alamofire (1.2.0)
+  - AsakusaSatellite (0.3.0):
     - Alamofire (~> 1.1)
-    - Socket.IO-Client-Swift (~> 1.1)
+    - Socket.IO-Client-Swift (~> 2.0)
     - SwiftyJSON (~> 2.1)
     - UTIKit (~> 1.0)
   - HanekeSwift (0.8.1)
-  - Socket.IO-Client-Swift (1.4.4)
+  - Socket.IO-Client-Swift (2.0.2)
   - SwiftyJSON (2.1.3)
   - TUSafariActivity (1.0.4)
-  - UTIKit (1.0.0)
+  - UTIKit (1.1.0)
 
 DEPENDENCIES:
-  - AsakusaSatellite (~> 0.1)
+  - AsakusaSatellite (from `https://github.com/codefirst/AsakusaSatelliteSwiftClient.git`,
+    branch `swift1.2`)
   - HanekeSwift (from `https://github.com/Haneke/HanekeSwift.git`, branch `podspec`)
   - TUSafariActivity (~> 1.0)
 
 EXTERNAL SOURCES:
+  AsakusaSatellite:
+    :branch: swift1.2
+    :git: https://github.com/codefirst/AsakusaSatelliteSwiftClient.git
   HanekeSwift:
     :branch: podspec
     :git: https://github.com/Haneke/HanekeSwift.git
 
 CHECKOUT OPTIONS:
+  AsakusaSatellite:
+    :commit: 65fa5fa46812c567fefcccdb00c8e10d763f8803
+    :git: https://github.com/codefirst/AsakusaSatelliteSwiftClient.git
   HanekeSwift:
     :commit: f6117414b09faeb421aee50ad4f33bd0c9869aea
     :git: https://github.com/Haneke/HanekeSwift.git
 
 SPEC CHECKSUMS:
-  Alamofire: 524225da382071ee3e6d0badd0ee4b4dc36740de
-  AsakusaSatellite: e71efbd093a57df4bd606be4565fd079b93ae132
+  Alamofire: d765c5c1713aa64106b0228aaa600a1e6851f68d
+  AsakusaSatellite: d42ae8b42c153ab6c85bb2985169d714cd5f4fc1
   HanekeSwift: 63eac3df5211d91b0023ba8b91e497480bd236cc
-  Socket.IO-Client-Swift: fa8d4061cd930cc5e853ee5d25b4126692129f8c
-  SwiftyJSON: 48be7490a3989a58a3f511cd54167f0a2b466e76
+  Socket.IO-Client-Swift: 0a35d6d46ef10db390430d4df68f795adffdca03
+  SwiftyJSON: a561c2a840121085bec8a2dfeac97a360fc66901
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
-  UTIKit: 6880d51f5d4e1242c6fb37f9e3eeae4343eb037f
+  UTIKit: 6c23dc3a08f335f14e48d4f1673dc0ee310b3fa4
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.36.3
