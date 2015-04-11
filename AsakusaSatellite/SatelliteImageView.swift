@@ -61,7 +61,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as Cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! Cell
         let url = imageURLs[indexPath.item]
         cell.imageView.hnk_cancelSetImage()
         cell.imageView.image = nil
@@ -181,7 +181,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     // MARK: - ShapeLayerView
     
     private class ShapeLayerView: UIView {
-        var shapeLayer: CAShapeLayer { return layer as CAShapeLayer }
+        var shapeLayer: CAShapeLayer { return layer as! CAShapeLayer }
         override class func layerClass() -> AnyClass {
             return CAShapeLayer.self
         }
@@ -203,6 +203,10 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             shapeLayer.lineWidth = 1.0 / UIScreen.mainScreen().scale
             shapeLayer.strokeColor = Appearance.asakusaRed.colorWithAlphaComponent(0.25).CGColor
             shapeLayer.fillColor = nil
+        }
+
+        required init(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
         }
         
         private override func layoutSubviews() {

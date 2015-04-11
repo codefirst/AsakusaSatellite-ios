@@ -74,7 +74,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         refreshView.onRefresh = { completion in
-            self.reloadMessages(completion)
+            self.reloadMessages(completion: completion)
         }
         
         let keyboardSpacer = KeyboardSpacerView()
@@ -121,7 +121,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             switch r {
             case .Success(let many):
-                self.appendMessages(many().items.reverse())
+                self.appendMessages(many.value.items.reverse())
                 dispatch_async(dispatch_get_main_queue()) {
                     self.scrollToBottom()
                 }
@@ -203,7 +203,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as TableCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as! TableCell
         let message = messages[indexPath.row]
         cell.messageView.baseURL = NSURL(string: client.rootURL)
         cell.message = message

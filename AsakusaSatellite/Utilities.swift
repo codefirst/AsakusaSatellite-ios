@@ -12,7 +12,7 @@ import UIKit
 
 extension NSObject {
     func tap<T>(block: T -> Void) -> T {
-        let s = self as T
+        let s = self as! T
         block(s)
         return s
     }
@@ -111,7 +111,7 @@ class KeyboardSpacerView : UIView {
         
         NSNotificationCenter.defaultCenter().addObserverForName(UIKeyboardWillChangeFrameNotification, object: nil, queue: nil) { (n: NSNotification!) -> Void in
             if let userInfo = n.userInfo {
-                if let f = (userInfo[UIKeyboardFrameEndUserInfoKey] as NSValue?)?.CGRectValue() {
+                if let f = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
                     self.keyboardHeightConstraint?.constant = f.size.height
                     self.onHeightChange?(f.size.height)
                 }
@@ -133,14 +133,14 @@ class KeyboardSpacerView : UIView {
 func hwmachine() -> String? {
     let name = NSString(string: "hw.machine")
     
-    var size: UInt = 0
+    var size: Int = 0
     if sysctlbyname(name.UTF8String, nil, &size, nil, 0) != 0 {
         return nil
     }
     
     if let data = NSMutableData(length: Int(size)) {
         sysctlbyname(name.UTF8String, data.mutableBytes, &size, nil, 0)
-        return NSString(data: data, encoding: NSUTF8StringEncoding)
+        return NSString(data: data, encoding: NSUTF8StringEncoding) as String?
     }
     return nil
 }

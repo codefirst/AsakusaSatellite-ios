@@ -28,7 +28,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     // MARK: - init
     
-    override init() {
+    init() {
         roomsView = UICollectionView(frame: CGRectZero, collectionViewLayout: roomsLayout)
         super.init(nibName: nil, bundle: nil)
         
@@ -84,7 +84,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         client?.roomList() { response in
             switch response {
             case .Success(let many):
-                self.rooms = many().items
+                self.rooms = many.value.items
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
@@ -130,7 +130,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = roomsView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as RoomCell
+        let cell = roomsView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! RoomCell
         cell.room = rooms[indexPath.item]
         return cell
     }
