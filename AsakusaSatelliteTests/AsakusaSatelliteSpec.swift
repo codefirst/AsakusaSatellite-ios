@@ -31,14 +31,19 @@ class AsakusaSatelliteSpec : QuickSpec {
     override func spec() {
         describe("Message") {
             describe("HTML") {
-                it("does not have HTML when body == htmlBody") {
+                it("body is same to htmlBody") {
                     let m = self.message(body: "some text", htmlBody: "some text")!
                     expect(m.hasHTML).to(beFalse())
                 }
                 
-                it("has HTML when body != htmlBody") {
+                it("body differ from htmlBody") {
                     let m = self.message(body: "some text", htmlBody: "<div>some text</div>")!
                     expect(m.hasHTML).to(beTrue())
+                }
+                
+                it("HTMLs are only newlines") {
+                    let m = self.message(body: "\nsome\n\ntext\n", htmlBody: "<br/>some<br/><br/>text<br/>")!
+                    expect(m.hasHTML).to(beFalse())
                 }
             }
         }

@@ -10,7 +10,10 @@ import Foundation
 import AsakusaSatellite
 
 extension Message {
-    var hasHTML: Bool {return body != htmlBody}
+    var hasHTML: Bool {
+        let simplyTranslated = body.stringByReplacingOccurrencesOfString("\n", withString: "<br/>", options: nil, range: nil)
+        return simplyTranslated != htmlBody
+    }
     var html: String { return "<!DOCTYPE html>"
         + "<html>"
         + "<head>"
