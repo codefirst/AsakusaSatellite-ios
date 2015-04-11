@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		20F78F457E64979411F392C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		23ED81B6AE8E5A0D5D0C5678 /* Pods_AsakusaSatelliteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6526EC6D3F8D535F7416F /* Pods_AsakusaSatelliteTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EA00CA481ABEDE0100527848 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = EA00CA471ABEDE0100527848 /* iTunesArtwork */; };
 		EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3241AB7161400CF5691 /* AppDelegate.swift */; };
 		EA01F32C1AB7161400CF5691 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA01F32B1AB7161400CF5691 /* Images.xcassets */; };
 		EA01F32F1AB7161400CF5691 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA01F32D1AB7161400CF5691 /* LaunchScreen.xib */; };
-		EA01F33B1AB7161400CF5691 /* AsakusaSatelliteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F33A1AB7161400CF5691 /* AsakusaSatelliteTests.swift */; };
 		EA01F3471AB7186400CF5691 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */; };
 		EA01F3491AB7188200CF5691 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3481AB7188200CF5691 /* Appearance.swift */; };
 		EA01F34B1AB71E0100CF5691 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
@@ -28,6 +28,8 @@
 		EA69FE901ABF0A8F00F5EF54 /* MessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA69FE8F1ABF0A8F00F5EF54 /* MessageDetailViewController.swift */; };
 		EA7C95C11ABEA37C00CD2641 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C95C01ABEA37C00CD2641 /* PostView.swift */; };
 		EAA3A1E21AD911DE00F6CD6B /* AsakusaSatellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */; };
+		EAA3A1E41AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E31AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift */; };
+		EAA3A1E51AD9166800F6CD6B /* AsakusaSatellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,8 @@
 /* Begin PBXFileReference section */
 		2440A198DAFA9B01CC508D58 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2F18BE776796048F4FBE2C57 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		53B112EB882E07B14F967900 /* Pods-AsakusaSatelliteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsakusaSatelliteTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AsakusaSatelliteTests/Pods-AsakusaSatelliteTests.release.xcconfig"; sourceTree = "<group>"; };
+		99A6526EC6D3F8D535F7416F /* Pods_AsakusaSatelliteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsakusaSatelliteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA23D058DC67A17776C1F6FB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA00CA471ABEDE0100527848 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsakusaSatellite.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,7 +56,6 @@
 		EA01F32E1AB7161400CF5691 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		EA01F3341AB7161400CF5691 /* AsakusaSatelliteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AsakusaSatelliteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA01F3391AB7161400CF5691 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EA01F33A1AB7161400CF5691 /* AsakusaSatelliteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsakusaSatelliteTests.swift; sourceTree = "<group>"; };
 		EA01F3461AB7186400CF5691 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		EA01F3481AB7188200CF5691 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		EA01F34A1AB71E0100CF5691 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -69,6 +72,8 @@
 		EA69FE8F1ABF0A8F00F5EF54 /* MessageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailViewController.swift; sourceTree = "<group>"; };
 		EA7C95C01ABEA37C00CD2641 /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsakusaSatellite.swift; sourceTree = "<group>"; };
+		EAA3A1E31AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AsakusaSatelliteSpec.swift; path = AsakusaSatelliteTests/AsakusaSatelliteSpec.swift; sourceTree = SOURCE_ROOT; };
+		EB49FB05A032D37FDC9147C3 /* Pods-AsakusaSatelliteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsakusaSatelliteTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AsakusaSatelliteTests/Pods-AsakusaSatelliteTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23ED81B6AE8E5A0D5D0C5678 /* Pods_AsakusaSatelliteTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +101,8 @@
 			children = (
 				2440A198DAFA9B01CC508D58 /* Pods.debug.xcconfig */,
 				2F18BE776796048F4FBE2C57 /* Pods.release.xcconfig */,
+				EB49FB05A032D37FDC9147C3 /* Pods-AsakusaSatelliteTests.debug.xcconfig */,
+				53B112EB882E07B14F967900 /* Pods-AsakusaSatelliteTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -103,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				BA23D058DC67A17776C1F6FB /* Pods.framework */,
+				99A6526EC6D3F8D535F7416F /* Pods_AsakusaSatelliteTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -136,6 +145,7 @@
 				EA64C77A1AB9B29D00282113 /* UserDefaults.swift */,
 				EA01F34A1AB71E0100CF5691 /* Utilities.swift */,
 				EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */,
+				EAA3A1E31AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift */,
 				EA1FA4DF1ABD565C00BA1D68 /* ViewControllers */,
 				EA1FA4E01ABD567200BA1D68 /* Views */,
 				EA01F32B1AB7161400CF5691 /* Images.xcassets */,
@@ -157,7 +167,6 @@
 		EA01F3371AB7161400CF5691 /* AsakusaSatelliteTests */ = {
 			isa = PBXGroup;
 			children = (
-				EA01F33A1AB7161400CF5691 /* AsakusaSatelliteTests.swift */,
 				EA01F3381AB7161400CF5691 /* Supporting Files */,
 			);
 			path = AsakusaSatelliteTests;
@@ -223,9 +232,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA01F3411AB7161400CF5691 /* Build configuration list for PBXNativeTarget "AsakusaSatelliteTests" */;
 			buildPhases = (
+				21A9F7977FB7738E040511BE /* Check Pods Manifest.lock */,
 				EA01F3301AB7161400CF5691 /* Sources */,
 				EA01F3311AB7161400CF5691 /* Frameworks */,
 				EA01F3321AB7161400CF5691 /* Resources */,
+				1B7919C11EBFADB7C0939C32 /* Embed Pods Frameworks */,
+				E7CB493616DE202FA8E660CF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -310,6 +322,36 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		1B7919C11EBFADB7C0939C32 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AsakusaSatelliteTests/Pods-AsakusaSatelliteTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		21A9F7977FB7738E040511BE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		2D13A2113B3FAAAE58E5EFFE /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,6 +380,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7CB493616DE202FA8E660CF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AsakusaSatelliteTests/Pods-AsakusaSatelliteTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -370,7 +427,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA01F33B1AB7161400CF5691 /* AsakusaSatelliteTests.swift in Sources */,
+				EAA3A1E41AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift in Sources */,
+				EAA3A1E51AD9166800F6CD6B /* AsakusaSatellite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,8 +560,10 @@
 		};
 		EA01F3421AB7161400CF5691 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB49FB05A032D37FDC9147C3 /* Pods-AsakusaSatelliteTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -515,14 +575,17 @@
 				INFOPLIST_FILE = AsakusaSatelliteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsakusaSatellite.app/AsakusaSatellite";
 			};
 			name = Debug;
 		};
 		EA01F3431AB7161400CF5691 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 53B112EB882E07B14F967900 /* Pods-AsakusaSatelliteTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

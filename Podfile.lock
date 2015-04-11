@@ -6,6 +6,8 @@ PODS:
     - SwiftyJSON (~> 2.1)
     - UTIKit (~> 1.0)
   - HanekeSwift (0.8.1)
+  - Nimble (0.4.2)
+  - Quick (0.3.1)
   - Socket.IO-Client-Swift (2.0.2)
   - SwiftyJSON (2.1.3)
   - TUSafariActivity (1.0.4)
@@ -15,6 +17,8 @@ DEPENDENCIES:
   - AsakusaSatellite (from `https://github.com/codefirst/AsakusaSatelliteSwiftClient.git`,
     branch `swift1.2`)
   - HanekeSwift (from `./HanekeSwift.podspec`)
+  - Nimble
+  - Quick
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `xcode6.3`)
   - TUSafariActivity (~> 1.0)
 
@@ -43,6 +47,8 @@ SPEC CHECKSUMS:
   Alamofire: d765c5c1713aa64106b0228aaa600a1e6851f68d
   AsakusaSatellite: d42ae8b42c153ab6c85bb2985169d714cd5f4fc1
   HanekeSwift: 2a9fe62a04b4316811e149591f249ee5a5232572
+  Nimble: 49b7a7da8919f42823d37c6d68cc6d15a7009f32
+  Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
   Socket.IO-Client-Swift: 0a35d6d46ef10db390430d4df68f795adffdca03
   SwiftyJSON: a561c2a840121085bec8a2dfeac97a360fc66901
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546

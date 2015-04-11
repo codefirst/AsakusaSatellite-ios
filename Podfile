@@ -5,3 +5,9 @@ pod 'AsakusaSatellite', :git => 'https://github.com/codefirst/AsakusaSatelliteSw
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'xcode6.3'
 pod 'HanekeSwift', :podspec => './HanekeSwift.podspec'
 pod 'TUSafariActivity', '~> 1.0'
+
+
+target "AsakusaSatelliteTests" do
+    pod 'Quick'
+    pod 'Nimble'
+end
