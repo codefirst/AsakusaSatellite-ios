@@ -41,6 +41,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
                 autolayout("V:[icon][web(>=1)][attachments]")
                 webView.message = message
                 bringSubviewToFront(webView)
+                bringSubviewToFront(separator)
             } else {
                 webView.message = nil
             }
@@ -69,6 +70,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
             webView.delegate = self
         }
     }
+    let separator = Appearance.separatorView()
     var baseURL: NSURL? {
         didSet {
             if oldValue != baseURL {
@@ -124,15 +126,17 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
                 "body": bodyLabel,
                 "attachments": attachmentsView,
                 "web": webView,
-                "separator": Appearance.separatorView()
+                "separator": separator
             ])
         autolayout("H:|-p-[icon(==iconSize)]-p-[name][date]-p-|")
         autolayout("H:|-p-[body]-p-|")
         autolayout("H:|[attachments]|")
         autolayout("H:|[separator]|")
         autolayout("V:|-sp-[date]")
-        autolayout("V:|-p-[icon(==iconSize)]-p-[body]-p-[attachments][separator(==onepx)]|")
+        autolayout("V:|-p-[icon(==iconSize)]-p-[body]-p-[attachments]|")
+        autolayout("V:[separator(==onepx)]|")
         addEqualConstraint(.CenterY, view: nameLabel, toView: iconView)
+        bringSubviewToFront(separator)
     }
 
     required init(coder aDecoder: NSCoder) {
