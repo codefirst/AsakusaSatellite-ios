@@ -34,6 +34,7 @@ struct Appearance {
     static let textColorOnLightDarkBackgroundColor = GRAY(128)
     static let darkBackgroundColor = GRAY(96)
     static let onepx = 1 / UIScreen.mainScreen().scale
+    static let messageBodyFontSize = CGFloat(14)
     
     static func install() {
         UINavigationBar.appearance().barTintColor = navBarColor

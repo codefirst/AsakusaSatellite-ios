@@ -30,6 +30,8 @@
 		EAA3A1E21AD911DE00F6CD6B /* AsakusaSatellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */; };
 		EAA3A1E41AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E31AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift */; };
 		EAA3A1E51AD9166800F6CD6B /* AsakusaSatellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */; };
+		EAA3A1E61AD91B9100F6CD6B /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3481AB7188200CF5691 /* Appearance.swift */; };
+		EAA3A1E71AD91BAE00F6CD6B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -428,6 +430,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAA3A1E41AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift in Sources */,
+				EAA3A1E61AD91B9100F6CD6B /* Appearance.swift in Sources */,
+				EAA3A1E71AD91BAE00F6CD6B /* Utilities.swift in Sources */,
 				EAA3A1E51AD9166800F6CD6B /* AsakusaSatellite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

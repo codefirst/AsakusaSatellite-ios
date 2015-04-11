@@ -14,13 +14,15 @@ extension Message {
         let simplyTranslated = body.stringByReplacingOccurrencesOfString("\n", withString: "<br/>", options: nil, range: nil)
         return simplyTranslated != htmlBody
     }
-    var html: String { return "<!DOCTYPE html>"
+    func html(var bodyFontSize: CGFloat = Appearance.messageBodyFontSize) -> String {
+        return "<!DOCTYPE html>"
         + "<html>"
         + "<head>"
         + "<meta content=\"width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes\" name=\"viewport\">"
         + "<link href=\"assets/application.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\">"
-        + "<style>body{margin:0; padding:0; background-color: white;} iframe{margin-left:-5px;}</style>"
+        + "<style>body{font-size: \(bodyFontSize); margin:0; padding:0; background-color: white;} iframe{margin-left:-5px;}</style>"
         + "</head>"
         + "<body><div id=\"AsakusaSatMessageContent\" style=\"padding: 8px;\">\(htmlBody)</div></body>"
-        + "</html>" }
+        + "</html>"
+    }
 }
