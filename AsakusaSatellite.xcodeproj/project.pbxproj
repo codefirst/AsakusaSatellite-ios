@@ -27,6 +27,7 @@
 		EA64C77D1AB9DA3A00282113 /* SatelliteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */; };
 		EA69FE901ABF0A8F00F5EF54 /* MessageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA69FE8F1ABF0A8F00F5EF54 /* MessageDetailViewController.swift */; };
 		EA7C95C11ABEA37C00CD2641 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C95C01ABEA37C00CD2641 /* PostView.swift */; };
+		EAA3A1E21AD911DE00F6CD6B /* AsakusaSatellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SatelliteImageView.swift; sourceTree = "<group>"; };
 		EA69FE8F1ABF0A8F00F5EF54 /* MessageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageDetailViewController.swift; sourceTree = "<group>"; };
 		EA7C95C01ABEA37C00CD2641 /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsakusaSatellite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				EA01F3481AB7188200CF5691 /* Appearance.swift */,
 				EA64C77A1AB9B29D00282113 /* UserDefaults.swift */,
 				EA01F34A1AB71E0100CF5691 /* Utilities.swift */,
+				EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */,
 				EA1FA4DF1ABD565C00BA1D68 /* ViewControllers */,
 				EA1FA4E01ABD567200BA1D68 /* Views */,
 				EA01F32B1AB7161400CF5691 /* Images.xcassets */,
@@ -345,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA64C7791AB9AD6F00282113 /* HomeViewController.swift in Sources */,
+				EAA3A1E21AD911DE00F6CD6B /* AsakusaSatellite.swift in Sources */,
 				EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */,
 				EA11E9301ACA79FB00046CCB /* InlineMessageWebView.swift in Sources */,
 				EA0757131AC82F7500535BB5 /* ImageCollectionViewCell.swift in Sources */,
