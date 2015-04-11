@@ -104,7 +104,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         
         bodyLabel.numberOfLines = 0
         bodyLabel.font = Appearance.hiraginoW3(Appearance.messageBodyFontSize)
-        bodyLabel.textColor = UIColor.blackColor()
+        bodyLabel.textColor = Appearance.messageBodyColor
         bodyLabel.setContentCompressionResistancePriorityHigh(.Vertical)
         
         attachmentsView.dataSource = self
