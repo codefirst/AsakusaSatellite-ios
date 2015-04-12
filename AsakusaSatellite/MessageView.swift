@@ -103,8 +103,8 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         dateLabel.setContentCompressionResistancePriorityHigh(.Vertical)
         
         bodyLabel.numberOfLines = 0
-        bodyLabel.font = Appearance.hiraginoW3(14)
-        bodyLabel.textColor = UIColor.blackColor()
+        bodyLabel.font = Appearance.hiraginoW3(Appearance.messageBodyFontSize)
+        bodyLabel.textColor = Appearance.messageBodyColor
         bodyLabel.setContentCompressionResistancePriorityHigh(.Vertical)
         
         attachmentsView.dataSource = self

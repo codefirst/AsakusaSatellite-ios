@@ -22,6 +22,20 @@ private func GRAY(y: UInt8) -> UIColor {
 }
 
 
+extension UIColor {
+    var cssString: String? {
+        var (r, g, b, a) = (CGFloat(0), CGFloat(0), CGFloat(0), CGFloat(0))
+        if getRed(&r, green: &g, blue: &b, alpha: &a) {
+            return "rgba(\(Int(r * 255)), \(Int(g * 255)), \(Int(b * 255)), \(Int(a * 255)))"
+        }
+        if getWhite(&r, alpha: &a) {
+            return "rgba(\(Int(r * 255)), \(Int(r * 255)), \(Int(r * 255)), \(Int(a * 255)))"
+        }
+        return nil
+    }
+}
+
+
 struct Appearance {
     static let asakusaRed = RGB(200, 2, 2)
     static let navBarColor = asakusaRed
@@ -34,6 +48,8 @@ struct Appearance {
     static let textColorOnLightDarkBackgroundColor = GRAY(128)
     static let darkBackgroundColor = GRAY(96)
     static let onepx = 1 / UIScreen.mainScreen().scale
+    static let messageBodyColor = GRAY(51)
+    static let messageBodyFontSize = CGFloat(14)
     
     static func install() {
         UINavigationBar.appearance().barTintColor = navBarColor
