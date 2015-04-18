@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1389E2E9665E54225E9737E0 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		20F78F457E64979411F392C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		23ED81B6AE8E5A0D5D0C5678 /* Pods_AsakusaSatelliteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A6526EC6D3F8D535F7416F /* Pods_AsakusaSatelliteTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E6F36BA670598D1E4C3DD976 /* Pods_Specs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6CA75054C745F00E14AF2E /* Pods_Specs.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EA00CA481ABEDE0100527848 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = EA00CA471ABEDE0100527848 /* iTunesArtwork */; };
 		EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3241AB7161400CF5691 /* AppDelegate.swift */; };
@@ -96,7 +95,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23ED81B6AE8E5A0D5D0C5678 /* Pods_AsakusaSatelliteTests.framework in Frameworks */,
 				1389E2E9665E54225E9737E0 /* Pods.framework in Frameworks */,
 				E6F36BA670598D1E4C3DD976 /* Pods_Specs.framework in Frameworks */,
 			);
