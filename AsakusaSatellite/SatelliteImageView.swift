@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import HanekeSwift
+import Haneke
 
 
 private let kCellID = "Cell"

@@ -4,7 +4,7 @@ use_frameworks!
 link_with 'AsakusaSatellite'
 
 pod 'AsakusaSatellite', '~> 0.3'
-pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :commit => 'af1a2806ccdbb358ad1c25b690d504052e69f30d'
+pod 'HanekeSwift', '~> 0.9'
 pod 'TUSafariActivity', '~> 1.0'
 
 
