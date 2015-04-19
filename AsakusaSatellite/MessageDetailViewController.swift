@@ -61,7 +61,7 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
             webview.scalesPageToFit = true
             webview.loadRequest(NSURLRequest(URL: u))
         } else {
-            webview.loadHTMLString(message?.html, baseURL: baseURL)
+            webview.loadHTMLString(message?.html(), baseURL: baseURL)
         }
     }
     

@@ -28,7 +28,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     var onPost: ((text: String, attachments: [Attachment], completion: (clearField: Bool) -> Void) -> Void)?
     weak var containigViewController: UIViewController?
     
-    override init() {
+    init() {
         super.init(frame: CGRectMake(0, 0, 320, 50))
         autoresizingMask = .FlexibleWidth | .FlexibleBottomMargin // table footer does not support autolayout
         
@@ -126,7 +126,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as ImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! ImageCollectionViewCell
         cell.imageView.image = UIImage(data: attachments[indexPath.item].data, scale: UIScreen.mainScreen().scale)
         return cell
     }
@@ -144,7 +144,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     // MARK: - Input Accessory View
     
     private class PostAccessoryView: UIView {
-        let photoButton = UIButton.buttonWithType(.System) as UIButton
+        let photoButton = UIButton.buttonWithType(.System) as! UIButton
         let attachmentsView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout().tap { (l: UICollectionViewFlowLayout) in
             l.scrollDirection = .Horizontal
             l.itemSize = CGSizeMake(256, 44 - 8)

@@ -103,8 +103,8 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         dateLabel.setContentCompressionResistancePriorityHigh(.Vertical)
         
         bodyLabel.numberOfLines = 0
-        bodyLabel.font = Appearance.hiraginoW3(14)
-        bodyLabel.textColor = UIColor.blackColor()
+        bodyLabel.font = Appearance.hiraginoW3(Appearance.messageBodyFontSize)
+        bodyLabel.textColor = Appearance.messageBodyColor
         bodyLabel.setContentCompressionResistancePriorityHigh(.Vertical)
         
         attachmentsView.dataSource = self
@@ -198,7 +198,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == .LinkClicked {
-            onLinkTapped?(self, request.URL)
+            request.URL.map{onLinkTapped?(self, $0)}
             return false
         }
         return true
@@ -211,7 +211,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as ImageCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! ImageCollectionViewCell
 
         if let url = NSURL(string: attachments[indexPath.item].url) {
             cell.imageView.hnk_setImageFromURL(url)

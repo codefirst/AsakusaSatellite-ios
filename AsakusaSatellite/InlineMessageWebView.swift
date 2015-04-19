@@ -19,7 +19,7 @@ class InlineMessageWebView: UIWebView {
     var message: Message? {
         didSet {
             if let m = message {
-                loadHTMLString(m.html, baseURL: baseURL)
+                loadHTMLString(m.html(), baseURL: baseURL)
             } else {
                 // clear content
                 stopLoading()
@@ -52,7 +52,7 @@ class InlineMessageWebView: UIWebView {
     }
     
     func loadMessageHTML(message: Message?, baseURL: NSURL?) {
-        loadHTMLString(message?.html, baseURL: baseURL)
+        loadHTMLString(message?.html(), baseURL: baseURL)
     }
     
     override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {

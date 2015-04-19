@@ -1,7 +1,7 @@
 // Playground - noun: a place where people can play
 
 import UIKit
-import HanekeSwift
+import Haneke
 
 
 
@@ -88,7 +88,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as Cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! Cell
         let url = imageURLs[indexPath.item]
         cell.imageView.hnk_setImageFromURL(url)
         return cell

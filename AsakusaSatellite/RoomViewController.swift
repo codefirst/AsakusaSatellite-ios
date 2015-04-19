@@ -13,20 +13,6 @@ import AsakusaSatellite
 private let kCellID = "Cell"
 
 
-extension Message {
-    var hasHTML: Bool {return body != htmlBody}
-    var html: String { return "<!DOCTYPE html>"
-        + "<html>"
-        + "<head>"
-        + "<meta content=\"width=device-width, initial-scale=1.0, maximum-scale=4.0, user-scalable=yes\" name=\"viewport\">"
-        + "<link href=\"assets/application.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\">"
-        + "<style>body{margin:0; padding:0; background-color: white;} iframe{margin-left:-5px;}</style>"
-        + "</head>"
-        + "<body><div id=\"AsakusaSatMessageContent\" style=\"padding: 8px;\">\(htmlBody)</div></body>"
-        + "</html>" }
-}
-
-
 class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIWebViewDelegate {
     let client: Client
     var pusher: MessagePusherClient?
@@ -74,7 +60,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         refreshView.onRefresh = { completion in
-            self.reloadMessages(completion)
+            self.reloadMessages(completion: completion)
         }
         
         let keyboardSpacer = KeyboardSpacerView()
@@ -121,7 +107,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             switch r {
             case .Success(let many):
-                self.appendMessages(many().items.reverse())
+                self.appendMessages(many.value.items.reverse())
                 dispatch_async(dispatch_get_main_queue()) {
                     self.scrollToBottom()
                 }
@@ -203,7 +189,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as TableCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as! TableCell
         let message = messages[indexPath.row]
         cell.messageView.baseURL = NSURL(string: client.rootURL)
         cell.message = message

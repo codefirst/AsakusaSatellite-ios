@@ -11,7 +11,7 @@ import AsakusaSatellite
 
 
 let AppFullName = "AsakusaSatellite"
-var appDelegate: AppDelegate { return UIApplication.sharedApplication().delegate as AppDelegate }
+var appDelegate: AppDelegate { return UIApplication.sharedApplication().delegate as! AppDelegate }
 
 
 @UIApplicationMain
