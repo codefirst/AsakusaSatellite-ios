@@ -39,6 +39,8 @@ class InlineMessageWebView: UIWebView {
         
         super.init(frame: frame)
         
+        suppressesIncrementalRendering = true
+        
         scrollView.scrollEnabled = false
         scrollView.addObserver(self, forKeyPath: kContentSize, options: nil, context: nil)
     }
