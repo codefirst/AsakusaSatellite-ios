@@ -33,6 +33,14 @@
 		EAA3A1E51AD9166800F6CD6B /* AsakusaSatellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */; };
 		EAA3A1E61AD91B9100F6CD6B /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3481AB7188200CF5691 /* Appearance.swift */; };
 		EAA3A1E71AD91BAE00F6CD6B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
+		EAB4CD0B1AECC51800D2C816 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0A1AECC51800D2C816 /* InterfaceController.swift */; };
+		EAB4CD0D1AECC51800D2C816 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0C1AECC51800D2C816 /* NotificationController.swift */; };
+		EAB4CD0F1AECC51800D2C816 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0E1AECC51800D2C816 /* GlanceController.swift */; };
+		EAB4CD111AECC51800D2C816 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD101AECC51800D2C816 /* Images.xcassets */; };
+		EAB4CD151AECC51800D2C816 /* AsakusaSatellite WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */; };
+		EAB4CD1D1AECC51800D2C816 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */; };
+		EAB4CD1F1AECC51800D2C816 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1E1AECC51800D2C816 /* Images.xcassets */; };
+		EAB4CD221AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +51,35 @@
 			remoteGlobalIDString = EA01F31E1AB7161400CF5691;
 			remoteInfo = AsakusaSatellite;
 		};
+		EAB4CD161AECC51800D2C816 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAB4CD131AECC51800D2C816;
+			remoteInfo = "AsakusaSatellite WatchKit App";
+		};
+		EAB4CD201AECC51800D2C816 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAB4CD041AECC51800D2C816;
+			remoteInfo = "AsakusaSatellite WatchKit Extension";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		EAB4CD291AECC51800D2C816 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EAB4CD221AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		08960A29823B420EAB67D7AE /* Pods-Specs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.debug.xcconfig"; sourceTree = "<group>"; };
@@ -79,6 +115,17 @@
 		EA7C95C01ABEA37C00CD2641 /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsakusaSatellite.swift; sourceTree = "<group>"; };
 		EAA3A1E31AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AsakusaSatelliteSpec.swift; path = AsakusaSatelliteTests/AsakusaSatelliteSpec.swift; sourceTree = SOURCE_ROOT; };
+		EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AsakusaSatellite WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAB4CD081AECC51800D2C816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAB4CD091AECC51800D2C816 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		EAB4CD0A1AECC51800D2C816 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		EAB4CD0C1AECC51800D2C816 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		EAB4CD0E1AECC51800D2C816 /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
+		EAB4CD101AECC51800D2C816 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AsakusaSatellite WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAB4CD1A1AECC51800D2C816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAB4CD1C1AECC51800D2C816 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		EAB4CD1E1AECC51800D2C816 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EB49FB05A032D37FDC9147C3 /* Pods-AsakusaSatelliteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsakusaSatelliteTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AsakusaSatelliteTests/Pods-AsakusaSatelliteTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +144,13 @@
 			files = (
 				1389E2E9665E54225E9737E0 /* Pods.framework in Frameworks */,
 				E6F36BA670598D1E4C3DD976 /* Pods_Specs.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAB4CD021AECC51800D2C816 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +186,8 @@
 				EA1FA4DE1ABD3FCB00BA1D68 /* AsakusaSatellite.playground */,
 				EA01F3211AB7161400CF5691 /* AsakusaSatellite */,
 				EA01F3371AB7161400CF5691 /* AsakusaSatelliteTests */,
+				EAB4CD061AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */,
+				EAB4CD181AECC51800D2C816 /* AsakusaSatellite WatchKit App */,
 				EA01F3201AB7161400CF5691 /* Products */,
 				1DF2023A3EECC4163662F513 /* Pods */,
 				B99D720E667DAB177CDE44D7 /* Frameworks */,
@@ -143,6 +199,8 @@
 			children = (
 				EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */,
 				EA01F3341AB7161400CF5691 /* AsakusaSatelliteTests.xctest */,
+				EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */,
+				EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,6 +273,45 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		EAB4CD061AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				EAB4CD0A1AECC51800D2C816 /* InterfaceController.swift */,
+				EAB4CD0C1AECC51800D2C816 /* NotificationController.swift */,
+				EAB4CD0E1AECC51800D2C816 /* GlanceController.swift */,
+				EAB4CD101AECC51800D2C816 /* Images.xcassets */,
+				EAB4CD071AECC51800D2C816 /* Supporting Files */,
+			);
+			path = "AsakusaSatellite WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		EAB4CD071AECC51800D2C816 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EAB4CD081AECC51800D2C816 /* Info.plist */,
+				EAB4CD091AECC51800D2C816 /* PushNotificationPayload.apns */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EAB4CD181AECC51800D2C816 /* AsakusaSatellite WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */,
+				EAB4CD1E1AECC51800D2C816 /* Images.xcassets */,
+				EAB4CD191AECC51800D2C816 /* Supporting Files */,
+			);
+			path = "AsakusaSatellite WatchKit App";
+			sourceTree = "<group>";
+		};
+		EAB4CD191AECC51800D2C816 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EAB4CD1A1AECC51800D2C816 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -228,10 +325,12 @@
 				EA01F31D1AB7161400CF5691 /* Resources */,
 				2D13A2113B3FAAAE58E5EFFE /* Embed Pods Frameworks */,
 				E3EF05330C0E002D20CD250D /* Copy Pods Resources */,
+				EAB4CD291AECC51800D2C816 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EAB4CD211AECC51800D2C816 /* PBXTargetDependency */,
 			);
 			name = AsakusaSatellite;
 			productName = AsakusaSatellite;
@@ -259,6 +358,39 @@
 			productReference = EA01F3341AB7161400CF5691 /* AsakusaSatelliteTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		EAB4CD041AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAB4CD281AECC51800D2C816 /* Build configuration list for PBXNativeTarget "AsakusaSatellite WatchKit Extension" */;
+			buildPhases = (
+				EAB4CD011AECC51800D2C816 /* Sources */,
+				EAB4CD021AECC51800D2C816 /* Frameworks */,
+				EAB4CD031AECC51800D2C816 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EAB4CD171AECC51800D2C816 /* PBXTargetDependency */,
+			);
+			name = "AsakusaSatellite WatchKit Extension";
+			productName = "AsakusaSatellite WatchKit Extension";
+			productReference = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit-extension";
+		};
+		EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAB4CD271AECC51800D2C816 /* Build configuration list for PBXNativeTarget "AsakusaSatellite WatchKit App" */;
+			buildPhases = (
+				EAB4CD121AECC51800D2C816 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AsakusaSatellite WatchKit App";
+			productName = "AsakusaSatellite WatchKit App";
+			productReference = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -274,6 +406,12 @@
 					EA01F3331AB7161400CF5691 = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = EA01F31E1AB7161400CF5691;
+					};
+					EAB4CD041AECC51800D2C816 = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+					EAB4CD131AECC51800D2C816 = {
+						CreatedOnToolsVersion = 6.3.1;
 					};
 				};
 			};
@@ -292,6 +430,8 @@
 			targets = (
 				EA01F31E1AB7161400CF5691 /* AsakusaSatellite */,
 				EA01F3331AB7161400CF5691 /* AsakusaSatelliteTests */,
+				EAB4CD041AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */,
+				EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */,
 			);
 		};
 /* End PBXProject section */
@@ -311,6 +451,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAB4CD031AECC51800D2C816 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAB4CD151AECC51800D2C816 /* AsakusaSatellite WatchKit App.app in Resources */,
+				EAB4CD111AECC51800D2C816 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAB4CD121AECC51800D2C816 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAB4CD1D1AECC51800D2C816 /* Interface.storyboard in Resources */,
+				EAB4CD1F1AECC51800D2C816 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +602,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EAB4CD011AECC51800D2C816 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAB4CD0D1AECC51800D2C816 /* NotificationController.swift in Sources */,
+				EAB4CD0B1AECC51800D2C816 /* InterfaceController.swift in Sources */,
+				EAB4CD0F1AECC51800D2C816 /* GlanceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -451,6 +619,16 @@
 			isa = PBXTargetDependency;
 			target = EA01F31E1AB7161400CF5691 /* AsakusaSatellite */;
 			targetProxy = EA01F3351AB7161400CF5691 /* PBXContainerItemProxy */;
+		};
+		EAB4CD171AECC51800D2C816 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */;
+			targetProxy = EAB4CD161AECC51800D2C816 /* PBXContainerItemProxy */;
+		};
+		EAB4CD211AECC51800D2C816 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAB4CD041AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */;
+			targetProxy = EAB4CD201AECC51800D2C816 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -461,6 +639,14 @@
 				EA01F32E1AB7161400CF5691 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAB4CD1C1AECC51800D2C816 /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -609,6 +795,72 @@
 			};
 			name = Release;
 		};
+		EAB4CD231AECC51800D2C816 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		EAB4CD241AECC51800D2C816 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		EAB4CD251AECC51800D2C816 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
+				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Debug;
+		};
+		EAB4CD261AECC51800D2C816 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
+				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -638,6 +890,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		EAB4CD271AECC51800D2C816 /* Build configuration list for PBXNativeTarget "AsakusaSatellite WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAB4CD251AECC51800D2C816 /* Debug */,
+				EAB4CD261AECC51800D2C816 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		EAB4CD281AECC51800D2C816 /* Build configuration list for PBXNativeTarget "AsakusaSatellite WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAB4CD231AECC51800D2C816 /* Debug */,
+				EAB4CD241AECC51800D2C816 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
