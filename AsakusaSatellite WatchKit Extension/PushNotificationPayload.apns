@@ -3,8 +3,7 @@
         "alert": {
             "body": "Test message",
             "title": "Optional title"
-        },
-        "category": "myCategory"
+        }
     },
     
     "WatchKit Simulator Actions": [
