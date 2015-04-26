@@ -365,6 +365,7 @@
 				EAB4CD011AECC51800D2C816 /* Sources */,
 				EAB4CD021AECC51800D2C816 /* Frameworks */,
 				EAB4CD031AECC51800D2C816 /* Resources */,
+				EAECA85E1AECDF3A0041B0B3 /* WatchKit Versioning */,
 			);
 			buildRules = (
 			);
@@ -564,6 +565,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		EAECA85E1AECDF3A0041B0B3 /* WatchKit Versioning */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "WatchKit Versioning";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "extension_plist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nextension_build_path=\"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}\"\napp_name=`cd \"$extension_build_path\"; ls -d *app`\napp_plist=\"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}/$app_name/Info.plist\"\n\nextension_build_number=$(/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$extension_plist\")\n/usr/libexec/PlistBuddy -c \"Add :CFBundleVersion string $extension_build_number\" \"$app_plist\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -819,6 +834,7 @@
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "e8dc5b35-f0b4-4ada-b51f-570db406cef4";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
