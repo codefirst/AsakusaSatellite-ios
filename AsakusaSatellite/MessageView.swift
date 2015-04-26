@@ -16,6 +16,9 @@ private let kPadding = CGFloat(8)
 private let kAttachmentsSize = CGSizeMake(256, 64)
 
 
+private let kAppGroupID = "group.org.codefirst.asakusasatellite"
+
+
 class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIWebViewDelegate {
     var message: Message? {
         didSet {
@@ -23,7 +26,25 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
                 if CGRectIsEmpty(iconView.frame) {
                     iconView.frame = CGRectMake(iconView.frame.origin.x, iconView.frame.origin.y, 44, 44) // haneke requires non-zero imageview
                 }
-                iconView.hnk_setImageFromURL(u)
+                
+                iconView.hnk_setImageFromURL(u, success: { image in
+                    self.iconView.image = image
+                    
+                    // cache to watch
+                    let fm = NSFileManager.defaultManager()
+                    if  let cacheKey = self.message?.screenName,
+                        let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("UserIcon").stringByAppendingPathComponent("\(cacheKey).png") {
+                            fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil, error: nil)
+                            
+                            let lastModified = fm.attributesOfItemAtPath(cachePath, error: nil)?[NSFileModificationDate] as? NSDate
+                            let needsCache = lastModified.map({NSDate().timeIntervalSinceDate($0) > (60 * 60)}) ?? true
+                            if needsCache {
+                                let png = UIImagePNGRepresentation(image)
+                                NSLog("cache size = \(png.length)")
+                                png.writeToFile(cachePath, atomically: true)
+                            }
+                    }
+                })
             }
             
             nameLabel.text = message?.name

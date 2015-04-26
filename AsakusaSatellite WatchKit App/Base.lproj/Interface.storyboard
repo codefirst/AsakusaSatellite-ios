@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AgC-eL-Hgc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="3737"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
@@ -38,9 +38,21 @@
             <objects>
                 <notificationController id="YCC-NB-fut">
                     <items>
-                        <label alignment="left" text="Alert Label" id="XkS-y5-khE"/>
+                        <group width="1" alignment="left" layout="vertical" id="exb-VA-XcW">
+                            <items>
+                                <label width="1" alignment="left" text="Alert Label" textAlignment="left" numberOfLines="0" id="XkS-y5-khE">
+                                    <color key="textColor" white="0.0" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <fontDescription key="font" type="system" pointSize="16"/>
+                                </label>
+                            </items>
+                            <edgeInsets key="margins" left="4" right="4" top="0.0" bottom="0.0"/>
+                        </group>
                     </items>
-                    <notificationCategory key="notificationCategory" id="JfB-70-Muf"/>
+                    <notificationCategory key="notificationCategory" identifier="CREATE_MESSAGE" wantsSashBlur="YES" id="JfB-70-Muf">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="sashColor" red="0.7843137255" green="0.0078431372550000003" blue="0.0078431372550000003" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                    </notificationCategory>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.79000000000000004" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="XkS-y5-khE" id="49B-RR-99y"/>
                         <segue destination="gdX-wl-uQE" kind="relationship" relationship="dynamicNotificationInterface" id="fKh-qV-3T2"/>
@@ -54,8 +66,21 @@
             <objects>
                 <controller id="gdX-wl-uQE" customClass="NotificationController" customModule="AsakusaSatellite_WatchKit_ExtensionApp">
                     <items>
-                        <label alignment="left" text="Hello, Notification" id="YuF-ae-3dk"/>
+                        <group width="1" alignment="left" contentMode="TopLeft" layout="vertical" id="LDI-Sb-fjc">
+                            <items>
+                                <label width="1" alignment="left" text="Alert Label" textAlignment="left" numberOfLines="0" id="YuF-ae-3dk">
+                                    <color key="textColor" white="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <fontDescription key="font" type="system" pointSize="16"/>
+                                </label>
+                            </items>
+                            <edgeInsets key="margins" left="4" right="4" top="2" bottom="4"/>
+                        </group>
                     </items>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.79000000000000004" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <outlet property="group" destination="LDI-Sb-fjc" id="Qx5-ZP-7gK"/>
+                        <outlet property="notificationAlertLabel" destination="YuF-ae-3dk" id="Dtt-pX-uL7"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="553" y="1001"/>

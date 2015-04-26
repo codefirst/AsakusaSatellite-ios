@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1389E2E9665E54225E9737E0 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		20F78F457E64979411F392C3 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		15285D36457CA618B7A976E7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E6F36BA670598D1E4C3DD976 /* Pods_Specs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6CA75054C745F00E14AF2E /* Pods_Specs.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EA00CA481ABEDE0100527848 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = EA00CA471ABEDE0100527848 /* iTunesArtwork */; };
 		EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3241AB7161400CF5691 /* AppDelegate.swift */; };
@@ -41,6 +41,7 @@
 		EAB4CD1D1AECC51800D2C816 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */; };
 		EAB4CD1F1AECC51800D2C816 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1E1AECC51800D2C816 /* Images.xcassets */; };
 		EAB4CD221AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EACA7D9B1AEDA5D30073D1A5 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		EA593B801AED3748001CBCB5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EAB4CD291AECC51800D2C816 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -83,13 +94,13 @@
 
 /* Begin PBXFileReference section */
 		08960A29823B420EAB67D7AE /* Pods-Specs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.debug.xcconfig"; sourceTree = "<group>"; };
+		1D13CD1DDD21D276C35B3935 /* Pods_Common.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Common.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2440A198DAFA9B01CC508D58 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2F18BE776796048F4FBE2C57 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		53B112EB882E07B14F967900 /* Pods-AsakusaSatelliteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsakusaSatelliteTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AsakusaSatelliteTests/Pods-AsakusaSatelliteTests.release.xcconfig"; sourceTree = "<group>"; };
 		7E6CA75054C745F00E14AF2E /* Pods_Specs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Specs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		99A6526EC6D3F8D535F7416F /* Pods_AsakusaSatelliteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsakusaSatelliteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1503A2E1063CCF6D79A378B /* Pods-Specs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Specs.release.xcconfig"; path = "Pods/Target Support Files/Pods-Specs/Pods-Specs.release.xcconfig"; sourceTree = "<group>"; };
 		BA23D058DC67A17776C1F6FB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E173414C0868E080A15AFA2B /* Pods_AsakusaSatellite_WatchKit_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsakusaSatellite_WatchKit_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA00CA471ABEDE0100527848 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsakusaSatellite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA01F3231AB7161400CF5691 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,9 +137,10 @@
 		EAB4CD1A1AECC51800D2C816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAB4CD1C1AECC51800D2C816 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		EAB4CD1E1AECC51800D2C816 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EACA7D9A1AED3BD50073D1A5 /* Common-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common-Bridging-Header.h"; path = "AsakusaSatellite/Common-Bridging-Header.h"; sourceTree = "<group>"; };
 		EAEAA83A1AECF3D20096D410 /* AsakusaSatellite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AsakusaSatellite.entitlements; sourceTree = "<group>"; };
 		EAEAA83B1AECF3F00096D410 /* AsakusaSatellite WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit Extension.entitlements"; sourceTree = "<group>"; };
-		EB49FB05A032D37FDC9147C3 /* Pods-AsakusaSatelliteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsakusaSatelliteTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AsakusaSatelliteTests/Pods-AsakusaSatelliteTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FC5427DC266B203D19ED9166 /* Pods_WatchKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WatchKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,7 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20F78F457E64979411F392C3 /* Pods.framework in Frameworks */,
+				15285D36457CA618B7A976E7 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,8 +176,6 @@
 			children = (
 				2440A198DAFA9B01CC508D58 /* Pods.debug.xcconfig */,
 				2F18BE776796048F4FBE2C57 /* Pods.release.xcconfig */,
-				EB49FB05A032D37FDC9147C3 /* Pods-AsakusaSatelliteTests.debug.xcconfig */,
-				53B112EB882E07B14F967900 /* Pods-AsakusaSatelliteTests.release.xcconfig */,
 				08960A29823B420EAB67D7AE /* Pods-Specs.debug.xcconfig */,
 				A1503A2E1063CCF6D79A378B /* Pods-Specs.release.xcconfig */,
 			);
@@ -176,8 +186,10 @@
 			isa = PBXGroup;
 			children = (
 				BA23D058DC67A17776C1F6FB /* Pods.framework */,
-				99A6526EC6D3F8D535F7416F /* Pods_AsakusaSatelliteTests.framework */,
 				7E6CA75054C745F00E14AF2E /* Pods_Specs.framework */,
+				E173414C0868E080A15AFA2B /* Pods_AsakusaSatellite_WatchKit_Extension.framework */,
+				FC5427DC266B203D19ED9166 /* Pods_WatchKit.framework */,
+				1D13CD1DDD21D276C35B3935 /* Pods_Common.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -186,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				EA1FA4DE1ABD3FCB00BA1D68 /* AsakusaSatellite.playground */,
+				EACA7D9A1AED3BD50073D1A5 /* Common-Bridging-Header.h */,
 				EA01F3211AB7161400CF5691 /* AsakusaSatellite */,
 				EA01F3371AB7161400CF5691 /* AsakusaSatelliteTests */,
 				EAB4CD061AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */,
@@ -323,13 +336,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EA01F33E1AB7161400CF5691 /* Build configuration list for PBXNativeTarget "AsakusaSatellite" */;
 			buildPhases = (
-				0CF0ED2102BFC6C888936ABE /* Check Pods Manifest.lock */,
+				A844BDEB37B05A32CEC61973 /* Check Pods Manifest.lock */,
 				EA01F31B1AB7161400CF5691 /* Sources */,
 				EA01F31C1AB7161400CF5691 /* Frameworks */,
 				EA01F31D1AB7161400CF5691 /* Resources */,
-				2D13A2113B3FAAAE58E5EFFE /* Embed Pods Frameworks */,
-				E3EF05330C0E002D20CD250D /* Copy Pods Resources */,
+				8A5DCB0E0601C1EFAA06FF5C /* Embed Pods Frameworks */,
+				8E468DDD61929F7AE48B059F /* Copy Pods Resources */,
 				EAB4CD291AECC51800D2C816 /* Embed App Extensions */,
+				EA593B801AED3748001CBCB5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -492,21 +506,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0CF0ED2102BFC6C888936ABE /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		1B7919C11EBFADB7C0939C32 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -537,7 +536,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		2D13A2113B3FAAAE58E5EFFE /* Embed Pods Frameworks */ = {
+		8A5DCB0E0601C1EFAA06FF5C /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -552,7 +551,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E3EF05330C0E002D20CD250D /* Copy Pods Resources */ = {
+		8E468DDD61929F7AE48B059F /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -565,6 +564,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A844BDEB37B05A32CEC61973 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		E7CB493616DE202FA8E660CF /* Copy Pods Resources */ = {
@@ -625,6 +639,7 @@
 			files = (
 				EAB4CD0D1AECC51800D2C816 /* NotificationController.swift in Sources */,
 				EAB4CD0B1AECC51800D2C816 /* InterfaceController.swift in Sources */,
+				EACA7D9B1AEDA5D30073D1A5 /* Utilities.swift in Sources */,
 				EAB4CD0F1AECC51800D2C816 /* GlanceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -762,6 +777,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -777,6 +793,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -824,6 +841,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit Extension/AsakusaSatellite WatchKit Extension.entitlements";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -834,6 +852,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "999c7c3e-5f7e-4adb-bf84-1a822cc94889";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -842,12 +861,14 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit Extension/AsakusaSatellite WatchKit Extension.entitlements";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "163c49d2-754b-471d-82cf-730bbca5a020";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
 			name = Release;
 		};
