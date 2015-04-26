@@ -578,7 +578,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "extension_plist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nextension_build_path=\"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}\"\napp_name=`cd \"$extension_build_path\"; ls -d *app`\napp_plist=\"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}/$app_name/Info.plist\"\n\nextension_build_number=$(/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$extension_plist\")\n/usr/libexec/PlistBuddy -c \"Add :CFBundleVersion string $extension_build_number\" \"$app_plist\"";
+			shellScript = "extension_plist=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\nextension_build_path=\"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}\"\napp_name=`cd \"$extension_build_path\"; ls -d *app`\napp_plist=\"${TARGET_BUILD_DIR}/${FULL_PRODUCT_NAME}/$app_name/Info.plist\"\n\nextension_build_number=$(/usr/libexec/PlistBuddy -c \"Print :CFBundleVersion\" \"$extension_plist\")\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $extension_build_number\" \"$app_plist\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
