@@ -107,7 +107,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         UserDefaults.apiKey = nil
 
         let welcome = WelcomeViewController()
-        appDelegate.root.pushViewController(welcome, animated: true)
+        navigationController?.pushViewController(welcome, animated: true)
 
         navigationItem.leftBarButtonItem?.title = NSLocalizedString("Sign Out", comment: "")
     }
