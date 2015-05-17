@@ -23,7 +23,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     let roomsView: UICollectionView
     let roomsLayout = UICollectionViewFlowLayout()
-    
+
     private var displayLink: CADisplayLink?
     
     // MARK: - init
@@ -57,7 +57,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         view.backgroundColor = Appearance.backgroundColor
         roomsView.backgroundColor = view.backgroundColor
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Sign Out", comment: ""), style: .Plain, target: self, action: "signout:")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Sign Out", comment: ""), style: .Plain, target: self, action: "auth:")
         
         let autolayout = view.autolayoutFormat(nil, ["rooms": roomsView])
         autolayout("H:|[rooms]|")
@@ -94,10 +94,28 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     // MARK: - Actions
-    
-    func signout(sender: AnyObject?) {
+
+    @objc private func auth(sender: AnyObject?) {
+        if UserDefaults.apiKey == nil {
+            signin()
+        } else {
+            signout()
+        }
+    }
+
+    private func signin() {
+        UserDefaults.apiKey = nil
+
+        let welcome = WelcomeViewController()
+        navigationController?.pushViewController(welcome, animated: true)
+
+        navigationItem.leftBarButtonItem?.title = NSLocalizedString("Sign Out", comment: "")
+    }
+
+    private func signout() {
         UserDefaults.apiKey = nil
         reloadRoomList()
+        navigationItem.leftBarButtonItem?.title = NSLocalizedString("Sign In", comment: "")
     }
     
     // MARK: - Animations
