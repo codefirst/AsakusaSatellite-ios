@@ -13,6 +13,10 @@ import AsakusaSatellite
 let AppFullName = "AsakusaSatellite"
 var appDelegate: AppDelegate { return UIApplication.sharedApplication().delegate as! AppDelegate }
 
+private let kStringExactly = NSLocalizedString("Exactly!", comment: "")
+private let kStringHuh = NSLocalizedString("Huh?", comment: "")
+private let kStringReply = NSLocalizedString("Reply", comment: "")
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDelegate, UIViewControllerAnimatedTransitioning {
@@ -62,21 +66,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
             
             let disagree = UIMutableUserNotificationAction().tap { (a: UIMutableUserNotificationAction) in
                 a.identifier = "disagree"
-                a.title = NSLocalizedString("えっ", comment: "")
+                a.title = kStringHuh
                 a.activationMode = .Background
                 a.authenticationRequired = false
             }
             
             let agree = UIMutableUserNotificationAction().tap { (a: UIMutableUserNotificationAction) in
                 a.identifier = "agree"
-                a.title = NSLocalizedString("それな", comment: "")
+                a.title = kStringExactly
                 a.activationMode = .Background
                 a.authenticationRequired = false
             }
             
             let reply = UIMutableUserNotificationAction().tap { (a: UIMutableUserNotificationAction) in
                 a.identifier = "reply"
-                a.title = NSLocalizedString("Reply", comment: "")
+                a.title = kStringReply
                 a.activationMode = .Foreground
                 a.authenticationRequired = false
             }
@@ -121,8 +125,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         
         switch identifier {
         case .Some("star"): post("⭐️")
-        case .Some("disagree"): post(NSLocalizedString("えっ", comment: ""))
-        case .Some("agree"): post(NSLocalizedString("それな", comment: ""))
+        case .Some("disagree"): post(kStringHuh)
+        case .Some("agree"): post(kStringExactly)
         default: completionHandler()
         }
     }
