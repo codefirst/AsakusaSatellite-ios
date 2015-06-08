@@ -1,0 +1,15 @@
+{
+    "room_id": "4e3ceb70666b130001000058",
+    "user": "banjun",
+    "aps": {
+        "alert": "banjun / apple banjun cocoa dashbozu",
+        "category": "CREATE_MESSAGE",
+        "sound": "default"
+    },
+    "WatchKit Simulator Actions": [
+        {
+            "title": "First Button",
+            "identifier": "firstButtonAction"
+        }
+    ]
+}

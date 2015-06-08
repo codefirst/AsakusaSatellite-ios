@@ -22,7 +22,7 @@
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
@@ -31,6 +31,34 @@
                BlueprintIdentifier = "EA01F3331AB7161400CF5691"
                BuildableName = "AsakusaSatelliteTests.xctest"
                BlueprintName = "AsakusaSatelliteTests"
+               ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EA2FF1501AED290A0051A459"
+               BuildableName = "AsakusaSatelliteCommonTests.xctest"
+               BlueprintName = "AsakusaSatelliteCommonTests"
+               ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EA593B6D1AED3748001CBCB5"
+               BuildableName = "CommonTests.xctest"
+               BlueprintName = "CommonTests"
                ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -49,6 +77,26 @@
                BlueprintIdentifier = "EA01F3331AB7161400CF5691"
                BuildableName = "AsakusaSatelliteTests.xctest"
                BlueprintName = "AsakusaSatelliteTests"
+               ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EA2FF1501AED290A0051A459"
+               BuildableName = "AsakusaSatelliteCommonTests.xctest"
+               BlueprintName = "AsakusaSatelliteCommonTests"
+               ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EA593B6D1AED3748001CBCB5"
+               BuildableName = "CommonTests.xctest"
+               BlueprintName = "CommonTests"
                ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
             </BuildableReference>
          </TestableReference>
