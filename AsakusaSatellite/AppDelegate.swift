@@ -111,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
 
         let post = { (message: String) -> Void in
             if let roomID = userInfo["room_id"] as? String {
-                Client(apiKey: UserDefaults.apiKey).postMessage("\(message) (from ⌚️)", roomID: roomID, files: []) { _ in
+                Client(apiKey: UserDefaults.apiKey).postMessage(message, roomID: roomID, files: []) { _ in
                     completionHandler()
                 }
             } else {
