@@ -8,8 +8,8 @@
     },
     "WatchKit Simulator Actions": [
         {
-            "title": "First Button",
-            "identifier": "firstButtonAction"
+            "title": "⭐️",
+            "identifier": "star"
         }
     ]
 }

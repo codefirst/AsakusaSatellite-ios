@@ -42,13 +42,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         window?.rootViewController = root
         window?.makeKeyAndVisible()
         
+        registerPushNotification()
+        
         return true
     }
     
     // MARK: - Push Notification
     
     func registerPushNotification() {
-        let settings = UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil)
+        let createMessageCategory = UIMutableUserNotificationCategory().tap { (c: UIMutableUserNotificationCategory) in
+            c.identifier = "CREATE_MESSAGE"
+            
+            let star = UIMutableUserNotificationAction().tap { (a: UIMutableUserNotificationAction) in
+                a.identifier = "star"
+                a.title = "⭐️"
+                a.activationMode = .Background
+                a.authenticationRequired = false
+            }
+            
+            let disagree = UIMutableUserNotificationAction().tap { (a: UIMutableUserNotificationAction) in
+                a.identifier = "disagree"
+                a.title = NSLocalizedString("えっ", comment: "")
+                a.activationMode = .Background
+                a.authenticationRequired = false
+            }
+            
+            let agree = UIMutableUserNotificationAction().tap { (a: UIMutableUserNotificationAction) in
+                a.identifier = "agree"
+                a.title = NSLocalizedString("それな", comment: "")
+                a.activationMode = .Background
+                a.authenticationRequired = false
+            }
+            
+            let reply = UIMutableUserNotificationAction().tap { (a: UIMutableUserNotificationAction) in
+                a.identifier = "reply"
+                a.title = NSLocalizedString("Reply", comment: "")
+                a.activationMode = .Foreground
+                a.authenticationRequired = false
+            }
+            
+            c.setActions([star, disagree, agree, reply], forContext: .Default)
+        }
+        
+        let settings = UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: [createMessageCategory])
+        
         UIApplication.sharedApplication().registerForRemoteNotifications()
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
     }
@@ -68,6 +105,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         UIAlertController.presentSimpleAlert(onViewController: root.topViewController, title: NSLocalizedString("Cannot Register for Notifications", comment: ""), error: error)
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+
+        let post = { (message: String) -> Void in
+            if let roomID = userInfo["room_id"] as? String {
+                Client(apiKey: UserDefaults.apiKey).postMessage("\(message) (from ⌚️)", roomID: roomID, files: []) { _ in
+                    completionHandler()
+                }
+            } else {
+                completionHandler()
+            }
+        }
+        
+        switch identifier {
+        case .Some("star"): post("⭐️")
+        case .Some("disagree"): post(NSLocalizedString("えっ", comment: ""))
+        case .Some("agree"): post(NSLocalizedString("それな", comment: ""))
+        default: completionHandler()
+        }
     }
     
     // MARK: - Custom Navigation Animation
