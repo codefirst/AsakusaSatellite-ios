@@ -17,7 +17,7 @@ DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift-2.0`)
   - AsakusaSatellite (from `https://github.com/codefirst/AsakusaSatelliteSwiftClient.git`,
     branch `xcode7`)
-  - HanekeSwift (~> 0.9)
+  - HanekeSwift (from `https://github.com/meteochu/HanekeSwift.git`, branch `swift-2.0`)
   - Nimble
   - Quick
   - Socket.IO-Client-Swift (from `https://github.com/socketio/socket.io-client-swift.git`,
@@ -33,6 +33,9 @@ EXTERNAL SOURCES:
   AsakusaSatellite:
     :branch: xcode7
     :git: https://github.com/codefirst/AsakusaSatelliteSwiftClient.git
+  HanekeSwift:
+    :branch: swift-2.0
+    :git: https://github.com/meteochu/HanekeSwift.git
   Socket.IO-Client-Swift:
     :branch: swift-2
     :git: https://github.com/socketio/socket.io-client-swift.git
@@ -50,6 +53,9 @@ CHECKOUT OPTIONS:
   AsakusaSatellite:
     :commit: f0cd5ec5fc503429ae56cbf98aff5b712c4a983a
     :git: https://github.com/codefirst/AsakusaSatelliteSwiftClient.git
+  HanekeSwift:
+    :commit: 5631483fccfb68893f3f3c44b0fab3cba8f7cddb
+    :git: https://github.com/meteochu/HanekeSwift.git
   Socket.IO-Client-Swift:
     :commit: 7206fa6d5cd2686f662e23098769995c6c3d9f57
     :git: https://github.com/socketio/socket.io-client-swift.git

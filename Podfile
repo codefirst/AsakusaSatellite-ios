@@ -9,7 +9,7 @@ pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branc
 pod 'Socket.IO-Client-Swift', :git => 'https://github.com/socketio/socket.io-client-swift.git', :branch => 'swift-2'
 pod 'UTIKit', :git => 'https://github.com/banjun/UTIKit.git', :branch => 'xcode7'
 
-pod 'HanekeSwift', '~> 0.9'
+pod 'HanekeSwift', :git => 'https://github.com/meteochu/HanekeSwift.git', :branch => 'swift-2.0'
 pod 'TUSafariActivity', '~> 1.0'
 
 
