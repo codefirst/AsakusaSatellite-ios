@@ -791,6 +791,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AsakusaSatellite/AsakusaSatellite.entitlements;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -805,6 +806,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AsakusaSatellite/AsakusaSatellite.entitlements;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
