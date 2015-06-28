@@ -93,7 +93,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             fatalError("init(coder:) has not been implemented")
         }
         
-        private override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes!) {
+        private override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
             imageView.layer.cornerRadius = layoutAttributes.size.width / 2
         }
     }
@@ -151,7 +151,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             contentSizeSide = min(contentSize.width, contentSize.height)
         }
         
-        func centerForItemAt(#percentage: CGFloat, radiusScale: CGFloat = 1.0) -> CGPoint {
+        func centerForItemAt(percentage percentage: CGFloat, radiusScale: CGFloat = 1.0) -> CGPoint {
             let contentSize = collectionView?.bounds.size ?? CGSizeZero
             let center = CGPointMake(contentSize.width / 2, contentSize.height / 2)
             
@@ -161,7 +161,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
                 center.y + radius * radiusScale * sin(angle))
         }
         
-        private override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+        private override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
             let section = 0
             let numberOfItems = collectionView?.numberOfItemsInSection(section) ?? 0
             

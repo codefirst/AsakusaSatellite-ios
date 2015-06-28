@@ -113,7 +113,7 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
         updateToolbar()
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
         UIAlertController.presentSimpleAlert(onViewController: self, title: NSLocalizedString("Cannot Load", comment: ""), error: error)
         updateToolbar()
     }

@@ -106,7 +106,7 @@ class WelcomeViewController: UIViewController {
             delay: 0,
             usingSpringWithDamping: 1.0,
             initialSpringVelocity: 0.0,
-            options: nil,
+            options: [],
             animations: { [weak self] in
                 if let s = self {
                     s.signinVC?.view.frame = s.view.bounds

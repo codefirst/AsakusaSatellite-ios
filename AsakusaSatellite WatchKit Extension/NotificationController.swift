@@ -70,7 +70,7 @@ class NotificationController: WKUserNotificationInterfaceController {
                 if  let cacheKey = user,
                     let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("NotificationUserIcon").stringByAppendingPathComponent("\(cacheKey).png"),
                     let iconPath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("UserIcon").stringByAppendingPathComponent("\(cacheKey).png") {
-                        let lastModified = fm.attributesOfItemAtPath(cachePath, error: nil)?[NSFileModificationDate] as? NSDate
+                        let lastModified = fm.attributesOfItemAtPath(cachePath)[NSFileModificationDate] as? NSDate
                         let inCache = lastModified.map({NSDate().timeIntervalSinceDate($0) < (60 * 60)}) ?? false
                         if inCache {
                             // NSLog("hit cache for \(cacheKey)")
@@ -85,7 +85,10 @@ class NotificationController: WKUserNotificationInterfaceController {
                                 let data = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext())
                                 UIGraphicsEndImageContext()
                                 
-                                fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil, error: nil)
+                                do {
+                                    try fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
+                                } catch _ {
+                                }
                                 data.writeToFile(cachePath, atomically: true)
                                 
                                 let watch = WKInterfaceDevice.currentDevice()

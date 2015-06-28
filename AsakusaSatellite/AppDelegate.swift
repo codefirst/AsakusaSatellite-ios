@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
             c.setActions([star, disagree, agree, reply], forContext: .Default)
         }
         
-        let settings = UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: [createMessageCategory])
+        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: [createMessageCategory])
         
         UIApplication.sharedApplication().registerForRemoteNotifications()
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
@@ -140,7 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         return nil
     }
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.5
     }
     
@@ -153,7 +153,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
                     delay: 0,
                     usingSpringWithDamping: 1.0,
                     initialSpringVelocity: 0,
-                    options: nil,
+                    options: [],
                     animations: {
                         let v = fromVC.view
                         v.frame = CGRectMake(0, transitionContext.containerView().frame.height, v.bounds.width, v.bounds.height)

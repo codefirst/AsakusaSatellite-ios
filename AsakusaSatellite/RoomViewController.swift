@@ -60,7 +60,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         refreshView.onRefresh = { completion in
-            self.reloadMessages(completion: completion)
+            self.reloadMessages(completion)
         }
         
         let keyboardSpacer = KeyboardSpacerView()
@@ -150,7 +150,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         var tmpFiles = [String]()
         for a in attachments {
             var file = ""
-            do {
+            repeat {
                 file = tmpFolder.stringByAppendingPathComponent("upload-\(filenameIndex).\(a.ext)")
                 ++filenameIndex
             } while NSFileManager.defaultManager().fileExistsAtPath(file)

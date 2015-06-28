@@ -30,7 +30,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     init() {
         super.init(frame: CGRectMake(0, 0, 320, 50))
-        autoresizingMask = .FlexibleWidth | .FlexibleBottomMargin // table footer does not support autolayout
+        autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin] // table footer does not support autolayout
         
         backgroundColor = Appearance.lightBackgroundColor
         
@@ -105,7 +105,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     // MARK: - UIImagePickerControllerDelegate
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
         picker.dismissViewControllerAnimated(true) {
             if let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage {
                 self.attachments += [(data: image.jpegData(1 * 1024 * 1024), ext: "jpg")]
@@ -144,7 +144,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     // MARK: - Input Accessory View
     
     private class PostAccessoryView: UIView {
-        let photoButton = UIButton.buttonWithType(.System) as! UIButton
+        let photoButton = UIButton.buttonWithType(.System)
         let attachmentsView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout().tap { (l: UICollectionViewFlowLayout) in
             l.scrollDirection = .Horizontal
             l.itemSize = CGSizeMake(256, 44 - 8)
@@ -153,7 +153,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         
         override init(frame: CGRect) {
             super.init(frame: CGRectMake(frame.origin.x, frame.origin.y, frame.width, 44))
-            autoresizingMask = .FlexibleWidth | .FlexibleBottomMargin
+            autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
             
             backgroundColor = Appearance.lightBackgroundColor
             photoButton.setTitle(NSLocalizedString("Photo", comment: ""), forState: .Normal)

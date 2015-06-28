@@ -69,7 +69,7 @@ class HeadUpImageViewController: UIViewController {
             delay: 0.0,
             usingSpringWithDamping: 0.8,
             initialSpringVelocity: 0.0,
-            options: nil,
+            options: [],
             animations: { () -> Void in
                 self.imageView.transform = CGAffineTransformIdentity
                 self.imageView.alpha = 1.0
@@ -81,7 +81,7 @@ class HeadUpImageViewController: UIViewController {
             delay: 0.0,
             usingSpringWithDamping: 0.8,
             initialSpringVelocity: 0.0,
-            options: nil,
+            options: [],
             animations: { () -> Void in
                 self.imageView.transform = CGAffineTransformMakeScale(1.1, 1.1)
                 self.imageView.alpha = 0.0

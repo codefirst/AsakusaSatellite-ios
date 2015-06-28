@@ -24,13 +24,13 @@ private let priorities = (high: Float(750), low: Float(250), fittingSizeLevel: F
 
 extension UIView {
     func autolayoutFormat(metrics: [String:CGFloat]?, _ views: [String:UIView]) -> String -> Void {
-        return self.autolayoutFormat(metrics, views, options: NSLayoutFormatOptions.allZeros)
+        return self.autolayoutFormat(metrics, views, options: NSLayoutFormatOptions())
     }
     
     func autolayoutFormat(metrics: [String:CGFloat]?, _ views: [String:UIView], options: NSLayoutFormatOptions) -> String -> Void {
         for v in views.values {
             if !v.isDescendantOfView(self) {
-                v.setTranslatesAutoresizingMaskIntoConstraints(false)
+                v.translatesAutoresizingMaskIntoConstraints = false
                 self.addSubview(v)
             }
         }
