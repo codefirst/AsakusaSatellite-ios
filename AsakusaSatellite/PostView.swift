@@ -74,7 +74,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     func updateViews() {
         textField.enabled = true
-        sendButton.enabled = !textField.text.isEmpty || attachments.count > 0
+        sendButton.enabled = !(textField.text?.isEmpty ?? true) || attachments.count > 0
     }
     
     func textChanged(sender: AnyObject?) {
@@ -86,7 +86,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         textField.enabled = false
         sendButton.enabled = false
         
-        onPost?(text: textField.text, attachments: attachments) { (clearField: Bool) -> Void in
+        onPost?(text: textField.text ?? "", attachments: attachments) { (clearField: Bool) -> Void in
             if clearField {
                 self.textField.text = ""
                 self.attachments.removeAll(keepCapacity: false)
@@ -107,8 +107,9 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
 
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
         picker.dismissViewControllerAnimated(true) {
-            if let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.attachments += [(data: image.jpegData(1 * 1024 * 1024), ext: "jpg")]
+            if  let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage,
+                let jpegData = image.jpegData(1 * 1024 * 1024) {
+                self.attachments.append((data: jpegData, ext: "jpg"))
                 self.textField.becomeFirstResponder()
             }
         }
@@ -144,7 +145,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     // MARK: - Input Accessory View
     
     private class PostAccessoryView: UIView {
-        let photoButton = UIButton.buttonWithType(.System)
+        let photoButton = UIButton(type: .System)
         let attachmentsView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout().tap { (l: UICollectionViewFlowLayout) in
             l.scrollDirection = .Horizontal
             l.itemSize = CGSizeMake(256, 44 - 8)

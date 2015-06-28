@@ -107,7 +107,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             switch r {
             case .Success(let many):
-                self.appendMessages(many.value.items.reverse())
+                self.appendMessages(many.items.reverse())
                 dispatch_async(dispatch_get_main_queue()) {
                     self.scrollToBottom()
                 }
@@ -128,7 +128,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         UIView.setAnimationsEnabled(false) // disable automatic animation
         let ids = self.messages.map{$0.id}
         for m in messages {
-            if find(ids, m.id) == nil {
+            if ids.indexOf(m.id) == nil {
                 self.messages.append(m)
                 self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.messages.count - 1, inSection: 0)], withRowAnimation: .None)
             }
@@ -162,12 +162,14 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
             for file in tmpFiles {
-                NSFileManager.defaultManager().removeItemAtPath(file, error: nil)
+                do {
+                    try NSFileManager.defaultManager().removeItemAtPath(file)
+                } catch _ {}
             }
             
             switch r {
-            case .Success(let postMessage):
-                self.reloadMessages(completion: nil)
+            case .Success(_):
+                self.reloadMessages(nil)
                 completion?(true)
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Cannot Send Message", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)

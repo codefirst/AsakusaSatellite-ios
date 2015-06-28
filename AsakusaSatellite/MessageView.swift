@@ -34,14 +34,18 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
                     let fm = NSFileManager.defaultManager()
                     if  let cacheKey = self.message?.screenName,
                         let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("UserIcon").stringByAppendingPathComponent("\(cacheKey).png") {
-                            fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil, error: nil)
-                            
-                            let lastModified = fm.attributesOfItemAtPath(cachePath, error: nil)?[NSFileModificationDate] as? NSDate
-                            let needsCache = lastModified.map({NSDate().timeIntervalSinceDate($0) > (60 * 60)}) ?? true
-                            if needsCache {
-                                let png = UIImagePNGRepresentation(image)
-                                NSLog("cache size = \(png.length)")
-                                png.writeToFile(cachePath, atomically: true)
+                            do {
+                                try fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
+                                let lastModified = try fm.attributesOfItemAtPath(cachePath)[NSFileModificationDate] as? NSDate
+                                
+                                let needsCache = lastModified.map({NSDate().timeIntervalSinceDate($0) > (60 * 60)}) ?? true
+                                if needsCache {
+                                    if let png = UIImagePNGRepresentation(image) {
+                                        NSLog("cache size = \(png.length)")
+                                        png.writeToFile(cachePath, atomically: true)
+                                    }
+                                }
+                            } catch _ {
                             }
                     }
                 })
@@ -247,7 +251,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let url = NSURL(string: attachments[indexPath.item].url) {
             let vc = HeadUpImageViewController(imageURL: url)
-            appDelegate.root.topViewController.presentViewController(vc, animated: true, completion: nil)
+            appDelegate.root.topViewController!.presentViewController(vc, animated: true, completion: nil)
         }
     }
 }

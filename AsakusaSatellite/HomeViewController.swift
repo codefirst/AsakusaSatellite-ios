@@ -84,7 +84,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         client?.roomList() { response in
             switch response {
             case .Success(let many):
-                self.rooms = many.value.items
+                self.rooms = many.items
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))

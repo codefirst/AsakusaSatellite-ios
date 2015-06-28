@@ -20,7 +20,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        edgesForExtendedLayout = nil
+        edgesForExtendedLayout = .None
         view.backgroundColor = Appearance.asakusaRed
         
         let alpha = CGFloat(0.9)

@@ -57,7 +57,7 @@ class NotificationController: WKUserNotificationInterfaceController {
                 let separatorLocation = (alert as NSString).rangeOfString(" / ").location
                 let body = (separatorLocation != NSNotFound ? (alert as NSString).substringFromIndex(separatorLocation + 3) : alert)
                 
-                let attrs: [NSObject: AnyObject] = [
+                let attrs: [String: AnyObject] = [
                     NSParagraphStyleAttributeName: (NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle).tap { (p: NSMutableParagraphStyle) in
                         // p.firstLineHeadIndent = 16 + 4 // iOS 8.3 + Watch OS 8.2: firstLineHeadIndent cause incorrect line break on the first line. use space characters instead.
                         p.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -70,8 +70,13 @@ class NotificationController: WKUserNotificationInterfaceController {
                 if  let cacheKey = user,
                     let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("NotificationUserIcon").stringByAppendingPathComponent("\(cacheKey).png"),
                     let iconPath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("UserIcon").stringByAppendingPathComponent("\(cacheKey).png") {
-                        let lastModified = fm.attributesOfItemAtPath(cachePath)[NSFileModificationDate] as? NSDate
-                        let inCache = lastModified.map({NSDate().timeIntervalSinceDate($0) < (60 * 60)}) ?? false
+                        let inCache: Bool
+                        do {
+                            let lastModified = try fm.attributesOfItemAtPath(cachePath)[NSFileModificationDate] as? NSDate
+                            inCache = lastModified.map({NSDate().timeIntervalSinceDate($0) < (60 * 60)}) ?? false
+                        } catch _ {
+                            inCache = false
+                        }
                         if inCache {
                             // NSLog("hit cache for \(cacheKey)")
                         } else {
@@ -89,10 +94,13 @@ class NotificationController: WKUserNotificationInterfaceController {
                                     try fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
                                 } catch _ {
                                 }
-                                data.writeToFile(cachePath, atomically: true)
                                 
-                                let watch = WKInterfaceDevice.currentDevice()
-                                watch.addCachedImageWithData(data, name: cacheKey)
+                                if let data = data {
+                                    data.writeToFile(cachePath, atomically: true)
+                                    
+                                    let watch = WKInterfaceDevice.currentDevice()
+                                    watch.addCachedImageWithData(data, name: cacheKey)
+                                }
                             }
                         }
                         group?.setBackgroundImageNamed(cacheKey)
