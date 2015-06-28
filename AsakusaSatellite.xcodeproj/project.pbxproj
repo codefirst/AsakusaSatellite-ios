@@ -33,6 +33,9 @@
 		EAA3A1E51AD9166800F6CD6B /* AsakusaSatellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */; };
 		EAA3A1E61AD91B9100F6CD6B /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3481AB7188200CF5691 /* Appearance.swift */; };
 		EAA3A1E71AD91BAE00F6CD6B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
+		EAAE26391B258C91004FAEB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAAE26371B258C91004FAEB7 /* Localizable.strings */; };
+		EAAE263A1B258C91004FAEB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAAE26371B258C91004FAEB7 /* Localizable.strings */; };
+		EAAE263B1B258C91004FAEB7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EAAE26371B258C91004FAEB7 /* Localizable.strings */; };
 		EAB4CD0B1AECC51800D2C816 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0A1AECC51800D2C816 /* InterfaceController.swift */; };
 		EAB4CD0D1AECC51800D2C816 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0C1AECC51800D2C816 /* NotificationController.swift */; };
 		EAB4CD0F1AECC51800D2C816 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0E1AECC51800D2C816 /* GlanceController.swift */; };
@@ -126,6 +129,8 @@
 		EA7C95C01ABEA37C00CD2641 /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsakusaSatellite.swift; sourceTree = "<group>"; };
 		EAA3A1E31AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AsakusaSatelliteSpec.swift; path = AsakusaSatelliteTests/AsakusaSatelliteSpec.swift; sourceTree = SOURCE_ROOT; };
+		EAAE26381B258C91004FAEB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EAAE263C1B258CA5004FAEB7 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AsakusaSatellite WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAB4CD081AECC51800D2C816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAB4CD091AECC51800D2C816 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
@@ -234,6 +239,7 @@
 				EA1FA4E01ABD567200BA1D68 /* Views */,
 				EA01F32B1AB7161400CF5691 /* Images.xcassets */,
 				EA01F32D1AB7161400CF5691 /* LaunchScreen.xib */,
+				EAAE26371B258C91004FAEB7 /* Localizable.strings */,
 				EA01F3221AB7161400CF5691 /* Supporting Files */,
 			);
 			path = AsakusaSatellite;
@@ -453,6 +459,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = EA01F3161AB7161400CF5691;
 			productRefGroup = EA01F3201AB7161400CF5691 /* Products */;
@@ -473,6 +480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA01F32F1AB7161400CF5691 /* LaunchScreen.xib in Resources */,
+				EAAE26391B258C91004FAEB7 /* Localizable.strings in Resources */,
 				EA00CA481ABEDE0100527848 /* iTunesArtwork in Resources */,
 				EA01F32C1AB7161400CF5691 /* Images.xcassets in Resources */,
 			);
@@ -490,6 +498,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAB4CD151AECC51800D2C816 /* AsakusaSatellite WatchKit App.app in Resources */,
+				EAAE263A1B258C91004FAEB7 /* Localizable.strings in Resources */,
 				EAB4CD111AECC51800D2C816 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAB4CD1D1AECC51800D2C816 /* Interface.storyboard in Resources */,
+				EAAE263B1B258C91004FAEB7 /* Localizable.strings in Resources */,
 				EAB4CD1F1AECC51800D2C816 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,6 +681,15 @@
 				EA01F32E1AB7161400CF5691 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		EAAE26371B258C91004FAEB7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EAAE26381B258C91004FAEB7 /* Base */,
+				EAAE263C1B258CA5004FAEB7 /* ja */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */ = {
