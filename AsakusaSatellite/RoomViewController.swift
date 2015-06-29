@@ -8,6 +8,7 @@
 
 import UIKit
 import AsakusaSatellite
+import SafariServices
 
 
 private let kCellID = "Cell"
@@ -91,6 +92,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         refreshView.refresh()
         tableView.tableFooterView = postView
+        
+        navigationController?.navigationBar.translucent = false // workaround for SFSafariViewController
     }
     
     // MARK: -
@@ -209,7 +212,12 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func onLinkTapped(messageView: MessageView, url: NSURL) {
-        navigationController?.pushViewController(MessageDetailViewController(URL: url), animated: true)
+        if #available(iOS 9.0, *) {
+            navigationController?.navigationBar.translucent = true // workaround for SFSafariViewController
+            navigationController?.pushViewController(SFSafariViewController(URL: url), animated: true)
+        } else {
+            navigationController?.pushViewController(MessageDetailViewController(URL: url), animated: true)
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
