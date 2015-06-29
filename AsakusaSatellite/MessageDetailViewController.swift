@@ -9,6 +9,7 @@
 import UIKit
 import AsakusaSatellite
 import TUSafariActivity
+import SafariServices
 
 
 class MessageDetailViewController: UIViewController, UIWebViewDelegate {
@@ -92,9 +93,15 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     // MARK: - WebView
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if navigationType == .LinkClicked {
-            webview.scalesPageToFit = true
-            navigationController?.setToolbarHidden(false, animated: true)
+        if navigationType == .LinkClicked, let url = request.URL {
+            if #available(iOS 9.0, *) {
+                navigationController?.navigationBar.translucent = true // workaround for SFSafariViewController
+                navigationController?.pushViewController(SFSafariViewController(URL: url), animated: true)
+                return false
+            } else {
+                webview.scalesPageToFit = true
+                navigationController?.setToolbarHidden(false, animated: true)
+            }
         }
         updateToolbar()
         return true
