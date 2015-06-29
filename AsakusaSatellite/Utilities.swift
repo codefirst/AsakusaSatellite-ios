@@ -60,7 +60,7 @@ extension UIImage {
     class func colorImage(color: UIColor, size: CGSize) -> UIImage {
         UIGraphicsBeginImageContext(size)
         color.set()
-        UIRectFillUsingBlendMode(CGRectMake(0, 0, size.width, size.height), kCGBlendModeCopy)
+        UIRectFillUsingBlendMode(CGRectMake(0, 0, size.width, size.height), .Copy)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
