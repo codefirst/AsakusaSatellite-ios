@@ -97,7 +97,12 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     func addPhoto(sender: AnyObject?) {
         let picker = UIImagePickerController()
-        picker.delegate = self
+        
+        // FIXME: Swift Compiler of Xcode 7b2 fails to compile on "Early Performance Inliner"
+//        picker.delegate = self
+        typealias P = protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>?
+        picker.delegate = unsafeBitCast(PostView?.Some(self), P.self)
+        
         picker.sourceType = .PhotoLibrary
         picker.allowsEditing = true
         containigViewController?.presentViewController(picker, animated: true, completion: nil)
