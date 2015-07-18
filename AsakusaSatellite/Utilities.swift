@@ -109,7 +109,7 @@ class KeyboardSpacerView : UIView {
         keyboardHeightConstraint?.priority = 1000
         addConstraint(keyboardHeightConstraint!)
         
-        NSNotificationCenter.defaultCenter().addObserverForName(UIKeyboardWillChangeFrameNotification, object: nil, queue: nil) { (n: NSNotification!) -> Void in
+        NSNotificationCenter.defaultCenter().addObserverForName(UIKeyboardWillChangeFrameNotification, object: nil, queue: nil) { (n: NSNotification) -> Void in
             if let userInfo = n.userInfo {
                 if let f = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
                     self.keyboardHeightConstraint?.constant = f.size.height
@@ -118,14 +118,10 @@ class KeyboardSpacerView : UIView {
             }
         }
         
-        NSNotificationCenter.defaultCenter().addObserverForName(UIKeyboardWillHideNotification, object: nil, queue: nil) { (n: NSNotification!) -> Void in
+        NSNotificationCenter.defaultCenter().addObserverForName(UIKeyboardWillHideNotification, object: nil, queue: nil) { (n: NSNotification) -> Void in
             self.keyboardHeightConstraint?.constant = 0
             self.onHeightChange?(0)
         }
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
