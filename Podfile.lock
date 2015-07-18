@@ -51,7 +51,7 @@ CHECKOUT OPTIONS:
     :commit: fd71afb3a0af2042b9f05a6b9f29317ad4903703
     :git: https://github.com/Alamofire/Alamofire.git
   AsakusaSatellite:
-    :commit: b7141fa681ea098c7498627f93516d0734ac9fe5
+    :commit: ad6e8a9e60f47c56c84c3d07f52ff605a0cc60c0
     :git: https://github.com/codefirst/AsakusaSatelliteSwiftClient.git
   HanekeSwift:
     :commit: 5631483fccfb68893f3f3c44b0fab3cba8f7cddb

@@ -57,7 +57,7 @@ class InlineMessageWebView: UIWebView {
         loadHTMLString(message?.html() ?? "", baseURL: baseURL)
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [NSObject : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if object === scrollView && keyPath == kContentSize {
             let height = Int(stringByEvaluatingJavaScriptFromString("document.getElementById(\"AsakusaSatMessageContent\").clientHeight") ?? "").map{CGFloat($0)} ?? 0
             contentSize = CGSizeMake(scrollView.contentSize.width, height)
