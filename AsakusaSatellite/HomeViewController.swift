@@ -67,6 +67,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        loadCachedRoomList()
         reloadRoomList()
         startAnimation()
     }
@@ -77,6 +78,19 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         stopAnimation()
     }
     
+    // MARK: - Caches
+    
+    private var cachedRoomListFile: String { return NSHomeDirectory().stringByAppendingPathComponent("Library/Caches/rooms.json") }
+    
+    private func loadCachedRoomList() {
+        guard let many = Many<Room>(file: cachedRoomListFile) else { return }
+        rooms = many.items
+    }
+    
+    private func cacheRoomList(many: Many<Room>) {
+        many.saveToFile(cachedRoomListFile)
+    }
+    
     // MARK: -
     
     func reloadRoomList() {
@@ -85,6 +99,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             switch response {
             case .Success(let many):
                 self.rooms = many.items
+                self.cacheRoomList(many)
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
