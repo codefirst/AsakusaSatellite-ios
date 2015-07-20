@@ -32,6 +32,8 @@
 		<dict>
 			<key>asakusa-satellite.herokuapp.com</key>
 			<dict/>
+			<key>keima.herokuapp.com</key>
+			<dict/>
 			<key>twitter.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
