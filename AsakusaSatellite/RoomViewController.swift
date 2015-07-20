@@ -12,6 +12,7 @@ import SafariServices
 
 
 private let kCellID = "Cell"
+private let kNumberOfCachedMessages = 20
 
 
 class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIWebViewDelegate {
@@ -80,6 +81,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
+        
+        loadCachedMessages()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -94,6 +97,20 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.tableFooterView = postView
         
         navigationController?.navigationBar.translucent = false // workaround for SFSafariViewController
+    }
+    
+    // MARK: - Caches
+    
+    private var cachedMessagesFile: String { return NSHomeDirectory().stringByAppendingPathComponent("Library/Caches/\(room.id)-messages.json") }
+    
+    private func loadCachedMessages() {
+        guard let many = Many<Message>(file: cachedMessagesFile) else { return }
+        appendMessages(many.items)
+    }
+    
+    private func cacheMessages() {
+        let messagesForCache = [Message](messages[max(0, messages.count - kNumberOfCachedMessages)..<messages.count])
+        Many<Message>(items: messagesForCache)?.saveToFile(cachedMessagesFile)
     }
     
     // MARK: -
@@ -137,6 +154,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         UIView.setAnimationsEnabled(true)
+        
+        cacheMessages()
     }
     
     private func scrollToBottom() {
@@ -190,7 +209,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return MessageView.layoutSize(forMessage: messages[indexPath.row], forWidth: tableView.frame.width).height
+        return MessageView.layoutSize(forMessage: messages[indexPath.row], forWidth: max(tableView.frame.width, 60)).height
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
