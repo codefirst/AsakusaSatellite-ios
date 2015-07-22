@@ -32,7 +32,6 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     
     convenience init(message: Message, baseURL: String) {
         self.init(message: message, baseURL: NSURL(string: baseURL), initialURL: nil)
-        title = message.name
     }
     
     convenience init (URL: NSURL) {
@@ -44,6 +43,8 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     }
     
     override func loadView() {
+        title = message?.name
+
         view = webview
         view.backgroundColor = Appearance.backgroundColor
         

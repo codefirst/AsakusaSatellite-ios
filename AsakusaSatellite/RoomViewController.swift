@@ -31,8 +31,6 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.room = room
         
         super.init(nibName: nil, bundle: nil)
-        
-        title = room.name
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -43,6 +41,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func loadView() {
         super.loadView()
+        
+        title = room.name
         
         view.backgroundColor = Appearance.backgroundColor
         tableView.backgroundColor = view.backgroundColor
