@@ -54,7 +54,7 @@ CHECKOUT OPTIONS:
     :commit: f992b1ec05bbaf99f40cbe579c1270c23ddc7684
     :git: https://github.com/codefirst/AsakusaSatelliteSwiftClient.git
   HanekeSwift:
-    :commit: 5631483fccfb68893f3f3c44b0fab3cba8f7cddb
+    :commit: 228e72502ab623be998d710669d80c673c7b5046
     :git: https://github.com/meteochu/HanekeSwift.git
   Socket.IO-Client-Swift:
     :commit: 94a3844181ae51ceb457c636a1f6398aabaff378
