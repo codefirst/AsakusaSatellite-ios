@@ -34,11 +34,6 @@
 			<dict/>
 			<key>keima.herokuapp.com</key>
 			<dict/>
-			<key>twitter.com</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
 		</dict>
 	</dict>
 	<key>UILaunchStoryboardName</key>
