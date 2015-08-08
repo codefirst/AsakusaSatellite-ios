@@ -16,5 +16,5 @@ pod 'TUSafariActivity', '~> 1.0'
 target 'Specs' do
     link_with 'AsakusaSatelliteTests'
     pod 'Quick'
-    pod 'Nimble'
+    pod 'Nimble', '2.0.0-rc.2'
 end

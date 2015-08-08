@@ -154,7 +154,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         for a in attachments {
             var file = ""
             repeat {
-                file = tmpFolder.stringByAppendingPathComponent("upload-\(filenameIndex).\(a.ext)")
+                file = "\(tmpFolder)/upload-\(filenameIndex).\(a.ext)"
                 ++filenameIndex
             } while NSFileManager.defaultManager().fileExistsAtPath(file)
             a.data.writeToFile(file, atomically: true)

@@ -17,7 +17,7 @@ import SwiftyJSON
 class AsakusaSatelliteSpec : QuickSpec {
     
     private func message(body body: String, htmlBody: String) -> Message? {
-        return Message(SwiftyJSON.JSON([
+        return Message(json: SwiftyJSON.JSON([
             "body": body,
             "html_body": htmlBody,
             "id": "1",

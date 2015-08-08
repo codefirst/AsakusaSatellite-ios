@@ -50,7 +50,7 @@ class NotificationController: WKUserNotificationInterfaceController {
     */
     
     override func didReceiveRemoteNotification(remoteNotification: [NSObject : AnyObject], withCompletion completionHandler: ((WKUserNotificationInterfaceType) -> Void)) {
-        let roomID = remoteNotification["room_id"] as? String
+        // let roomID = remoteNotification["room_id"] as? String
         let user = remoteNotification["user"] as? String
         if  let aps = remoteNotification["aps"] as? [String: AnyObject],
             let alert = aps["alert"] as? String {
@@ -68,8 +68,8 @@ class NotificationController: WKUserNotificationInterfaceController {
             
                 let fm = NSFileManager.defaultManager()
                 if  let cacheKey = user,
-                    let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("NotificationUserIcon").stringByAppendingPathComponent("\(cacheKey).png"),
-                    let iconPath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("UserIcon").stringByAppendingPathComponent("\(cacheKey).png") {
+                    let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path.map({"\($0)/NotificationUserIcon/\(cacheKey).png"}),
+                    let iconPath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path.map({"\($0)/UserIcon/\(cacheKey).png"}) {
                         let inCache: Bool
                         do {
                             let lastModified = try fm.attributesOfItemAtPath(cachePath)[NSFileModificationDate] as? NSDate
@@ -91,7 +91,7 @@ class NotificationController: WKUserNotificationInterfaceController {
                                 UIGraphicsEndImageContext()
                                 
                                 do {
-                                    try fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
+                                    try fm.createDirectoryAtPath((cachePath as NSString).stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
                                 } catch _ {
                                 }
                                 

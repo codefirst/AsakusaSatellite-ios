@@ -107,7 +107,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         
         let time = CGFloat(NSDate().timeIntervalSince1970)
         let periodInSeconds = CGFloat(30)
-        let offset = time * 2 * CGFloat(M_PI) / periodInSeconds
+        // let offset = time * 2 * CGFloat(M_PI) / periodInSeconds
         
         // NOTE:
         // invalidateLayout consume high cpu (> 60% on iPhone 6)

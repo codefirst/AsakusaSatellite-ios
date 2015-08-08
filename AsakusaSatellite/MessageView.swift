@@ -33,9 +33,9 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
                     // cache to watch
                     let fm = NSFileManager.defaultManager()
                     if  let cacheKey = self.message?.screenName,
-                        let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("UserIcon").stringByAppendingPathComponent("\(cacheKey).png") {
+                        let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path.map({"\($0)/UserIcon/\(cacheKey).png"}) {
                             do {
-                                try fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
+                                try fm.createDirectoryAtPath((cachePath as NSString).stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
                                 let lastModified = try fm.attributesOfItemAtPath(cachePath)[NSFileModificationDate] as? NSDate
                                 
                                 let needsCache = lastModified.map({NSDate().timeIntervalSinceDate($0) > (60 * 60)}) ?? true
