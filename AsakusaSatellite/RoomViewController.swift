@@ -145,14 +145,28 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func appendMessages(messages: [Message]) {
+        insertMessages(messages, beforeID: nil)
+    }
+    
+    private func insertMessages(messagesToInsert: [Message], beforeID: String?) {
         UIView.setAnimationsEnabled(false) // disable automatic animation
-        let ids = self.messages.map{$0.id}
-        for m in messages {
-            if ids.indexOf(m.id) == nil {
-                self.messages.append(m)
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.messages.count - 1, inSection: 0)], withRowAnimation: .None)
+        
+        var indexToInsert = messages.indexOf{$0.id == beforeID} ?? messages.count
+        for m in messagesToInsert {
+            if let cachedIndex = messages.map({$0.id}).indexOf(m.id) {
+                // update (m is already loaded into tableView)
+                if messages[cachedIndex].prevID == nil {
+                    messages[cachedIndex] = m
+                    tableView.reloadRowsAtIndexPaths([NSIndexPath(forItem: cachedIndex, inSection: 0)], withRowAnimation: .None)
+                }
+            } else {
+                // insert or append
+                messages.insert(m, atIndex: indexToInsert)
+                tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: indexToInsert, inSection: 0)], withRowAnimation: .None)
+                indexToInsert += 1
             }
         }
+        
         UIView.setAnimationsEnabled(true)
         
         cacheMessages()
@@ -204,12 +218,18 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - TableView
     
+    private func hasPreviousMessage(message: Message) -> Bool {
+        guard let prevID = message.prevID else { return false }
+        return messages.contains{$0.id == prevID}
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return MessageView.layoutSize(forMessage: messages[indexPath.row], forWidth: max(tableView.frame.width, 60)).height
+        let message = messages[indexPath.row]
+        return MessageView.layoutSize(forMessage: message, showsLoadButton: !hasPreviousMessage(message), forWidth: max(tableView.frame.width, 60)).height
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -220,6 +240,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.selectionStyle = .None
         cell.messageView.onLayoutChange = onLayoutChange
         cell.messageView.onLinkTapped = onLinkTapped
+        cell.messageView.onLoadTapped = hasPreviousMessage(message) ? nil : onLoadTapped
         return cell
     }
     
@@ -236,6 +257,24 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationController?.pushViewController(SFSafariViewController(URL: url), animated: true)
         } else {
             navigationController?.pushViewController(MessageDetailViewController(URL: url), animated: true)
+        }
+    }
+    
+    func onLoadTapped(messageView: MessageView) {
+        guard let message = messageView.message else { return }
+        let untilID = message.id
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        client.messageList(room.id, count: 20, sinceID: nil, untilID: untilID, order: .Asc) { r in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            switch r {
+            case .Success(let many):
+                self.insertMessages(many.items, beforeID: untilID)
+            case .Failure(let error):
+                let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
+                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
+                self.presentViewController(ac, animated: true, completion: nil)
+            }
         }
     }
     

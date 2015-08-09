@@ -78,6 +78,9 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
             attachmentsView.reloadData()
         }
     }
+    
+    let loadButton = UIButton(type: .System)
+    let loadButtonHeightConstraint: NSLayoutConstraint
     let iconView = UIImageView(frame: CGRectZero)
     let nameLabel = UILabel()
     let dateLabel = UILabel()
@@ -105,12 +108,25 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
     }
     var onLayoutChange: (MessageView -> Void)?
     var onLinkTapped: ((MessageView, NSURL) -> Void)?
+    var onLoadTapped: (MessageView -> Void)? {
+        didSet {
+            let showsLoadButton = (onLoadTapped != nil)
+            loadButtonHeightConstraint.constant = showsLoadButton ? 44 : 0
+            loadButton.hidden = !showsLoadButton
+        }
+    }
     
     override init(frame: CGRect) {
+        loadButtonHeightConstraint = NSLayoutConstraint(item: loadButton, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 0, constant: 0)
+        loadButtonHeightConstraint.active = true
         attachmentsViewConstraint = NSLayoutConstraint(item: attachmentsView, attribute: .Height, relatedBy: .Equal, toItem: attachmentsView, attribute: .Height, multiplier: 0, constant: 0)
         attachmentsView.addConstraint(attachmentsViewConstraint)
         
         super.init(frame: frame)
+        
+        loadButton.setTitle(NSLocalizedString("Load", comment: ""), forState: .Normal)
+        loadButton.addTarget(self, action: "load:", forControlEvents: .TouchUpInside)
+        loadButton.backgroundColor = Appearance.lightDarkBackgroundColor
         
         let iconSize = CGFloat(32)
         iconView.layer.cornerRadius = iconSize / 2
@@ -145,6 +161,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
             "iconSize": iconSize,
             "onepx": Appearance.onepx,
             ], [
+                "load": loadButton,
                 "icon": iconView,
                 "name": nameLabel,
                 "date": dateLabel,
@@ -153,12 +170,14 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
                 "web": webView,
                 "separator": separator
             ])
+        autolayout("H:|[load]|")
         autolayout("H:|-p-[icon(==iconSize)]-p-[name][date]-p-|")
         autolayout("H:|-p-[body]-p-|")
         autolayout("H:|[attachments]|")
         autolayout("H:|[separator]|")
-        autolayout("V:|-sp-[date]")
-        autolayout("V:|-p-[icon(==iconSize)]-p-[body]-p-[attachments]|")
+        autolayout("V:|[load]")
+        autolayout("V:[load]-sp-[date]")
+        autolayout("V:[load]-p-[icon(==iconSize)]-p-[body]-p-[attachments]|")
         autolayout("V:[separator(==onepx)]|")
         addEqualConstraint(.CenterY, view: nameLabel, toView: iconView)
         bringSubviewToFront(separator)
@@ -168,6 +187,12 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Actions
+    
+    @objc private func load(sender: AnyObject?) {
+        onLoadTapped?(self)
+    }
+    
     // MARK: - Layout Size
     
     struct LayoutStatic {
@@ -175,10 +200,11 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         static var webViewHeightsCache = [String: CGFloat]() // map: message.id -> height
     }
     
-    class func layoutSize(forMessage m: Message, forWidth w: CGFloat) -> CGSize {
+    class func layoutSize(forMessage m: Message, showsLoadButton: Bool, forWidth w: CGFloat) -> CGSize {
         let v = LayoutStatic.view
         v.bodyLabel.text = m.body
         v.attachments = m.attachments
+        v.onLoadTapped = showsLoadButton ? {_ in ()} : nil
         
         // we cannot calculate webview height synchronously.
         // add webview height after once loaded and cached the webview height
@@ -214,6 +240,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         iconView.image = nil
         
         attachmentsViewConstraint.constant = 0 // UITableView.dequeue cause layout before contents set that may result in autolayout error
+        loadButtonHeightConstraint.constant = 0
         
         webView.message = nil // clear content
         webView.removeFromSuperview() // remove constraints

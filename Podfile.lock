@@ -48,10 +48,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Alamofire:
-    :commit: 61d6ddf9c91da83a062cbe29dc6b7f6a0a5d8789
+    :commit: 1b7b1f1aa4243004369c9e741d08ff4cdb072470
     :git: https://github.com/Alamofire/Alamofire.git
   AsakusaSatellite:
-    :commit: b8fc8e9e25de447dfb817aa689f71f77d70481d8
+    :commit: e15978e50a38d0255ce791af996cdfcecf42f30c
     :git: https://github.com/codefirst/AsakusaSatelliteSwiftClient.git
   HanekeSwift:
     :commit: 58d7e2e5590b8767a76c6b2131e1fa28b72ff894
