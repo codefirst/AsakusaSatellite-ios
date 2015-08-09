@@ -80,7 +80,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     // MARK: - Caches
     
-    private var cachedRoomListFile: String { return NSHomeDirectory().stringByAppendingPathComponent("Library/Caches/rooms.json") }
+    private var cachedRoomListFile: String { return "\(NSHomeDirectory())/Library/Caches/rooms.json" }
     
     private func loadCachedRoomList() {
         guard let many = Many<Room>(file: cachedRoomListFile) else { return }

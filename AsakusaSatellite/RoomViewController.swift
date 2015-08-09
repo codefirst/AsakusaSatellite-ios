@@ -101,7 +101,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - Caches
     
-    private var cachedMessagesFile: String { return NSHomeDirectory().stringByAppendingPathComponent("Library/Caches/\(room.id)-messages.json") }
+    private var cachedMessagesFile: String { return "\(NSHomeDirectory())/Library/Caches/\(room.id)-messages.json" }
     
     private func loadCachedMessages() {
         guard let many = Many<Message>(file: cachedMessagesFile) else { return }
