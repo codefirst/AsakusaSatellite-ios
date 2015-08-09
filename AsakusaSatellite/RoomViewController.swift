@@ -260,7 +260,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func onLoadTapped(messageView: MessageView) {
+    func onLoadTapped(messageView: MessageView, completion: (Void) -> Void) {
         guard let message = messageView.message else { return }
         let untilID = message.id
         
@@ -275,6 +275,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
                 self.presentViewController(ac, animated: true, completion: nil)
             }
+            completion()
         }
     }
     

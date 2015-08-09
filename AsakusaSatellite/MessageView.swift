@@ -108,7 +108,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
     }
     var onLayoutChange: (MessageView -> Void)?
     var onLinkTapped: ((MessageView, NSURL) -> Void)?
-    var onLoadTapped: (MessageView -> Void)? {
+    var onLoadTapped: ((MessageView, completion: (Void) -> Void)-> Void)? {
         didSet {
             let showsLoadButton = (onLoadTapped != nil)
             loadButtonHeightConstraint.constant = showsLoadButton ? 44 : 0
@@ -190,7 +190,10 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
     // MARK: - Actions
     
     @objc private func load(sender: AnyObject?) {
-        onLoadTapped?(self)
+        loadButton.enabled = false
+        onLoadTapped?(self) {
+            self.loadButton.enabled = true
+        }
     }
     
     // MARK: - Layout Size
