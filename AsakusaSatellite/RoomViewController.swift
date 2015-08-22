@@ -150,6 +150,11 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     private func insertMessages(messagesToInsert: [Message], beforeID: String?) {
         UIView.setAnimationsEnabled(false) // disable automatic animation
+        tableView.beginUpdates()
+        
+        // reload cells with load button
+        let reloadedIndexes = messages.filter{!hasPreviousMessage($0)}.flatMap{m in messages.indexOf{$0.id == m.id}}
+        tableView.reloadRowsAtIndexPaths(reloadedIndexes.map{NSIndexPath(forItem: $0, inSection: 0)}, withRowAnimation: .None)
         
         var indexToInsert = messages.indexOf{$0.id == beforeID} ?? messages.count
         for m in messagesToInsert {
@@ -157,7 +162,6 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 // update (m is already loaded into tableView)
                 if messages[cachedIndex].prevID == nil {
                     messages[cachedIndex] = m
-                    tableView.reloadRowsAtIndexPaths([NSIndexPath(forItem: cachedIndex, inSection: 0)], withRowAnimation: .None)
                 }
             } else {
                 // insert or append
@@ -167,6 +171,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         
+        tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
         
         cacheMessages()
