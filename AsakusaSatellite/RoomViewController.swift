@@ -262,10 +262,11 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func onLoadTapped(messageView: MessageView, completion: (Void) -> Void) {
         guard let message = messageView.message else { return }
+        let sinceID = messages.indexOf{$0.id == message.id}.flatMap{$0 > 0 ? messages[$0 - 1].id : nil}
         let untilID = message.id
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        client.messageList(room.id, count: 20, sinceID: nil, untilID: untilID, order: .Asc) { r in
+        client.messageList(room.id, count: 20, sinceID: sinceID, untilID: untilID, order: .Asc) { r in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             switch r {
             case .Success(let many):
