@@ -865,7 +865,6 @@
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "999c7c3e-5f7e-4adb-bf84-1a822cc94889";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
@@ -881,7 +880,6 @@
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "163c49d2-754b-471d-82cf-730bbca5a020";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
@@ -900,7 +898,6 @@
 				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9ef0a26a-bf6c-44d1-aab3-95b3e629b9b7";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
@@ -916,7 +913,6 @@
 				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d0d667d5-7483-4b85-bbfc-63f19da02c05";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
 				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
