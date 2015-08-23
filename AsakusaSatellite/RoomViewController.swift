@@ -12,6 +12,7 @@ import SafariServices
 
 
 private let kCellID = "Cell"
+private let kNumberOfCachedMessages = 20
 
 
 class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIWebViewDelegate {
@@ -80,6 +81,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
+        
+        loadCachedMessages()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -94,6 +97,20 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.tableFooterView = postView
         
         navigationController?.navigationBar.translucent = false // workaround for SFSafariViewController
+    }
+    
+    // MARK: - Caches
+    
+    private var cachedMessagesFile: String { return "\(NSHomeDirectory())/Library/Caches/\(room.id)-messages.json" }
+    
+    private func loadCachedMessages() {
+        guard let many = Many<Message>(file: cachedMessagesFile) else { return }
+        appendMessages(many.items)
+    }
+    
+    private func cacheMessages() {
+        let messagesForCache = [Message](messages[max(0, messages.count - kNumberOfCachedMessages)..<messages.count])
+        Many<Message>(items: messagesForCache)?.saveToFile(cachedMessagesFile)
     }
     
     // MARK: -
@@ -128,15 +145,36 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func appendMessages(messages: [Message]) {
+        insertMessages(messages, beforeID: nil)
+    }
+    
+    private func insertMessages(messagesToInsert: [Message], beforeID: String?) {
         UIView.setAnimationsEnabled(false) // disable automatic animation
-        let ids = self.messages.map{$0.id}
-        for m in messages {
-            if ids.indexOf(m.id) == nil {
-                self.messages.append(m)
-                self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.messages.count - 1, inSection: 0)], withRowAnimation: .None)
+        tableView.beginUpdates()
+        
+        // reload cells with load button
+        let reloadedIndexes = messages.filter{!hasPreviousMessage($0)}.flatMap{m in messages.indexOf{$0.id == m.id}}
+        tableView.reloadRowsAtIndexPaths(reloadedIndexes.map{NSIndexPath(forItem: $0, inSection: 0)}, withRowAnimation: .None)
+        
+        var indexToInsert = messages.indexOf{$0.id == beforeID} ?? messages.count
+        for m in messagesToInsert {
+            if let cachedIndex = messages.map({$0.id}).indexOf(m.id) {
+                // update (m is already loaded into tableView)
+                if messages[cachedIndex].prevID == nil {
+                    messages[cachedIndex] = m
+                }
+            } else {
+                // insert or append
+                messages.insert(m, atIndex: indexToInsert)
+                tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: indexToInsert, inSection: 0)], withRowAnimation: .None)
+                indexToInsert += 1
             }
         }
+        
+        tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
+        
+        cacheMessages()
     }
     
     private func scrollToBottom() {
@@ -185,12 +223,18 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - TableView
     
+    private func hasPreviousMessage(message: Message) -> Bool {
+        guard let prevID = message.prevID else { return false }
+        return messages.contains{$0.id == prevID}
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return MessageView.layoutSize(forMessage: messages[indexPath.row], forWidth: tableView.frame.width).height
+        let message = messages[indexPath.row]
+        return MessageView.layoutSize(forMessage: message, showsLoadButton: !hasPreviousMessage(message), forWidth: max(tableView.frame.width, 60)).height
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -201,6 +245,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.selectionStyle = .None
         cell.messageView.onLayoutChange = onLayoutChange
         cell.messageView.onLinkTapped = onLinkTapped
+        cell.messageView.onLoadTapped = hasPreviousMessage(message) ? nil : onLoadTapped
         return cell
     }
     
@@ -217,6 +262,26 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationController?.pushViewController(SFSafariViewController(URL: url), animated: true)
         } else {
             navigationController?.pushViewController(MessageDetailViewController(URL: url), animated: true)
+        }
+    }
+    
+    func onLoadTapped(messageView: MessageView, completion: (Void) -> Void) {
+        guard let message = messageView.message else { return }
+        let sinceID = messages.indexOf{$0.id == message.id}.flatMap{$0 > 0 ? messages[$0 - 1].id : nil}
+        let untilID = message.id
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        client.messageList(room.id, count: 20, sinceID: sinceID, untilID: untilID, order: .Asc) { r in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            switch r {
+            case .Success(let many):
+                self.insertMessages(many.items, beforeID: untilID)
+            case .Failure(let error):
+                let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
+                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
+                self.presentViewController(ac, animated: true, completion: nil)
+            }
+            completion()
         }
     }
     
