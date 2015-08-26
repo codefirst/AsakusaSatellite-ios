@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (2.0.0-beta.1)
+  - Alamofire (2.0.0-beta.3)
   - AsakusaSatellite (0.3.2):
     - Alamofire (~> 2.0.0-beta1)
     - Socket.IO-Client-Swift (~> 2.3)
@@ -23,7 +23,7 @@ DEPENDENCIES:
     branch `swift-2`)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`, branch `xcode7`)
   - TUSafariActivity (~> 1.0)
-  - UTIKit (from `https://github.com/banjun/UTIKit.git`, branch `xcode7`)
+  - UTIKit (from `https://github.com/cockscomb/UTIKit.git`, branch `swift2`)
 
 EXTERNAL SOURCES:
   AsakusaSatellite:
@@ -39,28 +39,28 @@ EXTERNAL SOURCES:
     :branch: xcode7
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
   UTIKit:
-    :branch: xcode7
-    :git: https://github.com/banjun/UTIKit.git
+    :branch: swift2
+    :git: https://github.com/cockscomb/UTIKit.git
 
 CHECKOUT OPTIONS:
   AsakusaSatellite:
-    :commit: bf8cbdd1b15343a7d4bf4c3aacd309390652c023
+    :commit: 136e801a9f25bc486e5a060fb0349053afa04f59
     :git: https://github.com/codefirst/AsakusaSatelliteSwiftClient.git
   HanekeSwift:
     :commit: 58d7e2e5590b8767a76c6b2131e1fa28b72ff894
     :git: https://github.com/meteochu/HanekeSwift.git
   Socket.IO-Client-Swift:
-    :commit: 4fdb49ea2fe0a87e5bc6add8259f54a69f38646c
+    :commit: ccd6dcbf0a05d5c0ddc564a1b385beba3715c8c3
     :git: https://github.com/socketio/socket.io-client-swift.git
   SwiftyJSON:
     :commit: f269523ac572979245baa99c8475eab73caf1e9b
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
   UTIKit:
-    :commit: bececa8ac63c39944e76d4c87640cda8b6159a6a
-    :git: https://github.com/banjun/UTIKit.git
+    :commit: 353fe72d15c0b2b31d5d2862fd44ad99cab71757
+    :git: https://github.com/cockscomb/UTIKit.git
 
 SPEC CHECKSUMS:
-  Alamofire: 96feccc1e48a735edb92395cf023ba4ed52bdb45
+  Alamofire: 39dddb7d3725d1771b1d2f7099c8bd45bd83ffbb
   AsakusaSatellite: 3b407d13a16164946b6378d9bd8fef5fb7f84cb8
   HanekeSwift: 50d37bfbc4432edc649167e538c259feccb4a2bb
   Nimble: e3cf5e73a491daf21c2bc88783dbfc55ce8b8e02
