@@ -253,7 +253,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == .LinkClicked {
-            request.URL.map{onLinkTapped?(self, $0)}
+            if let u = request.URL { onLinkTapped?(self, u) }
             return false
         }
         return true
