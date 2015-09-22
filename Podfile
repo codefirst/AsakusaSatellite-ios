@@ -4,16 +4,14 @@ use_frameworks!
 link_with 'AsakusaSatellite'
 
 pod 'AsakusaSatellite', :git => 'https://github.com/codefirst/AsakusaSatelliteSwiftClient.git', :branch => 'xcode7'
-pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git', :branch => 'xcode7'
-pod 'Socket.IO-Client-Swift', :git => 'https://github.com/socketio/socket.io-client-swift.git', :branch => 'swift-2'
 pod 'UTIKit', :git => 'https://github.com/cockscomb/UTIKit.git', :branch => 'swift2'
 
-pod 'HanekeSwift', :git => 'https://github.com/meteochu/HanekeSwift.git', :branch => 'swift-2.0'
+pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :tag => 'v0.10.0'
 pod 'TUSafariActivity', '~> 1.0'
 
 
 target 'Specs' do
     link_with 'AsakusaSatelliteTests'
     pod 'Quick'
-    pod 'Nimble', '2.0.0-rc.2'
+    pod 'Nimble', '2.0.0-rc.3'
 end
