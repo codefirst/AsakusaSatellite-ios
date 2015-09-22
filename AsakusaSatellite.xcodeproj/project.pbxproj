@@ -40,10 +40,10 @@
 		EAB4CD0D1AECC51800D2C816 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0C1AECC51800D2C816 /* NotificationController.swift */; };
 		EAB4CD0F1AECC51800D2C816 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0E1AECC51800D2C816 /* GlanceController.swift */; };
 		EAB4CD111AECC51800D2C816 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD101AECC51800D2C816 /* Images.xcassets */; };
-		EAB4CD151AECC51800D2C816 /* AsakusaSatellite WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */; };
 		EAB4CD1D1AECC51800D2C816 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */; };
 		EAB4CD1F1AECC51800D2C816 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1E1AECC51800D2C816 /* Images.xcassets */; };
-		EAB4CD221AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EABEF6211BB163C700659F10 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EABEF6241BB163C700659F10 /* AsakusaSatellite WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */; };
 		EACA7D9B1AEDA5D30073D1A5 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,19 +55,19 @@
 			remoteGlobalIDString = EA01F31E1AB7161400CF5691;
 			remoteInfo = AsakusaSatellite;
 		};
-		EAB4CD161AECC51800D2C816 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EAB4CD131AECC51800D2C816;
-			remoteInfo = "AsakusaSatellite WatchKit App";
-		};
-		EAB4CD201AECC51800D2C816 /* PBXContainerItemProxy */ = {
+		EABEF61F1BB163C700659F10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = EAB4CD041AECC51800D2C816;
 			remoteInfo = "AsakusaSatellite WatchKit Extension";
+		};
+		EABEF6221BB163C700659F10 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAB4CD131AECC51800D2C816;
+			remoteInfo = "AsakusaSatellite WatchKit App";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -82,15 +82,26 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EAB4CD291AECC51800D2C816 /* Embed App Extensions */ = {
+		EABEF6251BB163C700659F10 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				EAB4CD221AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */,
+				EABEF6211BB163C700659F10 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EABEF6261BB163C700659F10 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				EABEF6241BB163C700659F10 /* AsakusaSatellite WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -142,6 +153,7 @@
 		EAB4CD1A1AECC51800D2C816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAB4CD1C1AECC51800D2C816 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		EAB4CD1E1AECC51800D2C816 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EABEF6271BB1644600659F10 /* AsakusaSatellite WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit App.entitlements"; sourceTree = "<group>"; };
 		EACA7D9A1AED3BD50073D1A5 /* Common-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common-Bridging-Header.h"; path = "AsakusaSatellite/Common-Bridging-Header.h"; sourceTree = "<group>"; };
 		EAEAA83A1AECF3D20096D410 /* AsakusaSatellite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AsakusaSatellite.entitlements; sourceTree = "<group>"; };
 		EAEAA83B1AECF3F00096D410 /* AsakusaSatellite WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -320,6 +332,7 @@
 		EAB4CD181AECC51800D2C816 /* AsakusaSatellite WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
+				EABEF6271BB1644600659F10 /* AsakusaSatellite WatchKit App.entitlements */,
 				EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */,
 				EAB4CD1E1AECC51800D2C816 /* Images.xcassets */,
 				EAB4CD191AECC51800D2C816 /* Supporting Files */,
@@ -348,13 +361,13 @@
 				EA01F31D1AB7161400CF5691 /* Resources */,
 				8A5DCB0E0601C1EFAA06FF5C /* Embed Pods Frameworks */,
 				8E468DDD61929F7AE48B059F /* Copy Pods Resources */,
-				EAB4CD291AECC51800D2C816 /* Embed App Extensions */,
 				EA593B801AED3748001CBCB5 /* Embed Frameworks */,
+				EABEF6261BB163C700659F10 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				EAB4CD211AECC51800D2C816 /* PBXTargetDependency */,
+				EABEF6231BB163C700659F10 /* PBXTargetDependency */,
 			);
 			name = AsakusaSatellite;
 			productName = AsakusaSatellite;
@@ -393,27 +406,28 @@
 			buildRules = (
 			);
 			dependencies = (
-				EAB4CD171AECC51800D2C816 /* PBXTargetDependency */,
 			);
 			name = "AsakusaSatellite WatchKit Extension";
 			productName = "AsakusaSatellite WatchKit Extension";
 			productReference = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 		EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAB4CD271AECC51800D2C816 /* Build configuration list for PBXNativeTarget "AsakusaSatellite WatchKit App" */;
 			buildPhases = (
 				EAB4CD121AECC51800D2C816 /* Resources */,
+				EABEF6251BB163C700659F10 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EABEF6201BB163C700659F10 /* PBXTargetDependency */,
 			);
 			name = "AsakusaSatellite WatchKit App";
 			productName = "AsakusaSatellite WatchKit App";
 			productReference = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
+			productType = "com.apple.product-type.application.watchapp2";
 		};
 /* End PBXNativeTarget section */
 
@@ -422,7 +436,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = codefirst;
 				TargetAttributes = {
 					EA01F31E1AB7161400CF5691 = {
@@ -450,6 +464,11 @@
 					EAB4CD131AECC51800D2C816 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = FPZK4WRGW7;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -498,7 +517,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAB4CD151AECC51800D2C816 /* AsakusaSatellite WatchKit App.app in Resources */,
 				EAAE263A1B258C91004FAEB7 /* Localizable.strings in Resources */,
 				EAB4CD111AECC51800D2C816 /* Images.xcassets in Resources */,
 			);
@@ -663,15 +681,15 @@
 			target = EA01F31E1AB7161400CF5691 /* AsakusaSatellite */;
 			targetProxy = EA01F3351AB7161400CF5691 /* PBXContainerItemProxy */;
 		};
-		EAB4CD171AECC51800D2C816 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */;
-			targetProxy = EAB4CD161AECC51800D2C816 /* PBXContainerItemProxy */;
-		};
-		EAB4CD211AECC51800D2C816 /* PBXTargetDependency */ = {
+		EABEF6201BB163C700659F10 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EAB4CD041AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */;
-			targetProxy = EAB4CD201AECC51800D2C816 /* PBXContainerItemProxy */;
+			targetProxy = EABEF61F1BB163C700659F10 /* PBXContainerItemProxy */;
+		};
+		EABEF6231BB163C700659F10 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */;
+			targetProxy = EABEF6221BB163C700659F10 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -870,10 +888,14 @@
 				);
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -886,10 +908,14 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -897,7 +923,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit App/AsakusaSatellite WatchKit App.entitlements";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -907,9 +935,10 @@
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -917,15 +946,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit App/AsakusaSatellite WatchKit App.entitlements";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
