@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EA01F31E1AB7161400CF5691"
-               BuildableName = "AsakusaSatellite.app"
+               BuildableName = "AsakusaSatelliteApp.app"
                BlueprintName = "AsakusaSatellite"
                ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
             </BuildableReference>
@@ -105,7 +105,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EA01F31E1AB7161400CF5691"
-            BuildableName = "AsakusaSatellite.app"
+            BuildableName = "AsakusaSatelliteApp.app"
             BlueprintName = "AsakusaSatellite"
             ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
          </BuildableReference>
@@ -128,7 +128,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EA01F31E1AB7161400CF5691"
-            BuildableName = "AsakusaSatellite.app"
+            BuildableName = "AsakusaSatelliteApp.app"
             BlueprintName = "AsakusaSatellite"
             ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
          </BuildableReference>
@@ -147,7 +147,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EA01F31E1AB7161400CF5691"
-            BuildableName = "AsakusaSatellite.app"
+            BuildableName = "AsakusaSatelliteApp.app"
             BlueprintName = "AsakusaSatellite"
             ReferencedContainer = "container:AsakusaSatellite.xcodeproj">
          </BuildableReference>

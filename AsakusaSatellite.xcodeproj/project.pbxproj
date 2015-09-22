@@ -116,7 +116,7 @@
 		BA23D058DC67A17776C1F6FB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E173414C0868E080A15AFA2B /* Pods_AsakusaSatellite_WatchKit_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsakusaSatellite_WatchKit_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA00CA471ABEDE0100527848 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
-		EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsakusaSatellite.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA01F31F1AB7161400CF5691 /* AsakusaSatelliteApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsakusaSatelliteApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA01F3231AB7161400CF5691 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA01F3241AB7161400CF5691 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA01F32B1AB7161400CF5691 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 		EA01F3201AB7161400CF5691 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */,
+				EA01F31F1AB7161400CF5691 /* AsakusaSatelliteApp.app */,
 				EA01F3341AB7161400CF5691 /* AsakusaSatelliteTests.xctest */,
 				EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */,
 				EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */,
@@ -371,7 +371,7 @@
 			);
 			name = AsakusaSatellite;
 			productName = AsakusaSatellite;
-			productReference = EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */;
+			productReference = EA01F31F1AB7161400CF5691 /* AsakusaSatelliteApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EA01F3331AB7161400CF5691 /* AsakusaSatelliteTests */ = {
@@ -815,7 +815,7 @@
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)App";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
@@ -830,7 +830,7 @@
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)App";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
