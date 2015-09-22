@@ -66,7 +66,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         let keyboardSpacer = KeyboardSpacerView()
-        let autolayout = view.autolayoutFormat(["p": 8], [
+        let autolayout = view.northLayoutFormat(["p": 8], [
             "table": tableView,
             "keyboard": keyboardSpacer
             ])
@@ -326,7 +326,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             
-            let autolayout = contentView.autolayoutFormat(nil, ["v": messageView])
+            let autolayout = contentView.northLayoutFormat([:], ["v": messageView])
             autolayout("H:|[v]|")
             autolayout("V:|[v]|")
         }

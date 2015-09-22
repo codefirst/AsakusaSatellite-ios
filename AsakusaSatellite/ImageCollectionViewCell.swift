@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NorthLayout
 
 class ImageCollectionViewCell: UICollectionViewCell {
     let imageView = UIImageView(frame: CGRectZero)
@@ -19,7 +20,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 4
         
-        let autolayout = contentView.autolayoutFormat(nil, ["v" : imageView])
+        let autolayout = contentView.northLayoutFormat([:], ["v" : imageView])
         autolayout("H:|[v]|")
         autolayout("V:|[v]|")
     }

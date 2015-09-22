@@ -40,7 +40,7 @@ class HeadUpImageViewController: UIViewController {
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "close:"))
         
-        let autolayout = view.autolayoutFormat(nil, ["image": imageView])
+        let autolayout = view.northLayoutFormat([:], ["image": imageView])
         autolayout("H:|[image]|")
         autolayout("V:|[image]|")
     }

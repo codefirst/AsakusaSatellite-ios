@@ -7,6 +7,7 @@ PODS:
     - UTIKit (~> 1.1)
   - HanekeSwift (0.10.0)
   - Nimble (2.0.0-rc.3)
+  - NorthLayout (2.0.0)
   - Quick (0.6.0)
   - Socket.IO-Client-Swift (3.0.2)
   - SwiftyJSON (2.3.0)
@@ -18,6 +19,7 @@ DEPENDENCIES:
     branch `xcode7`)
   - HanekeSwift (from `https://github.com/Haneke/HanekeSwift.git`, tag `v0.10.0`)
   - Nimble (= 2.0.0-rc.3)
+  - NorthLayout
   - Quick
   - TUSafariActivity (~> 1.0)
   - UTIKit (from `https://github.com/cockscomb/UTIKit.git`, branch `swift2`)
@@ -49,6 +51,7 @@ SPEC CHECKSUMS:
   AsakusaSatellite: fe0a619cc285f991fe8be29a38707b4b62c84041
   HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
   Nimble: 9dff98ee195ffe7351d3b2fb01d3a1420fd97948
+  NorthLayout: 52739ecae3c9c5877770869d4277c308512f9fd5
   Quick: 563686dbcf0ae0f9f7401ac9cd2d786ee1b7f3d7
   Socket.IO-Client-Swift: c68c105ee88d03d4610be8764f2e13ca2908de63
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4

@@ -41,7 +41,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
             tf.borderStyle = .RoundedRect
             tf.delegate = self
             tf.addTarget(self, action: "textChanged:", forControlEvents: .EditingChanged)
-            tf.setContentCompressionResistancePriorityHigh(.Horizontal)
+            tf.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
 
             self.postAccessoryView.photoButton.addTarget(self, action: "addPhoto:", forControlEvents: .TouchUpInside)
             self.postAccessoryView.attachmentsView.dataSource = self
@@ -51,10 +51,10 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         }
         sendButton.tap { (b: UIButton) in
             b.addTarget(self, action: "post:", forControlEvents: .TouchUpInside)
-            b.setContentHuggingPriorityHigh(.Horizontal)
+            b.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
         }
         
-        let autolayout = autolayoutFormat(["p": 8, "onepx": Appearance.onepx], [
+        let autolayout = northLayoutFormat(["p": 8, "onepx": Appearance.onepx], [
             "text": textField,
             "send": sendButton,
             "border": Appearance.separatorView(),
@@ -167,7 +167,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
             attachmentsView.showsHorizontalScrollIndicator = false
             attachmentsView.showsVerticalScrollIndicator = false
             
-            let autolayout = autolayoutFormat(["p": 8], ["photo": photoButton, "attachments": attachmentsView])
+            let autolayout = northLayoutFormat(["p": 8], ["photo": photoButton, "attachments": attachmentsView])
             autolayout("H:|-p-[photo]-p-[attachments]|")
             autolayout("V:|-p-[photo]-p-|")
             autolayout("V:|[attachments]|")

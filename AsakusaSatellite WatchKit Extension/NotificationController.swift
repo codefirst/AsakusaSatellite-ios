@@ -97,13 +97,13 @@ class NotificationController: WKUserNotificationInterfaceController {
                                 
                                 if let data = data {
                                     data.writeToFile(cachePath, atomically: true)
-                                    
-                                    let watch = WKInterfaceDevice.currentDevice()
-                                    watch.addCachedImageWithData(data, name: cacheKey)
                                 }
                             }
                         }
-                        group?.setBackgroundImageNamed(cacheKey)
+                        
+                        if let cachedImage = UIImage(contentsOfFile: cachePath) {
+                            group?.setBackgroundImage(cachedImage)
+                        }
                 }
                 
                 completionHandler(.Custom)

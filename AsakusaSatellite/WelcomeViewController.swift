@@ -8,6 +8,7 @@
 
 import UIKit
 import AsakusaSatellite
+import NorthLayout
 
 
 class WelcomeViewController: UIViewController {
@@ -31,7 +32,7 @@ class WelcomeViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""), style: .Plain, target: self, action: "cancelSignin:")
         
-        let autolayout = view.autolayoutFormat([
+        let autolayout = view.northLayoutFormat([
             "p": 20,
             ], [
                 "logo": logoView,
@@ -43,7 +44,7 @@ class WelcomeViewController: UIViewController {
         view.addCenterXConstraint(signinButton)
         view.addEqualConstraint(.Width, view: signinButton, toView: logoView)
         autolayout("V:|-p-[spacerT][logo]-p-[signin(==44)][spacerB(==spacerT)]-p-|")
-        logoView.setContentHuggingPriorityHigh(.Vertical)
+        logoView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

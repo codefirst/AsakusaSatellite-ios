@@ -44,7 +44,7 @@
 		EAB4CD1F1AECC51800D2C816 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1E1AECC51800D2C816 /* Images.xcassets */; };
 		EABEF6211BB163C700659F10 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EABEF6241BB163C700659F10 /* AsakusaSatellite WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */; };
-		EACA7D9B1AEDA5D30073D1A5 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
+		EABEF6281BB164E500659F10 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -668,7 +668,7 @@
 			files = (
 				EAB4CD0D1AECC51800D2C816 /* NotificationController.swift in Sources */,
 				EAB4CD0B1AECC51800D2C816 /* InterfaceController.swift in Sources */,
-				EACA7D9B1AEDA5D30073D1A5 /* Utilities.swift in Sources */,
+				EABEF6281BB164E500659F10 /* Utilities.swift in Sources */,
 				EAB4CD0F1AECC51800D2C816 /* GlanceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -739,6 +739,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -784,6 +785,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -880,6 +882,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit Extension/AsakusaSatellite WatchKit Extension.entitlements";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -904,6 +907,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit Extension/AsakusaSatellite WatchKit Extension.entitlements";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";

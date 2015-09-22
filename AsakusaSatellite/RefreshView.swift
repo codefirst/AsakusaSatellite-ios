@@ -49,7 +49,7 @@ class RefreshView: UIView, UIScrollViewDelegate {
         if statusLabel.superview == nil && bounds.size.width >= 16 {
             // delay layout until self.size is non-zero
             
-            let autolayout = autolayoutFormat(["p": 8, "pp": 16], [
+            let autolayout = northLayoutFormat(["p": 8, "pp": 16], [
                 "status": statusLabel,
                 ])
             autolayout("H:|-p-[status]-p-|")

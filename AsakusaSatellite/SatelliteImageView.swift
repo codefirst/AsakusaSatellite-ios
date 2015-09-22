@@ -8,6 +8,7 @@
 
 import UIKit
 import Haneke
+import NorthLayout
 
 
 private let kCellID = "Cell"
@@ -45,7 +46,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        let autolayout = autolayoutFormat(nil, ["collectionView": collectionView])
+        let autolayout = northLayoutFormat([:], ["collectionView": collectionView])
         autolayout("H:|[collectionView]|")
         autolayout("V:|[collectionView]|")
     }
@@ -84,7 +85,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             imageView.clipsToBounds = true
             imageView.frame = (CGRectIsEmpty(frame) ? CGRectMake(0, 0, 44, 44) : frame) // haneke requires initial non-zero rect
             
-            let autolayout = contentView.autolayoutFormat(nil, ["iv": imageView])
+            let autolayout = contentView.northLayoutFormat([:], ["iv": imageView])
             autolayout("H:|[iv]|")
             autolayout("V:|[iv]|")
         }

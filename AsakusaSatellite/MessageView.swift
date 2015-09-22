@@ -8,6 +8,7 @@
 
 import UIKit
 import AsakusaSatellite
+import NorthLayout
 
 
 private let dateFormatter: NSDateFormatter = NSDateFormatter().tap{$0.dateFormat = "yyyy-MM-dd HH:mm"}
@@ -57,7 +58,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
             attachments = message?.imageAttachments ?? []
 
             if message?.hasHTML == .Some(true) {
-                let autolayout = autolayoutFormat(["p": kPadding], [
+                let autolayout = northLayoutFormat(["p": kPadding], [
                     "icon": iconView,
                     "web": webView,
                     "attachments": attachmentsView,
@@ -135,18 +136,18 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         nameLabel.numberOfLines = 1
         nameLabel.font = Appearance.hiraginoW6(13)
         nameLabel.textColor = UIColor.blackColor()
-        nameLabel.setContentCompressionResistancePriorityHigh(.Vertical)
+        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
         
         dateLabel.numberOfLines = 1
         dateLabel.font = Appearance.hiraginoW3(10)
         dateLabel.textColor = UIColor.grayColor()
         dateLabel.textAlignment = .Right
-        dateLabel.setContentCompressionResistancePriorityHigh(.Vertical)
+        dateLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
         
         bodyLabel.numberOfLines = 0
         bodyLabel.font = Appearance.hiraginoW3(Appearance.messageBodyFontSize)
         bodyLabel.textColor = Appearance.messageBodyColor
-        bodyLabel.setContentCompressionResistancePriorityHigh(.Vertical)
+        bodyLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
         
         attachmentsView.dataSource = self
         attachmentsView.delegate = self
@@ -155,7 +156,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         attachmentsView.showsHorizontalScrollIndicator = false
         attachmentsView.showsVerticalScrollIndicator = false
         
-        let autolayout = autolayoutFormat([
+        let autolayout = northLayoutFormat([
             "sp": kPadding / 2,
             "p": kPadding,
             "iconSize": iconSize,
