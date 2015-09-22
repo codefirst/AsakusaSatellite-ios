@@ -935,7 +935,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -954,7 +953,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
