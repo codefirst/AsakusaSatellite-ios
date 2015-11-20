@@ -5,12 +5,12 @@ link_with 'AsakusaSatellite'
 
 pod 'AsakusaSatellite'
 pod 'NorthLayout'
-pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :tag => 'v0.10.0'
+pod 'HanekeSwift'
 pod 'TUSafariActivity', '~> 1.0'
 
 
 target 'Specs' do
     link_with 'AsakusaSatelliteTests'
     pod 'Quick'
-    pod 'Nimble', '2.0.0-rc.3'
+    pod 'Nimble'
 end

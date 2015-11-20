@@ -6,9 +6,9 @@ PODS:
     - SwiftyJSON (~> 2.2)
     - UTIKit (~> 1.2)
   - HanekeSwift (0.10.0)
-  - Nimble (2.0.0-rc.3)
+  - Nimble (3.0.0)
   - NorthLayout (2.0.0)
-  - Quick (0.6.0)
+  - Quick (0.8.0)
   - Socket.IO-Client-Swift (3.1.6)
   - SwiftyJSON (2.3.1)
   - TUSafariActivity (1.0.4)
@@ -16,29 +16,19 @@ PODS:
 
 DEPENDENCIES:
   - AsakusaSatellite
-  - HanekeSwift (from `https://github.com/Haneke/HanekeSwift.git`, tag `v0.10.0`)
-  - Nimble (= 2.0.0-rc.3)
+  - HanekeSwift
+  - Nimble
   - NorthLayout
   - Quick
   - TUSafariActivity (~> 1.0)
-
-EXTERNAL SOURCES:
-  HanekeSwift:
-    :git: https://github.com/Haneke/HanekeSwift.git
-    :tag: v0.10.0
-
-CHECKOUT OPTIONS:
-  HanekeSwift:
-    :git: https://github.com/Haneke/HanekeSwift.git
-    :tag: v0.10.0
 
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   AsakusaSatellite: a326d151f7f88ca9ffaa63d6e893a46c1c06a6d2
   HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
-  Nimble: 9dff98ee195ffe7351d3b2fb01d3a1420fd97948
+  Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
   NorthLayout: 52739ecae3c9c5877770869d4277c308512f9fd5
-  Quick: 563686dbcf0ae0f9f7401ac9cd2d786ee1b7f3d7
+  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
   Socket.IO-Client-Swift: f80e4eec9f067ced71fbcdbfa55bf59ff0248e53
   SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
