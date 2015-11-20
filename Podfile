@@ -3,9 +3,7 @@ use_frameworks!
 
 link_with 'AsakusaSatellite'
 
-pod 'AsakusaSatellite', :git => 'https://github.com/codefirst/AsakusaSatelliteSwiftClient.git', :branch => 'xcode7'
-pod 'UTIKit', :git => 'https://github.com/cockscomb/UTIKit.git', :branch => 'swift2'
-
+pod 'AsakusaSatellite'
 pod 'NorthLayout'
 pod 'HanekeSwift', :git => 'https://github.com/Haneke/HanekeSwift.git', :tag => 'v0.10.0'
 pod 'TUSafariActivity', '~> 1.0'
