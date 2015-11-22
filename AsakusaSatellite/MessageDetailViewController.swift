@@ -96,8 +96,7 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if navigationType == .LinkClicked, let url = request.URL {
             if #available(iOS 9.0, *) {
-                navigationController?.navigationBar.translucent = true // workaround for SFSafariViewController
-                navigationController?.pushViewController(SFSafariViewController(URL: url), animated: true)
+                navigationController?.presentViewController(SFSafariViewController(URL: url), animated: true, completion: nil)
                 return false
             } else {
                 webview.scalesPageToFit = true

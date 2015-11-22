@@ -95,8 +95,6 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         refreshView.refresh()
         tableView.tableFooterView = postView
-        
-        navigationController?.navigationBar.translucent = false // workaround for SFSafariViewController
     }
     
     // MARK: - Caches
@@ -258,8 +256,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func onLinkTapped(messageView: MessageView, url: NSURL) {
         if #available(iOS 9.0, *) {
-            navigationController?.navigationBar.translucent = true // workaround for SFSafariViewController
-            navigationController?.pushViewController(SFSafariViewController(URL: url), animated: true)
+            navigationController?.presentViewController(SFSafariViewController(URL: url), animated: true, completion: nil)
         } else {
             navigationController?.pushViewController(MessageDetailViewController(URL: url), animated: true)
         }
