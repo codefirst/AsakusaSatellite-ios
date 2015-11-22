@@ -49,7 +49,7 @@ class RefreshView: UIView, UIScrollViewDelegate {
         if statusLabel.superview == nil && bounds.size.width >= 16 {
             // delay layout until self.size is non-zero
             
-            let autolayout = autolayoutFormat(["p": 8, "pp": 16], [
+            let autolayout = northLayoutFormat(["p": 8, "pp": 16], [
                 "status": statusLabel,
                 ])
             autolayout("H:|-p-[status]-p-|")
@@ -64,7 +64,7 @@ class RefreshView: UIView, UIScrollViewDelegate {
             delay: 0,
             usingSpringWithDamping: 1.0,
             initialSpringVelocity: 0.0,
-            options: nil,
+            options: [],
             animations: {
                 self.backgroundColor = self.state.backgroundColor
                 self.statusLabel.text = self.state.statusText
@@ -110,7 +110,7 @@ class RefreshView: UIView, UIScrollViewDelegate {
             delay: 0,
             usingSpringWithDamping: 1.0,
             initialSpringVelocity: 0.0,
-            options: nil,
+            options: [],
             animations: {
                 self.statusLabel.layer.transform = CATransform3DIdentity
             }, completion: nil)

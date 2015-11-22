@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
             c.setActions([star, disagree, agree, reply], forContext: .Default)
         }
         
-        let settings = UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: [createMessageCategory])
+        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: [createMessageCategory])
         
         UIApplication.sharedApplication().registerForRemoteNotifications()
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
@@ -101,14 +101,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
                 case .Success(_):
                     break
                 case .Failure(let error):
-                    UIAlertController.presentSimpleAlert(onViewController: self.root.topViewController, title: NSLocalizedString("Cannot Register for Notifications", comment: ""), error: error)
+                    UIAlertController.presentSimpleAlert(onViewController: self.root.topViewController!, title: NSLocalizedString("Cannot Register for Notifications", comment: ""), error: error)
                 }
             }
         }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        UIAlertController.presentSimpleAlert(onViewController: root.topViewController, title: NSLocalizedString("Cannot Register for Notifications", comment: ""), error: error)
+        UIAlertController.presentSimpleAlert(onViewController: root.topViewController!, title: NSLocalizedString("Cannot Register for Notifications", comment: ""), error: error)
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
@@ -140,23 +140,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         return nil
     }
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
+    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.5
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         if let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey) {
             if let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) {
-                transitionContext.containerView().insertSubview(toVC.view, belowSubview: fromVC.view)
+                transitionContext.containerView()?.insertSubview(toVC.view, belowSubview: fromVC.view)
                 UIView.animateWithDuration(
                     transitionDuration(transitionContext),
                     delay: 0,
                     usingSpringWithDamping: 1.0,
                     initialSpringVelocity: 0,
-                    options: nil,
+                    options: [],
                     animations: {
                         let v = fromVC.view
-                        v.frame = CGRectMake(0, transitionContext.containerView().frame.height, v.bounds.width, v.bounds.height)
+                        v.frame = CGRectMake(0, transitionContext.containerView()?.frame.height ?? 0, v.bounds.width, v.bounds.height)
                         v.alpha = 0.5
                     }, completion: { _ in
                         transitionContext.completeTransition(!transitionContext.transitionWasCancelled())

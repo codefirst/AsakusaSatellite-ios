@@ -22,6 +22,6 @@ private func saveObject(value: AnyObject?, forKey: String) {
 struct UserDefaults {
     static var apiKey: String? {
         get { return defaults.stringForKey(kApiKey) }
-        set { saveObject(newValue, kApiKey) }
+        set { saveObject(newValue, forKey: kApiKey) }
     }
 }

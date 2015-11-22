@@ -9,6 +9,7 @@
 import UIKit
 import AsakusaSatellite
 import TUSafariActivity
+import SafariServices
 
 
 class MessageDetailViewController: UIViewController, UIWebViewDelegate {
@@ -31,7 +32,6 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     
     convenience init(message: Message, baseURL: String) {
         self.init(message: message, baseURL: NSURL(string: baseURL), initialURL: nil)
-        title = message.name
     }
     
     convenience init (URL: NSURL) {
@@ -43,6 +43,8 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     }
     
     override func loadView() {
+        title = message?.name
+
         view = webview
         view.backgroundColor = Appearance.backgroundColor
         
@@ -61,7 +63,7 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
             webview.scalesPageToFit = true
             webview.loadRequest(NSURLRequest(URL: u))
         } else {
-            webview.loadHTMLString(message?.html(), baseURL: baseURL)
+            webview.loadHTMLString(message?.html() ?? "", baseURL: baseURL)
         }
     }
     
@@ -92,9 +94,14 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
     // MARK: - WebView
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if navigationType == .LinkClicked {
-            webview.scalesPageToFit = true
-            navigationController?.setToolbarHidden(false, animated: true)
+        if navigationType == .LinkClicked, let url = request.URL {
+            if #available(iOS 9.0, *) {
+                navigationController?.presentViewController(SFSafariViewController(URL: url), animated: true, completion: nil)
+                return false
+            } else {
+                webview.scalesPageToFit = true
+                navigationController?.setToolbarHidden(false, animated: true)
+            }
         }
         updateToolbar()
         return true
@@ -113,7 +120,7 @@ class MessageDetailViewController: UIViewController, UIWebViewDelegate {
         updateToolbar()
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
         UIAlertController.presentSimpleAlert(onViewController: self, title: NSLocalizedString("Cannot Load", comment: ""), error: error)
         updateToolbar()
     }

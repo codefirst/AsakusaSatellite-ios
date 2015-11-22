@@ -11,7 +11,7 @@ import AsakusaSatellite
 
 extension Message {
     var hasHTML: Bool {
-        let simplyTranslated = body.stringByReplacingOccurrencesOfString("\n", withString: "<br/>", options: nil, range: nil)
+        let simplyTranslated = body.stringByReplacingOccurrencesOfString("\n", withString: "<br/>", options: [], range: nil)
         return simplyTranslated != htmlBody
     }
     func html(bodyFontSize: CGFloat = Appearance.messageBodyFontSize, bodyColor: UIColor = Appearance.messageBodyColor) -> String {

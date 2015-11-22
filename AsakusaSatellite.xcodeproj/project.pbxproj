@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1389E2E9665E54225E9737E0 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		15285D36457CA618B7A976E7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		E6F36BA670598D1E4C3DD976 /* Pods_Specs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6CA75054C745F00E14AF2E /* Pods_Specs.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		15285D36457CA618B7A976E7 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA23D058DC67A17776C1F6FB /* Pods.framework */; };
+		E6F36BA670598D1E4C3DD976 /* Pods_Specs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E6CA75054C745F00E14AF2E /* Pods_Specs.framework */; };
 		EA00CA481ABEDE0100527848 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = EA00CA471ABEDE0100527848 /* iTunesArtwork */; };
 		EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3241AB7161400CF5691 /* AppDelegate.swift */; };
 		EA01F32C1AB7161400CF5691 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA01F32B1AB7161400CF5691 /* Images.xcassets */; };
@@ -40,11 +40,11 @@
 		EAB4CD0D1AECC51800D2C816 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0C1AECC51800D2C816 /* NotificationController.swift */; };
 		EAB4CD0F1AECC51800D2C816 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB4CD0E1AECC51800D2C816 /* GlanceController.swift */; };
 		EAB4CD111AECC51800D2C816 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD101AECC51800D2C816 /* Images.xcassets */; };
-		EAB4CD151AECC51800D2C816 /* AsakusaSatellite WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */; };
 		EAB4CD1D1AECC51800D2C816 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */; };
 		EAB4CD1F1AECC51800D2C816 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB4CD1E1AECC51800D2C816 /* Images.xcassets */; };
-		EAB4CD221AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		EACA7D9B1AEDA5D30073D1A5 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
+		EABEF6211BB163C700659F10 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EABEF6241BB163C700659F10 /* AsakusaSatellite WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */; };
+		EABEF6281BB164E500659F10 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,19 +55,19 @@
 			remoteGlobalIDString = EA01F31E1AB7161400CF5691;
 			remoteInfo = AsakusaSatellite;
 		};
-		EAB4CD161AECC51800D2C816 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = EAB4CD131AECC51800D2C816;
-			remoteInfo = "AsakusaSatellite WatchKit App";
-		};
-		EAB4CD201AECC51800D2C816 /* PBXContainerItemProxy */ = {
+		EABEF61F1BB163C700659F10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = EAB4CD041AECC51800D2C816;
 			remoteInfo = "AsakusaSatellite WatchKit Extension";
+		};
+		EABEF6221BB163C700659F10 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAB4CD131AECC51800D2C816;
+			remoteInfo = "AsakusaSatellite WatchKit App";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -82,15 +82,26 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		EAB4CD291AECC51800D2C816 /* Embed App Extensions */ = {
+		EABEF6251BB163C700659F10 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				EAB4CD221AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */,
+				EABEF6211BB163C700659F10 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EABEF6261BB163C700659F10 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				EABEF6241BB163C700659F10 /* AsakusaSatellite WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -105,7 +116,7 @@
 		BA23D058DC67A17776C1F6FB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E173414C0868E080A15AFA2B /* Pods_AsakusaSatellite_WatchKit_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsakusaSatellite_WatchKit_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA00CA471ABEDE0100527848 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
-		EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsakusaSatellite.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA01F31F1AB7161400CF5691 /* AsakusaSatelliteApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsakusaSatelliteApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA01F3231AB7161400CF5691 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA01F3241AB7161400CF5691 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EA01F32B1AB7161400CF5691 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -142,6 +153,7 @@
 		EAB4CD1A1AECC51800D2C816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAB4CD1C1AECC51800D2C816 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		EAB4CD1E1AECC51800D2C816 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EABEF6271BB1644600659F10 /* AsakusaSatellite WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit App.entitlements"; sourceTree = "<group>"; };
 		EACA7D9A1AED3BD50073D1A5 /* Common-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common-Bridging-Header.h"; path = "AsakusaSatellite/Common-Bridging-Header.h"; sourceTree = "<group>"; };
 		EAEAA83A1AECF3D20096D410 /* AsakusaSatellite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AsakusaSatellite.entitlements; sourceTree = "<group>"; };
 		EAEAA83B1AECF3F00096D410 /* AsakusaSatellite WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -217,7 +229,7 @@
 		EA01F3201AB7161400CF5691 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */,
+				EA01F31F1AB7161400CF5691 /* AsakusaSatelliteApp.app */,
 				EA01F3341AB7161400CF5691 /* AsakusaSatelliteTests.xctest */,
 				EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */,
 				EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */,
@@ -320,6 +332,7 @@
 		EAB4CD181AECC51800D2C816 /* AsakusaSatellite WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
+				EABEF6271BB1644600659F10 /* AsakusaSatellite WatchKit App.entitlements */,
 				EAB4CD1B1AECC51800D2C816 /* Interface.storyboard */,
 				EAB4CD1E1AECC51800D2C816 /* Images.xcassets */,
 				EAB4CD191AECC51800D2C816 /* Supporting Files */,
@@ -348,17 +361,17 @@
 				EA01F31D1AB7161400CF5691 /* Resources */,
 				8A5DCB0E0601C1EFAA06FF5C /* Embed Pods Frameworks */,
 				8E468DDD61929F7AE48B059F /* Copy Pods Resources */,
-				EAB4CD291AECC51800D2C816 /* Embed App Extensions */,
 				EA593B801AED3748001CBCB5 /* Embed Frameworks */,
+				EABEF6261BB163C700659F10 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				EAB4CD211AECC51800D2C816 /* PBXTargetDependency */,
+				EABEF6231BB163C700659F10 /* PBXTargetDependency */,
 			);
 			name = AsakusaSatellite;
 			productName = AsakusaSatellite;
-			productReference = EA01F31F1AB7161400CF5691 /* AsakusaSatellite.app */;
+			productReference = EA01F31F1AB7161400CF5691 /* AsakusaSatelliteApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EA01F3331AB7161400CF5691 /* AsakusaSatelliteTests */ = {
@@ -393,27 +406,28 @@
 			buildRules = (
 			);
 			dependencies = (
-				EAB4CD171AECC51800D2C816 /* PBXTargetDependency */,
 			);
 			name = "AsakusaSatellite WatchKit Extension";
 			productName = "AsakusaSatellite WatchKit Extension";
 			productReference = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 		EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EAB4CD271AECC51800D2C816 /* Build configuration list for PBXNativeTarget "AsakusaSatellite WatchKit App" */;
 			buildPhases = (
 				EAB4CD121AECC51800D2C816 /* Resources */,
+				EABEF6251BB163C700659F10 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EABEF6201BB163C700659F10 /* PBXTargetDependency */,
 			);
 			name = "AsakusaSatellite WatchKit App";
 			productName = "AsakusaSatellite WatchKit App";
 			productReference = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
+			productType = "com.apple.product-type.application.watchapp2";
 		};
 /* End PBXNativeTarget section */
 
@@ -421,7 +435,8 @@
 		EA01F3171AB7161400CF5691 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = codefirst;
 				TargetAttributes = {
 					EA01F31E1AB7161400CF5691 = {
@@ -449,6 +464,11 @@
 					EAB4CD131AECC51800D2C816 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = FPZK4WRGW7;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -497,7 +517,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAB4CD151AECC51800D2C816 /* AsakusaSatellite WatchKit App.app in Resources */,
 				EAAE263A1B258C91004FAEB7 /* Localizable.strings in Resources */,
 				EAB4CD111AECC51800D2C816 /* Images.xcassets in Resources */,
 			);
@@ -649,7 +668,7 @@
 			files = (
 				EAB4CD0D1AECC51800D2C816 /* NotificationController.swift in Sources */,
 				EAB4CD0B1AECC51800D2C816 /* InterfaceController.swift in Sources */,
-				EACA7D9B1AEDA5D30073D1A5 /* Utilities.swift in Sources */,
+				EABEF6281BB164E500659F10 /* Utilities.swift in Sources */,
 				EAB4CD0F1AECC51800D2C816 /* GlanceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -662,15 +681,15 @@
 			target = EA01F31E1AB7161400CF5691 /* AsakusaSatellite */;
 			targetProxy = EA01F3351AB7161400CF5691 /* PBXContainerItemProxy */;
 		};
-		EAB4CD171AECC51800D2C816 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */;
-			targetProxy = EAB4CD161AECC51800D2C816 /* PBXContainerItemProxy */;
-		};
-		EAB4CD211AECC51800D2C816 /* PBXTargetDependency */ = {
+		EABEF6201BB163C700659F10 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EAB4CD041AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */;
-			targetProxy = EAB4CD201AECC51800D2C816 /* PBXContainerItemProxy */;
+			targetProxy = EABEF61F1BB163C700659F10 /* PBXContainerItemProxy */;
+		};
+		EABEF6231BB163C700659F10 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */;
+			targetProxy = EABEF6221BB163C700659F10 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -720,9 +739,11 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -740,7 +761,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)App";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -764,6 +785,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -777,7 +799,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)App";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -790,9 +812,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AsakusaSatellite/AsakusaSatellite.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite;
+				PRODUCT_NAME = "$(TARGET_NAME)App";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
@@ -804,9 +829,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AsakusaSatellite/AsakusaSatellite.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite;
+				PRODUCT_NAME = "$(TARGET_NAME)App";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 			};
@@ -818,19 +846,16 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = AsakusaSatelliteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.codefirst.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsakusaSatellite.app/AsakusaSatellite";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsakusaSatelliteApp.app/AsakusaSatelliteApp";
 			};
 			name = Debug;
 		};
@@ -840,14 +865,11 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = AsakusaSatelliteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.codefirst.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsakusaSatellite.app/AsakusaSatellite";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsakusaSatelliteApp.app/AsakusaSatelliteApp";
 			};
 			name = Release;
 		};
@@ -855,7 +877,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit Extension/AsakusaSatellite WatchKit Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -864,10 +890,14 @@
 				);
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "999c7c3e-5f7e-4adb-bf84-1a822cc94889";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -875,15 +905,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit Extension/AsakusaSatellite WatchKit Extension.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "163c49d2-754b-471d-82cf-730bbca5a020";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -891,19 +929,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit App/AsakusaSatellite WatchKit App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9ef0a26a-bf6c-44d1-aab3-95b3e629b9b7";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -911,15 +953,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit App/AsakusaSatellite WatchKit App.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				IBSC_MODULE = AsakusaSatellite_WatchKit_Extension;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d0d667d5-7483-4b85-bbfc-63f19da02c05";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};

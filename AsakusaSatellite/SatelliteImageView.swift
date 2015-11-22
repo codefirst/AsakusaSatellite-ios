@@ -8,6 +8,7 @@
 
 import UIKit
 import Haneke
+import NorthLayout
 
 
 private let kCellID = "Cell"
@@ -45,7 +46,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         collectionView.dataSource = self
         collectionView.delegate = self
         
-        let autolayout = autolayoutFormat(nil, ["collectionView": collectionView])
+        let autolayout = northLayoutFormat([:], ["collectionView": collectionView])
         autolayout("H:|[collectionView]|")
         autolayout("V:|[collectionView]|")
     }
@@ -84,7 +85,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             imageView.clipsToBounds = true
             imageView.frame = (CGRectIsEmpty(frame) ? CGRectMake(0, 0, 44, 44) : frame) // haneke requires initial non-zero rect
             
-            let autolayout = contentView.autolayoutFormat(nil, ["iv": imageView])
+            let autolayout = contentView.northLayoutFormat([:], ["iv": imageView])
             autolayout("H:|[iv]|")
             autolayout("V:|[iv]|")
         }
@@ -93,7 +94,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             fatalError("init(coder:) has not been implemented")
         }
         
-        private override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes!) {
+        private override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
             imageView.layer.cornerRadius = layoutAttributes.size.width / 2
         }
     }
@@ -107,7 +108,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         
         let time = CGFloat(NSDate().timeIntervalSince1970)
         let periodInSeconds = CGFloat(30)
-        let offset = time * 2 * CGFloat(M_PI) / periodInSeconds
+        // let offset = time * 2 * CGFloat(M_PI) / periodInSeconds
         
         // NOTE:
         // invalidateLayout consume high cpu (> 60% on iPhone 6)
@@ -151,7 +152,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             contentSizeSide = min(contentSize.width, contentSize.height)
         }
         
-        func centerForItemAt(#percentage: CGFloat, radiusScale: CGFloat = 1.0) -> CGPoint {
+        func centerForItemAt(percentage percentage: CGFloat, radiusScale: CGFloat = 1.0) -> CGPoint {
             let contentSize = collectionView?.bounds.size ?? CGSizeZero
             let center = CGPointMake(contentSize.width / 2, contentSize.height / 2)
             
@@ -161,7 +162,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
                 center.y + radius * radiusScale * sin(angle))
         }
         
-        private override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+        private override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
             let section = 0
             let numberOfItems = collectionView?.numberOfItemsInSection(section) ?? 0
             

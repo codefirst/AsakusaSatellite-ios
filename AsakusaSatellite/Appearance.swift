@@ -9,11 +9,11 @@
 import UIKit
 
 
-private func RGBA(r: UInt8, g: UInt8, b: UInt8, a: UInt8) -> UIColor {
+private func RGBA(r: UInt8, _ g: UInt8, _ b: UInt8, _ a: UInt8) -> UIColor {
     return UIColor(red: CGFloat(r)/255, green: CGFloat(g)/255, blue: CGFloat(b)/255, alpha: CGFloat(a)/255)
 }
 
-private func RGB(r: UInt8, g: UInt8, b: UInt8) -> UIColor {
+private func RGB(r: UInt8, _ g: UInt8, _ b: UInt8) -> UIColor {
     return RGBA(r, g, b, 255)
 }
 

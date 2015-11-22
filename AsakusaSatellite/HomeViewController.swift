@@ -8,6 +8,7 @@
 
 import UIKit
 import AsakusaSatellite
+import NorthLayout
 
 
 private let kCellID = "Room"
@@ -59,7 +60,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Sign Out", comment: ""), style: .Plain, target: self, action: "auth:")
         
-        let autolayout = view.autolayoutFormat(nil, ["rooms": roomsView])
+        let autolayout = view.northLayoutFormat([:], ["rooms": roomsView])
         autolayout("H:|[rooms]|")
         autolayout("V:|[rooms]|")
     }
@@ -67,6 +68,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        loadCachedRoomList()
         reloadRoomList()
         startAnimation()
     }
@@ -77,6 +79,19 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         stopAnimation()
     }
     
+    // MARK: - Caches
+    
+    private var cachedRoomListFile: String { return "\(NSHomeDirectory())/Library/Caches/rooms.json" }
+    
+    private func loadCachedRoomList() {
+        guard let many = Many<Room>(file: cachedRoomListFile) else { return }
+        rooms = many.items
+    }
+    
+    private func cacheRoomList(many: Many<Room>) {
+        many.saveToFile(cachedRoomListFile)
+    }
+    
     // MARK: -
     
     func reloadRoomList() {
@@ -84,7 +99,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         client?.roomList() { response in
             switch response {
             case .Success(let many):
-                self.rooms = many.value.items
+                self.rooms = many.items
+                self.cacheRoomList(many)
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
@@ -185,7 +201,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             nameLabel.textAlignment = .Center
             nameLabel.lineBreakMode = .ByWordWrapping
             
-            let autolayout = contentView.autolayoutFormat(["p": 8], ["sat": sat, "name": nameLabel])
+            let autolayout = contentView.northLayoutFormat(["p": 8], ["sat": sat, "name": nameLabel])
             autolayout("H:|[sat]|")
             autolayout("H:|[name]|")
             autolayout("V:|-p-[sat]-p-[name]|")

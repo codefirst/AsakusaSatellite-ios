@@ -8,6 +8,7 @@
 
 import UIKit
 import AsakusaSatellite
+import NorthLayout
 
 
 class WelcomeViewController: UIViewController {
@@ -20,7 +21,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        edgesForExtendedLayout = nil
+        edgesForExtendedLayout = .None
         view.backgroundColor = Appearance.asakusaRed
         
         let alpha = CGFloat(0.9)
@@ -31,7 +32,7 @@ class WelcomeViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""), style: .Plain, target: self, action: "cancelSignin:")
         
-        let autolayout = view.autolayoutFormat([
+        let autolayout = view.northLayoutFormat([
             "p": 20,
             ], [
                 "logo": logoView,
@@ -43,7 +44,7 @@ class WelcomeViewController: UIViewController {
         view.addCenterXConstraint(signinButton)
         view.addEqualConstraint(.Width, view: signinButton, toView: logoView)
         autolayout("V:|-p-[spacerT][logo]-p-[signin(==44)][spacerB(==spacerT)]-p-|")
-        logoView.setContentHuggingPriorityHigh(.Vertical)
+        logoView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -106,7 +107,7 @@ class WelcomeViewController: UIViewController {
             delay: 0,
             usingSpringWithDamping: 1.0,
             initialSpringVelocity: 0.0,
-            options: nil,
+            options: [],
             animations: { [weak self] in
                 if let s = self {
                     s.signinVC?.view.frame = s.view.bounds

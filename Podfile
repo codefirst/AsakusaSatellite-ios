@@ -3,8 +3,9 @@ use_frameworks!
 
 link_with 'AsakusaSatellite'
 
-pod 'AsakusaSatellite', '~> 0.3'
-pod 'HanekeSwift', '~> 0.9'
+pod 'AsakusaSatellite'
+pod 'NorthLayout'
+pod 'HanekeSwift'
 pod 'TUSafariActivity', '~> 1.0'
 
 

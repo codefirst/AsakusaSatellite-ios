@@ -30,7 +30,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     init() {
         super.init(frame: CGRectMake(0, 0, 320, 50))
-        autoresizingMask = .FlexibleWidth | .FlexibleBottomMargin // table footer does not support autolayout
+        autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin] // table footer does not support autolayout
         
         backgroundColor = Appearance.lightBackgroundColor
         
@@ -41,7 +41,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
             tf.borderStyle = .RoundedRect
             tf.delegate = self
             tf.addTarget(self, action: "textChanged:", forControlEvents: .EditingChanged)
-            tf.setContentCompressionResistancePriorityHigh(.Horizontal)
+            tf.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
 
             self.postAccessoryView.photoButton.addTarget(self, action: "addPhoto:", forControlEvents: .TouchUpInside)
             self.postAccessoryView.attachmentsView.dataSource = self
@@ -51,10 +51,10 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         }
         sendButton.tap { (b: UIButton) in
             b.addTarget(self, action: "post:", forControlEvents: .TouchUpInside)
-            b.setContentHuggingPriorityHigh(.Horizontal)
+            b.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
         }
         
-        let autolayout = autolayoutFormat(["p": 8, "onepx": Appearance.onepx], [
+        let autolayout = northLayoutFormat(["p": 8, "onepx": Appearance.onepx], [
             "text": textField,
             "send": sendButton,
             "border": Appearance.separatorView(),
@@ -74,7 +74,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     func updateViews() {
         textField.enabled = true
-        sendButton.enabled = !textField.text.isEmpty || attachments.count > 0
+        sendButton.enabled = !(textField.text?.isEmpty ?? true) || attachments.count > 0
     }
     
     func textChanged(sender: AnyObject?) {
@@ -86,7 +86,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         textField.enabled = false
         sendButton.enabled = false
         
-        onPost?(text: textField.text, attachments: attachments) { (clearField: Bool) -> Void in
+        onPost?(text: textField.text ?? "", attachments: attachments) { (clearField: Bool) -> Void in
             if clearField {
                 self.textField.text = ""
                 self.attachments.removeAll(keepCapacity: false)
@@ -97,7 +97,12 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     func addPhoto(sender: AnyObject?) {
         let picker = UIImagePickerController()
-        picker.delegate = self
+        
+        // FIXME: Swift Compiler of Xcode 7b2 fails to compile on "Early Performance Inliner"
+//        picker.delegate = self
+        typealias P = protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>?
+        picker.delegate = unsafeBitCast(PostView?.Some(self), P.self)
+        
         picker.sourceType = .PhotoLibrary
         picker.allowsEditing = true
         containigViewController?.presentViewController(picker, animated: true, completion: nil)
@@ -105,10 +110,11 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     // MARK: - UIImagePickerControllerDelegate
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
         picker.dismissViewControllerAnimated(true) {
-            if let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.attachments += [(data: image.jpegData(1 * 1024 * 1024), ext: "jpg")]
+            if  let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage,
+                let jpegData = image.jpegData(1 * 1024 * 1024) {
+                self.attachments.append((data: jpegData, ext: "jpg"))
                 self.textField.becomeFirstResponder()
             }
         }
@@ -144,7 +150,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     // MARK: - Input Accessory View
     
     private class PostAccessoryView: UIView {
-        let photoButton = UIButton.buttonWithType(.System) as! UIButton
+        let photoButton = UIButton(type: .System)
         let attachmentsView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout().tap { (l: UICollectionViewFlowLayout) in
             l.scrollDirection = .Horizontal
             l.itemSize = CGSizeMake(256, 44 - 8)
@@ -153,7 +159,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         
         override init(frame: CGRect) {
             super.init(frame: CGRectMake(frame.origin.x, frame.origin.y, frame.width, 44))
-            autoresizingMask = .FlexibleWidth | .FlexibleBottomMargin
+            autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
             
             backgroundColor = Appearance.lightBackgroundColor
             photoButton.setTitle(NSLocalizedString("Photo", comment: ""), forState: .Normal)
@@ -161,7 +167,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
             attachmentsView.showsHorizontalScrollIndicator = false
             attachmentsView.showsVerticalScrollIndicator = false
             
-            let autolayout = autolayoutFormat(["p": 8], ["photo": photoButton, "attachments": attachmentsView])
+            let autolayout = northLayoutFormat(["p": 8], ["photo": photoButton, "attachments": attachmentsView])
             autolayout("H:|-p-[photo]-p-[attachments]|")
             autolayout("V:|-p-[photo]-p-|")
             autolayout("V:|[attachments]|")

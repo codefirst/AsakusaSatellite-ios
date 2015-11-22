@@ -50,14 +50,14 @@ class NotificationController: WKUserNotificationInterfaceController {
     */
     
     override func didReceiveRemoteNotification(remoteNotification: [NSObject : AnyObject], withCompletion completionHandler: ((WKUserNotificationInterfaceType) -> Void)) {
-        let roomID = remoteNotification["room_id"] as? String
+        // let roomID = remoteNotification["room_id"] as? String
         let user = remoteNotification["user"] as? String
         if  let aps = remoteNotification["aps"] as? [String: AnyObject],
             let alert = aps["alert"] as? String {
                 let separatorLocation = (alert as NSString).rangeOfString(" / ").location
                 let body = (separatorLocation != NSNotFound ? (alert as NSString).substringFromIndex(separatorLocation + 3) : alert)
                 
-                let attrs: [NSObject: AnyObject] = [
+                let attrs: [String: AnyObject] = [
                     NSParagraphStyleAttributeName: (NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle).tap { (p: NSMutableParagraphStyle) in
                         // p.firstLineHeadIndent = 16 + 4 // iOS 8.3 + Watch OS 8.2: firstLineHeadIndent cause incorrect line break on the first line. use space characters instead.
                         p.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -68,10 +68,15 @@ class NotificationController: WKUserNotificationInterfaceController {
             
                 let fm = NSFileManager.defaultManager()
                 if  let cacheKey = user,
-                    let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("NotificationUserIcon").stringByAppendingPathComponent("\(cacheKey).png"),
-                    let iconPath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path?.stringByAppendingPathComponent("UserIcon").stringByAppendingPathComponent("\(cacheKey).png") {
-                        let lastModified = fm.attributesOfItemAtPath(cachePath, error: nil)?[NSFileModificationDate] as? NSDate
-                        let inCache = lastModified.map({NSDate().timeIntervalSinceDate($0) < (60 * 60)}) ?? false
+                    let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path.map({"\($0)/NotificationUserIcon/\(cacheKey).png"}),
+                    let iconPath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path.map({"\($0)/UserIcon/\(cacheKey).png"}) {
+                        let inCache: Bool
+                        do {
+                            let lastModified = try fm.attributesOfItemAtPath(cachePath)[NSFileModificationDate] as? NSDate
+                            inCache = lastModified.map({NSDate().timeIntervalSinceDate($0) < (60 * 60)}) ?? false
+                        } catch _ {
+                            inCache = false
+                        }
                         if inCache {
                             // NSLog("hit cache for \(cacheKey)")
                         } else {
@@ -85,14 +90,20 @@ class NotificationController: WKUserNotificationInterfaceController {
                                 let data = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext())
                                 UIGraphicsEndImageContext()
                                 
-                                fm.createDirectoryAtPath(cachePath.stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil, error: nil)
-                                data.writeToFile(cachePath, atomically: true)
+                                do {
+                                    try fm.createDirectoryAtPath((cachePath as NSString).stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
+                                } catch _ {
+                                }
                                 
-                                let watch = WKInterfaceDevice.currentDevice()
-                                watch.addCachedImageWithData(data, name: cacheKey)
+                                if let data = data {
+                                    data.writeToFile(cachePath, atomically: true)
+                                }
                             }
                         }
-                        group?.setBackgroundImageNamed(cacheKey)
+                        
+                        if let cachedImage = UIImage(contentsOfFile: cachePath) {
+                            group?.setBackgroundImage(cachedImage)
+                        }
                 }
                 
                 completionHandler(.Custom)
