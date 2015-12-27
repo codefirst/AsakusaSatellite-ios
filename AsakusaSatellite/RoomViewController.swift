@@ -15,7 +15,7 @@ private let kCellID = "Cell"
 private let kNumberOfCachedMessages = 20
 
 
-class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIWebViewDelegate {
+class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     let client: Client
     var pusher: MessagePusherClient?
     var room: Room
@@ -288,8 +288,6 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row], baseURL: client.rootURL), animated: true)
         }
     }
-    
-    // MARK: - WebView
     
     // MARK: - ScrollView
 
