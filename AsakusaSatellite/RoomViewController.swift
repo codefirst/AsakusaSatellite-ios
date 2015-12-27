@@ -258,7 +258,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if #available(iOS 9.0, *) {
             navigationController?.presentViewController(SFSafariViewController(URL: url), animated: true, completion: nil)
         } else {
-            navigationController?.pushViewController(MessageDetailViewController(URL: url), animated: true)
+            UIApplication.sharedApplication().openURL(url)
         }
     }
     
@@ -279,13 +279,6 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.presentViewController(ac, animated: true, completion: nil)
             }
             completion()
-        }
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if messages[indexPath.row].hasHTML {
-            navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row], baseURL: client.rootURL), animated: true)
         }
     }
     
