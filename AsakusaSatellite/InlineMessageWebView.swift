@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import WebKit
 import AsakusaSatellite
 
 
 private let kContentSize = "contentSize"
 
 
-class InlineMessageWebView: UIWebView {
+class InlineMessageWebView: WKWebView {
     let baseURL: NSURL?
     var onContentSizeChange: (CGSize -> Void)?
     var message: Message? {
@@ -23,7 +24,7 @@ class InlineMessageWebView: UIWebView {
             } else {
                 // clear content
                 stopLoading()
-                stringByEvaluatingJavaScriptFromString("document.body.innerHTML = \"\";")
+                evaluateJavaScript("document.body.innerHTML = \"\";", completionHandler: nil)
             }
         }
     }
@@ -36,17 +37,12 @@ class InlineMessageWebView: UIWebView {
     
     init(frame: CGRect, baseURL: NSURL?) {
         self.baseURL = baseURL
-        
-        super.init(frame: frame)
-        
-        suppressesIncrementalRendering = true
+        super.init(frame: frame, configuration: WKWebViewConfiguration().tap { c in
+            c.suppressesIncrementalRendering = true
+            })
         
         scrollView.scrollEnabled = false
         scrollView.addObserver(self, forKeyPath: kContentSize, options: [], context: nil)
-    }
-
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
@@ -59,8 +55,10 @@ class InlineMessageWebView: UIWebView {
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if object === scrollView && keyPath == kContentSize {
-            let height = Int(stringByEvaluatingJavaScriptFromString("document.getElementById(\"AsakusaSatMessageContent\").clientHeight") ?? "").map{CGFloat($0)} ?? 0
-            contentSize = CGSizeMake(scrollView.contentSize.width, height)
+            evaluateJavaScript("document.getElementById(\"AsakusaSatMessageContent\").clientHeight") { (obj, error) in
+                guard let height = (obj as? NSNumber).map({CGFloat($0)}) else { return }
+                self.contentSize = CGSizeMake(self.scrollView.contentSize.width, height)
+            }
             return
         }
         super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)

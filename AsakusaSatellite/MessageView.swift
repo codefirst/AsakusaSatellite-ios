@@ -96,7 +96,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         didSet {
             webView.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
             webView.onContentSizeChange = self.cacheWebViewContentSize
-            webView.delegate = self
+// TODO: use alternative to UIWebViewDelegate:            webView.delegate = self
         }
     }
     let separator = Appearance.separatorView()
