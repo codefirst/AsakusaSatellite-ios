@@ -9,6 +9,7 @@
 import UIKit
 import AsakusaSatellite
 import NorthLayout
+import WebKit
 
 
 private let dateFormatter: NSDateFormatter = NSDateFormatter().tap{$0.dateFormat = "yyyy-MM-dd HH:mm"}
@@ -20,7 +21,7 @@ private let kAttachmentsSize = CGSizeMake(256, 64)
 private let kAppGroupID = "group.org.codefirst.asakusasatellite"
 
 
-class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate, UIWebViewDelegate {
+class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
     var message: Message? {
         didSet {
             if let u: NSURL = (message.map{NSURL(string: $0.profileImageURL)} ?? nil)  {
@@ -96,7 +97,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         didSet {
             webView.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
             webView.onContentSizeChange = self.cacheWebViewContentSize
-            webView.delegate = self
+            webView.navigationDelegate = self
         }
     }
     let separator = Appearance.separatorView()
@@ -250,16 +251,6 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         webView.removeFromSuperview() // remove constraints
     }
     
-    // MARK: - WebView
-    
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if navigationType == .LinkClicked {
-            if let u = request.URL { onLinkTapped?(self, u) }
-            return false
-        }
-        return true
-    }
-    
     // MARK: - CollectionView
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -283,6 +274,19 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate,
         if let url = NSURL(string: attachments[indexPath.item].url) {
             let vc = HeadUpImageViewController(imageURL: url)
             appDelegate.root.topViewController!.presentViewController(vc, animated: true, completion: nil)
+        }
+    }
+}
+
+
+// MARK: WKNavigationDelegate
+extension MessageView: WKNavigationDelegate {
+    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .LinkActivated {
+            if let u = navigationAction.request.URL { onLinkTapped?(self, u) }
+            decisionHandler(.Cancel)
+        } else {
+            decisionHandler(.Allow)
         }
     }
 }

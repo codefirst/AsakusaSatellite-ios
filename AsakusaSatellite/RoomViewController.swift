@@ -15,7 +15,7 @@ private let kCellID = "Cell"
 private let kNumberOfCachedMessages = 20
 
 
-class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIWebViewDelegate {
+class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
     let client: Client
     var pusher: MessagePusherClient?
     var room: Room
@@ -258,7 +258,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if #available(iOS 9.0, *) {
             navigationController?.presentViewController(SFSafariViewController(URL: url), animated: true, completion: nil)
         } else {
-            navigationController?.pushViewController(MessageDetailViewController(URL: url), animated: true)
+            UIApplication.sharedApplication().openURL(url)
         }
     }
     
@@ -281,15 +281,6 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             completion()
         }
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if messages[indexPath.row].hasHTML {
-            navigationController?.pushViewController(MessageDetailViewController(message: messages[indexPath.row], baseURL: client.rootURL), animated: true)
-        }
-    }
-    
-    // MARK: - WebView
     
     // MARK: - ScrollView
 
