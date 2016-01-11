@@ -11,7 +11,7 @@ import UIKit
 
 
 extension NSObject {
-    func tap<T>(block: T -> Void) -> T {
+    func tap<T>(@noescape block: T -> Void) -> T {
         let s = self as! T
         block(s)
         return s

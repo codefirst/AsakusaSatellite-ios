@@ -9,12 +9,13 @@
 import UIKit
 import AsakusaSatellite
 import NorthLayout
+import SafariServices
 
 
 class WelcomeViewController: UIViewController {
     let logoView = UIImageView(image: UIImage(named: "Logo"))
     let signinButton = Appearance.roundRectButtonOnTintColor("Sign in with Twitter")
-    var signinVC: TwitterAuthViewController?
+    var signinVC: UIViewController?
     
     var displayLink: CADisplayLink?
     
@@ -89,6 +90,17 @@ class WelcomeViewController: UIViewController {
     
     func signin(sender: AnyObject?) {
         UserDefaults.apiKey = nil
+
+        if #available(iOS 9.0, *) {
+            appDelegate.openURLAuthCallbackDelegate = self
+            let authURL = NSURL(string: "/auth/twitter?callback_scheme=\(kURLSchemeAuthCallback)", relativeToURL:  NSURL(string: Client(apiKey: nil).rootURL)!)!
+            signinVC = SFSafariViewController(URL: authURL).tap { (vc: SFSafariViewController) in
+                vc.delegate = self
+                vc.modalPresentationStyle = .FormSheet
+                presentViewController(vc, animated: true, completion: nil)
+            }
+            return
+        }
         
         signinVC = TwitterAuthViewController(rootURL: NSURL(string: Client(apiKey: nil).rootURL)!) { apiKey in
             UserDefaults.apiKey = apiKey
@@ -140,3 +152,32 @@ class WelcomeViewController: UIViewController {
         startAnimation()
     }
 }
+
+
+extension WelcomeViewController: OpenURLAuthCallbackDelegate, SFSafariViewControllerDelegate {
+    func openURL(url: NSURL, sourceApplication: String?) -> Bool {
+        appDelegate.openURLAuthCallbackDelegate = nil
+
+        let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
+        if let apiKey = components?.queryItems?.filter({$0.name == "api_key"}).first?.value {
+            // signed in
+            UserDefaults.apiKey = apiKey
+            appDelegate.registerPushNotification()
+            navigationController?.popViewControllerAnimated(false)
+        } else {
+            // not signed in
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+            self.startAnimation()
+        }
+
+        signinVC?.dismissViewControllerAnimated(true, completion: nil)
+        return true
+    }
+
+    @available(iOS 9.0, *)
+    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        appDelegate.openURLAuthCallbackDelegate = nil
+        signinVC = nil
+    }
+}
+
