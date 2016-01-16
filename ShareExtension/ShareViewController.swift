@@ -61,8 +61,12 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func configurationItems() -> [AnyObject]! {
-        // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
-        return []
+        let room = UserDefaults.currentRoom
+        let roomConfigurationItem = SLComposeSheetConfigurationItem()
+        roomConfigurationItem.title = "To"
+        roomConfigurationItem.value = room?.name ?? "(not logged in)"
+
+        return [roomConfigurationItem]
     }
 
 }
