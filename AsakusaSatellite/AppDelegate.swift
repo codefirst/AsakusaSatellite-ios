@@ -18,12 +18,20 @@ private let kStringHuh = NSLocalizedString("Huh?", comment: "")
 private let kStringReply = NSLocalizedString("Reply", comment: "")
 
 
+let kURLSchemeAuthCallback = "org.codefirst.asakusasatellite"
+
+protocol OpenURLAuthCallbackDelegate: class {
+    func openURL(url: NSURL, sourceApplication: String?) -> Bool
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDelegate, UIViewControllerAnimatedTransitioning {
     var window: UIWindow?
     let root: UINavigationController
     let home: HomeViewController
     var welcome: WelcomeViewController?
+
+    weak var openURLAuthCallbackDelegate: OpenURLAuthCallbackDelegate?
     
     override init() {
         home = HomeViewController()
@@ -50,7 +58,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         
         return true
     }
-    
+
+    // MARK: - URL Scheme
+
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        switch url.scheme {
+        case kURLSchemeAuthCallback:
+            return openURLAuthCallbackDelegate?.openURL(url, sourceApplication: sourceApplication) ?? false
+        default:
+            return false
+        }
+    }
+
     // MARK: - Push Notification
     
     func registerPushNotification() {

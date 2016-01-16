@@ -64,6 +64,12 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         autolayout("H:|[rooms]|")
         autolayout("V:|[rooms]|")
     }
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
