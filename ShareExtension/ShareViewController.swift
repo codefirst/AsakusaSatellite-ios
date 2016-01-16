@@ -50,7 +50,7 @@ class ShareViewController: SLComposeServiceViewController {
                             return completeRequestIfFinished()
                     }
 
-                    client.postMessage("from Share Extension", roomID: roomID, files: [jpegFileURL.path!]) { _ in
+                    client.postMessage(self.contentText, roomID: roomID, files: [jpegFileURL.path!]) { _ in
                             completeRequestIfFinished()
                     }
                 }
