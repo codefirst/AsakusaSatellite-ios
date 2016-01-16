@@ -10,6 +10,7 @@ import UIKit
 import Social
 import MobileCoreServices
 import AsakusaSatellite
+import AppGroup
 
 
 class ShareViewController: SLComposeServiceViewController {
@@ -18,22 +19,20 @@ class ShareViewController: SLComposeServiceViewController {
         // Do validation of contentText and/or NSExtensionContext attachments here
         return true
     }
-
+    
     override func didSelectPost() {
-        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] where !inputItems.isEmpty else {
-            self.extensionContext?.completeRequestReturningItems([], completionHandler: nil)
-            return
-        }
-
-        // FIXME: debug info
-        let client = Client(apiKey: //"apikey)
-        let room = //"room"
-
         var asyncTasks: UInt = 0
         let completeRequestIfFinished = {
             if asyncTasks == 0 {
                 self.extensionContext!.completeRequestReturningItems([], completionHandler: nil)
             }
+        }
+
+        let client = Client(apiKey: UserDefaults.apiKey)
+        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] where !inputItems.isEmpty,
+            let roomID = UserDefaults.currentRoom?.id else {
+            completeRequestIfFinished()
+            return
         }
 
         for items in inputItems {
@@ -51,7 +50,7 @@ class ShareViewController: SLComposeServiceViewController {
                             return completeRequestIfFinished()
                     }
 
-                    client.postMessage("from Share Extension", roomID: room, files: [jpegFileURL.path!]) { _ in
+                    client.postMessage("from Share Extension", roomID: roomID, files: [jpegFileURL.path!]) { _ in
                             completeRequestIfFinished()
                     }
                 }
