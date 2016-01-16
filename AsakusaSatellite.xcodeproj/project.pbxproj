@@ -26,6 +26,9 @@
 		EA64C7791AB9AD6F00282113 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C7781AB9AD6F00282113 /* HomeViewController.swift */; };
 		EA64C77B1AB9B29D00282113 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C77A1AB9B29D00282113 /* UserDefaults.swift */; };
 		EA64C77D1AB9DA3A00282113 /* SatelliteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */; };
+		EA7425A91C49223E001CA461 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7425A81C49223E001CA461 /* ShareViewController.swift */; };
+		EA7425AC1C49223E001CA461 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA7425AA1C49223E001CA461 /* MainInterface.storyboard */; };
+		EA7425B01C49223E001CA461 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EA7425A61C49223E001CA461 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EA7C95C11ABEA37C00CD2641 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7C95C01ABEA37C00CD2641 /* PostView.swift */; };
 		EAA3A1E21AD911DE00F6CD6B /* AsakusaSatellite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */; };
 		EAA3A1E41AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA3A1E31AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift */; };
@@ -54,6 +57,13 @@
 			remoteGlobalIDString = EA01F31E1AB7161400CF5691;
 			remoteInfo = AsakusaSatellite;
 		};
+		EA7425AE1C49223E001CA461 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EA7425A51C49223E001CA461;
+			remoteInfo = ShareExtension;
+		};
 		EABEF61F1BB163C700659F10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EA01F3171AB7161400CF5691 /* Project object */;
@@ -79,6 +89,17 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA7425B41C49223E001CA461 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				EA7425B01C49223E001CA461 /* ShareExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EABEF6251BB163C700659F10 /* Embed App Extensions */ = {
@@ -135,6 +156,11 @@
 		EA64C7781AB9AD6F00282113 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		EA64C77A1AB9B29D00282113 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SatelliteImageView.swift; sourceTree = "<group>"; };
+		EA7425A61C49223E001CA461 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA7425A81C49223E001CA461 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		EA7425AB1C49223E001CA461 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		EA7425AD1C49223E001CA461 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA7425B51C492304001CA461 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		EA7C95C01ABEA37C00CD2641 /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		EAA3A1E11AD911DE00F6CD6B /* AsakusaSatellite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsakusaSatellite.swift; sourceTree = "<group>"; };
 		EAA3A1E31AD9144A00F6CD6B /* AsakusaSatelliteSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AsakusaSatelliteSpec.swift; path = AsakusaSatelliteTests/AsakusaSatelliteSpec.swift; sourceTree = SOURCE_ROOT; };
@@ -173,6 +199,13 @@
 			files = (
 				1389E2E9665E54225E9737E0 /* Pods.framework in Frameworks */,
 				E6F36BA670598D1E4C3DD976 /* Pods_Specs.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA7425A31C49223E001CA461 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +251,7 @@
 				EA01F3371AB7161400CF5691 /* AsakusaSatelliteTests */,
 				EAB4CD061AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */,
 				EAB4CD181AECC51800D2C816 /* AsakusaSatellite WatchKit App */,
+				EA7425A71C49223E001CA461 /* ShareExtension */,
 				EA01F3201AB7161400CF5691 /* Products */,
 				1DF2023A3EECC4163662F513 /* Pods */,
 				B99D720E667DAB177CDE44D7 /* Frameworks */,
@@ -231,6 +265,7 @@
 				EA01F3341AB7161400CF5691 /* AsakusaSatelliteTests.xctest */,
 				EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */,
 				EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */,
+				EA7425A61C49223E001CA461 /* ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -304,6 +339,17 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		EA7425A71C49223E001CA461 /* ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				EA7425B51C492304001CA461 /* ShareExtension.entitlements */,
+				EA7425A81C49223E001CA461 /* ShareViewController.swift */,
+				EA7425AA1C49223E001CA461 /* MainInterface.storyboard */,
+				EA7425AD1C49223E001CA461 /* Info.plist */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
 		EAB4CD061AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,11 +406,13 @@
 				8E468DDD61929F7AE48B059F /* Copy Pods Resources */,
 				EA593B801AED3748001CBCB5 /* Embed Frameworks */,
 				EABEF6261BB163C700659F10 /* Embed Watch Content */,
+				EA7425B41C49223E001CA461 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				EABEF6231BB163C700659F10 /* PBXTargetDependency */,
+				EA7425AF1C49223E001CA461 /* PBXTargetDependency */,
 			);
 			name = AsakusaSatellite;
 			productName = AsakusaSatellite;
@@ -391,6 +439,23 @@
 			productName = AsakusaSatelliteTests;
 			productReference = EA01F3341AB7161400CF5691 /* AsakusaSatelliteTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EA7425A51C49223E001CA461 /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EA7425B31C49223E001CA461 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				EA7425A21C49223E001CA461 /* Sources */,
+				EA7425A31C49223E001CA461 /* Frameworks */,
+				EA7425A41C49223E001CA461 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = EA7425A61C49223E001CA461 /* ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 		EAB4CD041AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */ = {
 			isa = PBXNativeTarget;
@@ -432,7 +497,7 @@
 		EA01F3171AB7161400CF5691 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = codefirst;
 				TargetAttributes = {
@@ -448,6 +513,15 @@
 					EA01F3331AB7161400CF5691 = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = EA01F31E1AB7161400CF5691;
+					};
+					EA7425A51C49223E001CA461 = {
+						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = FPZK4WRGW7;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					EAB4CD041AECC51800D2C816 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -487,6 +561,7 @@
 				EA01F3331AB7161400CF5691 /* AsakusaSatelliteTests */,
 				EAB4CD041AECC51800D2C816 /* AsakusaSatellite WatchKit Extension */,
 				EAB4CD131AECC51800D2C816 /* AsakusaSatellite WatchKit App */,
+				EA7425A51C49223E001CA461 /* ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -507,6 +582,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EA7425A41C49223E001CA461 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA7425AC1C49223E001CA461 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +741,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EA7425A21C49223E001CA461 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA7425A91C49223E001CA461 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EAB4CD011AECC51800D2C816 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -676,6 +767,11 @@
 			isa = PBXTargetDependency;
 			target = EA01F31E1AB7161400CF5691 /* AsakusaSatellite */;
 			targetProxy = EA01F3351AB7161400CF5691 /* PBXContainerItemProxy */;
+		};
+		EA7425AF1C49223E001CA461 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EA7425A51C49223E001CA461 /* ShareExtension */;
+			targetProxy = EA7425AE1C49223E001CA461 /* PBXContainerItemProxy */;
 		};
 		EABEF6201BB163C700659F10 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -696,6 +792,14 @@
 				EA01F32E1AB7161400CF5691 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		EA7425AA1C49223E001CA461 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA7425AB1C49223E001CA461 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		EAAE26371B258C91004FAEB7 /* Localizable.strings */ = {
@@ -810,6 +914,7 @@
 				CODE_SIGN_ENTITLEMENTS = AsakusaSatellite/AsakusaSatellite.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite;
@@ -827,6 +932,7 @@
 				CODE_SIGN_ENTITLEMENTS = AsakusaSatellite/AsakusaSatellite.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite;
@@ -866,6 +972,42 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codefirst.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsakusaSatelliteApp.app/AsakusaSatelliteApp";
+			};
+			name = Release;
+		};
+		EA7425B11C49223E001CA461 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		EA7425B21C49223E001CA461 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -992,6 +1134,15 @@
 			buildConfigurations = (
 				EA01F3421AB7161400CF5691 /* Debug */,
 				EA01F3431AB7161400CF5691 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EA7425B31C49223E001CA461 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EA7425B11C49223E001CA461 /* Debug */,
+				EA7425B21C49223E001CA461 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
