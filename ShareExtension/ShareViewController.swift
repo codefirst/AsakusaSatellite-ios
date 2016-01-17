@@ -67,6 +67,19 @@ class ShareViewController: SLComposeServiceViewController {
                         completeRequestIfFinished()
                     }
                 }
+
+                asyncTasks += 1
+                ip.loadItemForTypeIdentifier(kUTTypeText as String, options: nil) { object, error in
+                    asyncTasks -= 1
+                    guard error == nil,
+                        let _ = object as? String else {
+                            return completeRequestIfFinished()
+                    }
+
+                    client.postMessage(self.contentText, roomID: roomID, files: []) { _ in
+                        completeRequestIfFinished()
+                    }
+                }
             }
         }
 
