@@ -51,7 +51,20 @@ class ShareViewController: SLComposeServiceViewController {
                     }
 
                     client.postMessage(self.contentText, roomID: roomID, files: [jpegFileURL.path!]) { _ in
-                            completeRequestIfFinished()
+                        completeRequestIfFinished()
+                    }
+                }
+
+                asyncTasks += 1
+                ip.loadItemForTypeIdentifier(kUTTypeURL as String, options: nil) { object, error in
+                    asyncTasks -= 1
+                    guard error == nil,
+                        let url = object as? NSURL else {
+                            return completeRequestIfFinished()
+                    }
+
+                    client.postMessage(url.absoluteString + "\n" + self.contentText, roomID: roomID, files: []) { _ in
+                        completeRequestIfFinished()
                     }
                 }
             }
