@@ -1,16 +1,27 @@
 platform :ios, '8.0'
 use_frameworks!
 
-link_with 'AsakusaSatellite'
 
-pod 'AsakusaSatellite'
+def common
+    pod 'AsakusaSatellite'
+end
+
+link_with 'AsakusaSatellite'
+common
 pod 'NorthLayout'
 pod 'HanekeSwift'
 pod 'TUSafariActivity', '~> 1.0'
 
+target 'ShareExtension', :exclusive => true do
+    common
+    pod 'AppGroup', :podspec => 'Pods/CocoaPodsAppGroup/AppGroup.podspec.json'
+end
 
-target 'Specs' do
+target 'Specs', :exclusive => true do
     link_with 'AsakusaSatelliteTests'
+    common
     pod 'Quick'
     pod 'Nimble'
 end
+
+plugin 'cocoapods-app_group'

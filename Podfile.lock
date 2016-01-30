@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (2.0.2)
+  - AppGroup (1.0.0)
   - AsakusaSatellite (0.4.0):
     - Alamofire (~> 2.0)
     - Socket.IO-Client-Swift (~> 3.1)
@@ -15,6 +16,7 @@ PODS:
   - UTIKit (1.2.0)
 
 DEPENDENCIES:
+  - AppGroup (from `Pods/CocoaPodsAppGroup/AppGroup.podspec.json`)
   - AsakusaSatellite
   - HanekeSwift
   - Nimble
@@ -22,8 +24,13 @@ DEPENDENCIES:
   - Quick
   - TUSafariActivity (~> 1.0)
 
+EXTERNAL SOURCES:
+  AppGroup:
+    :podspec: Pods/CocoaPodsAppGroup/AppGroup.podspec.json
+
 SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
+  AppGroup: e2b8247a43e9381f825b247ac86cf5c930bf4f70
   AsakusaSatellite: a326d151f7f88ca9ffaa63d6e893a46c1c06a6d2
   HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926

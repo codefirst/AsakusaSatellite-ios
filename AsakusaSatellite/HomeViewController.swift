@@ -86,16 +86,10 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     // MARK: - Caches
-    
-    private var cachedRoomListFile: String { return "\(NSHomeDirectory())/Library/Caches/rooms.json" }
-    
+
     private func loadCachedRoomList() {
-        guard let many = Many<Room>(file: cachedRoomListFile) else { return }
-        rooms = many.items
-    }
-    
-    private func cacheRoomList(many: Many<Room>) {
-        many.saveToFile(cachedRoomListFile)
+        guard let items = CachedRoomList.loadCachedRoomList() else { return }
+        rooms = items
     }
     
     // MARK: -
@@ -106,7 +100,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             switch response {
             case .Success(let many):
                 self.rooms = many.items
-                self.cacheRoomList(many)
+                CachedRoomList.cacheRoomList(many)
             case .Failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
@@ -179,6 +173,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         let room = rooms[indexPath.item]
         if let c = client {
             let vc = RoomViewController(client: Client(rootURL: c.rootURL, apiKey: UserDefaults.apiKey), room: room)
+            UserDefaults.currentRoom = room
             navigationController?.pushViewController(vc, animated: true)
         }
     }
