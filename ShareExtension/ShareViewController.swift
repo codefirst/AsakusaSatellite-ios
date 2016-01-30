@@ -21,69 +21,72 @@ class ShareViewController: SLComposeServiceViewController {
     }
     
     override func didSelectPost() {
-        var asyncTasks: UInt = 0
         let completeRequestIfFinished = {
-            if asyncTasks == 0 {
-                self.extensionContext!.completeRequestReturningItems([], completionHandler: nil)
-            }
+            self.extensionContext?.completeRequestReturningItems([], completionHandler: nil)
         }
 
         let client = Client(apiKey: UserDefaults.apiKey)
         guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] where !inputItems.isEmpty,
             let roomID = UserDefaults.currentRoom?.id else {
-            completeRequestIfFinished()
-            return
+                completeRequestIfFinished()
+                return
         }
 
-        for items in inputItems {
-            let itemProviders = items.attachments as? [NSItemProvider] ?? []
-            itemProviders.forEach { ip in
-                asyncTasks += 1
-                ip.loadItemForTypeIdentifier(kUTTypeImage as String, options: nil) { object, error in
-                    let jpegFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(NSUUID().UUIDString).URLByAppendingPathExtension("jpg")
+        gatherValidContents() { text, imageFileURLs, urls in
+            let postText = (urls.map{$0.absoluteString} + [self.contentText] ).joinWithSeparator("\n")
+            client.postMessage(postText, roomID: roomID, files: imageFileURLs.map{$0.path!}) {_ in
+                completeRequestIfFinished()
+            }
+        }
+    }
 
-                    asyncTasks -= 1
-                    guard error == nil,
-                        let imageURL = object as? NSURL where imageURL.fileURL,
-                        let image = UIImage(contentsOfFile: imageURL.path!)
-                        where UIImageJPEGRepresentation(image, 0.8)?.writeToURL(jpegFileURL, atomically: true) == true else {
-                            return completeRequestIfFinished()
-                    }
+    private func gatherValidContents(completion: (text: String, imageFileURLs: [NSURL], urls: [NSURL]) -> Void) {
+        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] else { return completion(text: "", imageFileURLs: [], urls: []) }
 
-                    client.postMessage(self.contentText, roomID: roomID, files: [jpegFileURL.path!]) { _ in
-                        completeRequestIfFinished()
+        let queue = NSOperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        let text = contentText
+        var imageFileURLs = [NSURL]()
+        var urls = [NSURL]()
+
+        inputItems.flatMap{$0.attachments as? [NSItemProvider]}.flatten().forEach { itemProvider in
+            // Images
+            queue.addOperationWithBlock {
+                let sem = dispatch_semaphore_create(0)
+
+                itemProvider.loadItemForTypeIdentifier(kUTTypeImage as String, options: nil) { object, error in
+                    if  let imageURL = object as? NSURL where imageURL.fileURL,
+                        let imageURLPath = imageURL.path,
+                        let image = UIImage(contentsOfFile: imageURLPath),
+                        let jpegFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(NSUUID().UUIDString).URLByAppendingPathExtension("jpg") as NSURL?
+                        where error == nil && UIImageJPEGRepresentation(image, 0.8)?.writeToURL(jpegFileURL, atomically: true) == true {
+                            imageFileURLs.append(jpegFileURL)
                     }
+                    dispatch_semaphore_signal(sem)
                 }
 
-                asyncTasks += 1
-                ip.loadItemForTypeIdentifier(kUTTypeURL as String, options: nil) { object, error in
-                    asyncTasks -= 1
-                    guard error == nil,
-                        let url = object as? NSURL else {
-                            return completeRequestIfFinished()
-                    }
+                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+            }
 
-                    client.postMessage(url.absoluteString + "\n" + self.contentText, roomID: roomID, files: []) { _ in
-                        completeRequestIfFinished()
+            // URLs
+            queue.addOperationWithBlock {
+                let sem = dispatch_semaphore_create(0)
+
+                itemProvider.loadItemForTypeIdentifier(kUTTypeURL as String, options: nil) { object, error in
+                    if let url = object as? NSURL where error == nil {
+                        urls.append(url)
                     }
+                    dispatch_semaphore_signal(sem)
                 }
 
-                asyncTasks += 1
-                ip.loadItemForTypeIdentifier(kUTTypeText as String, options: nil) { object, error in
-                    asyncTasks -= 1
-                    guard error == nil,
-                        let _ = object as? String else {
-                            return completeRequestIfFinished()
-                    }
-
-                    client.postMessage(self.contentText, roomID: roomID, files: []) { _ in
-                        completeRequestIfFinished()
-                    }
-                }
+                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
             }
         }
 
-        completeRequestIfFinished()
+        dispatch_async(dispatch_get_global_queue(0, 0)) {
+            queue.waitUntilAllOperationsAreFinished()
+            completion(text: text, imageFileURLs: imageFileURLs, urls: urls)
+        }
     }
 
     override func configurationItems() -> [AnyObject]! {
@@ -91,7 +94,7 @@ class ShareViewController: SLComposeServiceViewController {
         let roomConfigurationItem = SLComposeSheetConfigurationItem()
         roomConfigurationItem.title = "To"
         roomConfigurationItem.value = room?.name ?? "(not logged in)"
-
+        
         return [roomConfigurationItem]
     }
 
