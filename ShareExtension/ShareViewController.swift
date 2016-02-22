@@ -55,9 +55,7 @@ class ShareViewController: SLComposeServiceViewController {
                 let sem = dispatch_semaphore_create(0)
 
                 itemProvider.loadItemForTypeIdentifier(kUTTypeImage as String, options: nil) { object, error in
-                    if  let imageURL = object as? NSURL where imageURL.fileURL,
-                        let imageURLPath = imageURL.path,
-                        let image = UIImage(contentsOfFile: imageURLPath).map({self.orientationFixedImage($0)}),
+                    if  let image = self.imageFromObject(object),
                         let jpegFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(NSUUID().UUIDString).URLByAppendingPathExtension("jpg") as NSURL?
                         where error == nil && UIImageJPEGRepresentation(image, 0.8)?.writeToURL(jpegFileURL, atomically: true) == true {
                             imageFileURLs.append(jpegFileURL)
@@ -106,4 +104,12 @@ class ShareViewController: SLComposeServiceViewController {
         return [roomConfigurationItem]
     }
 
+    private func imageFromObject(object : AnyObject?) -> UIImage? {
+        if  let imageURL = object as? NSURL where imageURL.fileURL,
+            let imageURLPath = imageURL.path {
+                return UIImage(contentsOfFile: imageURLPath).map({self.orientationFixedImage($0)})
+        } else {
+            return object as? UIImage
+        }
+    }
 }
