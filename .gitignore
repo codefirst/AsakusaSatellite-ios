@@ -2,3 +2,4 @@
 tmp/
 *.mobileprovision
 .cocoapods_appgroup
+/build/
