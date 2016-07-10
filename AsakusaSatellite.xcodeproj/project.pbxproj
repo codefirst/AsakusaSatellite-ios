@@ -423,6 +423,7 @@
 				EABEF6261BB163C700659F10 /* Embed Watch Content */,
 				EA7425B41C49223E001CA461 /* Embed App Extensions */,
 				0206CEBF9C636F5853807CE6 /* Embed Pods Frameworks */,
+				EAF3636E1D328E0B004582E2 /* 📚Fabric */,
 			);
 			buildRules = (
 			);
@@ -465,6 +466,7 @@
 				EA7425A31C49223E001CA461 /* Frameworks */,
 				EA7425A41C49223E001CA461 /* Resources */,
 				AFCFB6B0EB5B3D4EDE21C815 /* Copy Pods Resources */,
+				84CA2FA5FCC7E8900A6EDFAC /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -678,6 +680,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		84CA2FA5FCC7E8900A6EDFAC /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		A844BDEB37B05A32CEC61973 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -736,6 +753,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Specs/Pods-Specs-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAF3636E1D328E0B004582E2 /* 📚Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📚Fabric";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" f1afa090807acae41dbe14c689db9cdf93d83c1d c33851ad7fb7ae3147286558c88abdbc0ec89037e8f896cddf33f1b37e8ae1bf";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

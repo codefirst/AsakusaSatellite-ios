@@ -11,6 +11,8 @@ common
 pod 'NorthLayout'
 pod 'HanekeSwift'
 pod 'TUSafariActivity', '~> 1.0'
+pod 'Fabric'
+pod 'Crashlytics'
 
 target 'ShareExtension', :exclusive => true do
     common

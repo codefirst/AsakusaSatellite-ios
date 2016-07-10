@@ -6,6 +6,9 @@ PODS:
     - Socket.IO-Client-Swift (~> 3.1)
     - SwiftyJSON (~> 2.2)
     - UTIKit (~> 1.2)
+  - Crashlytics (3.7.2):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.7)
   - HanekeSwift (0.10.0)
   - Nimble (3.0.0)
   - NorthLayout (2.0.0)
@@ -18,6 +21,8 @@ PODS:
 DEPENDENCIES:
   - AppGroup (from `Pods/CocoaPodsAppGroup/AppGroup.podspec.json`)
   - AsakusaSatellite
+  - Crashlytics
+  - Fabric
   - HanekeSwift
   - Nimble
   - NorthLayout
@@ -32,6 +37,8 @@ SPEC CHECKSUMS:
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   AppGroup: e2b8247a43e9381f825b247ac86cf5c930bf4f70
   AsakusaSatellite: a326d151f7f88ca9ffaa63d6e893a46c1c06a6d2
+  Crashlytics: 130ab943f8c78cda7a814b434f270b2e2c8a3cba
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   HanekeSwift: d6f5bdf9dbdbbc09d59623b2c1d533e46463dd4d
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
   NorthLayout: 52739ecae3c9c5877770869d4277c308512f9fd5

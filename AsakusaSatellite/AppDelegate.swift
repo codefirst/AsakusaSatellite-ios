@@ -8,6 +8,8 @@
 
 import UIKit
 import AsakusaSatellite
+import Fabric
+import Crashlytics
 
 
 let AppFullName = "AsakusaSatellite"
@@ -55,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         window?.makeKeyAndVisible()
         
         registerPushNotification()
+
+        Fabric.with([Crashlytics.self])
         
         return true
     }
