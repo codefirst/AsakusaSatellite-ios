@@ -44,6 +44,10 @@ class InlineMessageWebView: WKWebView {
         scrollView.scrollEnabled = false
         scrollView.addObserver(self, forKeyPath: kContentSize, options: [], context: nil)
     }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     deinit {
         scrollView.removeObserver(self, forKeyPath: kContentSize)

@@ -26,7 +26,7 @@ extension UIImage {
         UIRectFillUsingBlendMode(CGRectMake(0, 0, size.width, size.height), .Copy)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        return image!
     }    
     
     func jpegData(maxSize: Int) -> NSData? {

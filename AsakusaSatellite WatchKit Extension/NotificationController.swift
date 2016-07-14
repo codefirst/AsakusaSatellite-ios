@@ -87,7 +87,7 @@ class NotificationController: WKUserNotificationInterfaceController {
                                 UIGraphicsBeginImageContextWithOptions(CGSizeMake(margin.width + side, margin.height + side), false, 2.0)
                                 UIBezierPath(ovalInRect: CGRectMake(margin.width, margin.height, side, side)).addClip()
                                 icon.drawInRect(CGRectMake(margin.width, margin.height, side, side))
-                                let data = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext())
+                                let data = UIImagePNGRepresentation(UIGraphicsGetImageFromCurrentImageContext()!)
                                 UIGraphicsEndImageContext()
                                 
                                 do {

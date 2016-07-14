@@ -33,7 +33,7 @@ class ShareViewController: SLComposeServiceViewController {
         }
 
         gatherValidContents() { text, imageFileURLs, urls in
-            let postText = (urls.map{$0.absoluteString} + [self.contentText] ).joinWithSeparator("\n")
+            let postText = (urls.flatMap{$0.absoluteString} + [self.contentText] ).joinWithSeparator("\n")
             client.postMessage(postText, roomID: roomID, files: imageFileURLs.map{$0.path!}) {_ in
                 completeRequestIfFinished()
             }
@@ -56,7 +56,7 @@ class ShareViewController: SLComposeServiceViewController {
 
                 itemProvider.loadItemForTypeIdentifier(kUTTypeImage as String, options: nil) { object, error in
                     if  let image = self.imageFromObject(object),
-                        let jpegFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(NSUUID().UUIDString).URLByAppendingPathExtension("jpg") as NSURL?
+                        let jpegFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(NSUUID().UUIDString)!.URLByAppendingPathExtension("jpg") as NSURL?
                         where error == nil && UIImageJPEGRepresentation(image, 0.8)?.writeToURL(jpegFileURL, atomically: true) == true {
                             imageFileURLs.append(jpegFileURL)
                     }
@@ -92,7 +92,7 @@ class ShareViewController: SLComposeServiceViewController {
         image.drawAtPoint(CGPointZero)
         let orientationFixedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return orientationFixedImage
+        return orientationFixedImage!
     }
 
     override func configurationItems() -> [AnyObject]! {
