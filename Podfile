@@ -2,28 +2,24 @@ platform :ios, '8.0'
 use_frameworks!
 
 
-def common
-    pod 'AsakusaSatellite'
-end
+target 'AsakusaSatellite' do
+  pod 'AsakusaSatellite'
+  pod 'NorthLayout'
+  pod 'HanekeSwift'
+  pod 'TUSafariActivity', '~> 1.0'
+  pod 'Fabric'
+  pod 'Crashlytics'
 
-link_with 'AsakusaSatellite'
-common
-pod 'NorthLayout'
-pod 'HanekeSwift'
-pod 'TUSafariActivity', '~> 1.0'
-pod 'Fabric'
-pod 'Crashlytics'
 
-target 'ShareExtension', :exclusive => true do
-    common
-    pod 'AppGroup', :podspec => 'Pods/CocoaPodsAppGroup/AppGroup.podspec.json'
-end
-
-target 'Specs', :exclusive => true do
-    link_with 'AsakusaSatelliteTests'
-    common
+  target 'AsakusaSatelliteTests' do
+    inherit! :search_paths
     pod 'Quick'
     pod 'Nimble'
+  end
 end
 
-plugin 'cocoapods-app_group'
+target 'ShareExtension' do
+  pod 'AsakusaSatellite'
+end
+
+plugin 'cocoapods-app_group', targets: ['ShareExtension']
