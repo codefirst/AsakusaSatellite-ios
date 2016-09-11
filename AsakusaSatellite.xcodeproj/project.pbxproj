@@ -21,6 +21,8 @@
 		EA1FA4E21ABD580200BA1D68 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1FA4E11ABD580200BA1D68 /* RoomViewController.swift */; };
 		EA2615D71ABD60600011DB1B /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2615D61ABD60600011DB1B /* MessageView.swift */; };
 		EA2615D91ABE4FE20011DB1B /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2615D81ABE4FE20011DB1B /* RefreshView.swift */; };
+		EA4E78CF1D852A15000B8FCC /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4E78CE1D852A15000B8FCC /* CoreAudio.framework */; };
+		EA4E78D11D852A1D000B8FCC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4E78D01D852A1D000B8FCC /* CoreMedia.framework */; };
 		EA64C7791AB9AD6F00282113 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C7781AB9AD6F00282113 /* HomeViewController.swift */; };
 		EA64C77B1AB9B29D00282113 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C77A1AB9B29D00282113 /* UserDefaults.swift */; };
 		EA64C77D1AB9DA3A00282113 /* SatelliteImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */; };
@@ -158,6 +160,8 @@
 		EA1FA4E11ABD580200BA1D68 /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		EA2615D61ABD60600011DB1B /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		EA2615D81ABE4FE20011DB1B /* RefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshView.swift; sourceTree = "<group>"; };
+		EA4E78CE1D852A15000B8FCC /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		EA4E78D01D852A1D000B8FCC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		EA64C7781AB9AD6F00282113 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		EA64C77A1AB9B29D00282113 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		EA64C77C1AB9DA3A00282113 /* SatelliteImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SatelliteImageView.swift; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA4E78D11D852A1D000B8FCC /* CoreMedia.framework in Frameworks */,
+				EA4E78CF1D852A15000B8FCC /* CoreAudio.framework in Frameworks */,
 				EAC4F71B1D37DC86002CA7D1 /* Pods_AsakusaSatellite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +258,8 @@
 		B99D720E667DAB177CDE44D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA4E78D01D852A1D000B8FCC /* CoreMedia.framework */,
+				EA4E78CE1D852A15000B8FCC /* CoreAudio.framework */,
 				EAC4F7181D37DBDF002CA7D1 /* AppGroup.framework */,
 				BA23D058DC67A17776C1F6FB /* Pods.framework */,
 				DFC6ADDD8194B5FDEC3B6A41 /* Pods_AsakusaSatellite.framework */,
