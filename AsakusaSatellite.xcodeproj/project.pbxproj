@@ -48,6 +48,9 @@
 		EABEF6211BB163C700659F10 /* AsakusaSatellite WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = EAB4CD051AECC51800D2C816 /* AsakusaSatellite WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EABEF6241BB163C700659F10 /* AsakusaSatellite WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = EAB4CD141AECC51800D2C816 /* AsakusaSatellite WatchKit App.app */; };
 		EABEF6281BB164E500659F10 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F34A1AB71E0100CF5691 /* Utilities.swift */; };
+		EAC4F71A1D37DC82002CA7D1 /* Pods_ShareExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 804A45E19218E9F899B83E39 /* Pods_ShareExtension.framework */; };
+		EAC4F71B1D37DC86002CA7D1 /* Pods_AsakusaSatellite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC6ADDD8194B5FDEC3B6A41 /* Pods_AsakusaSatellite.framework */; };
+		EAC4F71C1D37F1EE002CA7D1 /* AppGroup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC4F7181D37DBDF002CA7D1 /* AppGroup.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +184,9 @@
 		EAB4CD1E1AECC51800D2C816 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EABE455B1C4A482900388418 /* RoomList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomList.swift; sourceTree = "<group>"; };
 		EABEF6271BB1644600659F10 /* AsakusaSatellite WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit App.entitlements"; sourceTree = "<group>"; };
+		EAC4F7181D37DBDF002CA7D1 /* AppGroup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppGroup.framework; path = "../../../Library/Developer/Xcode/DerivedData/AsakusaSatellite-ffoahyytqsyeykbdixffgauzuutu/Build/Products/Debug-iphoneos/AppGroup/AppGroup.framework"; sourceTree = "<group>"; };
+		EAC4F71D1D3939A3002CA7D1 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Pods/Crashlytics/iOS/Crashlytics.framework; sourceTree = "<group>"; };
+		EAC4F71F1D3939A6002CA7D1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Pods/Fabric/iOS/Fabric.framework; sourceTree = "<group>"; };
 		EACA7D9A1AED3BD50073D1A5 /* Common-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common-Bridging-Header.h"; path = "AsakusaSatellite/Common-Bridging-Header.h"; sourceTree = "<group>"; };
 		EAEAA83A1AECF3D20096D410 /* AsakusaSatellite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AsakusaSatellite.entitlements; sourceTree = "<group>"; };
 		EAEAA83B1AECF3F00096D410 /* AsakusaSatellite WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -199,6 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAC4F71B1D37DC86002CA7D1 /* Pods_AsakusaSatellite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +221,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAC4F71C1D37F1EE002CA7D1 /* AppGroup.framework in Frameworks */,
+				EAC4F71A1D37DC82002CA7D1 /* Pods_ShareExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +252,7 @@
 		B99D720E667DAB177CDE44D7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EAC4F7181D37DBDF002CA7D1 /* AppGroup.framework */,
 				BA23D058DC67A17776C1F6FB /* Pods.framework */,
 				DFC6ADDD8194B5FDEC3B6A41 /* Pods_AsakusaSatellite.framework */,
 				E88CB07A926C15D7B8C9F095 /* Pods_AsakusaSatelliteTests.framework */,
@@ -254,6 +264,8 @@
 		EA01F3161AB7161400CF5691 = {
 			isa = PBXGroup;
 			children = (
+				EAC4F71F1D3939A6002CA7D1 /* Fabric.framework */,
+				EAC4F71D1D3939A3002CA7D1 /* Crashlytics.framework */,
 				EA1FA4DE1ABD3FCB00BA1D68 /* AsakusaSatellite.playground */,
 				EACA7D9A1AED3BD50073D1A5 /* Common-Bridging-Header.h */,
 				EA01F3211AB7161400CF5691 /* AsakusaSatellite */,
@@ -459,7 +471,6 @@
 				EA7425A21C49223E001CA461 /* Sources */,
 				EA7425A31C49223E001CA461 /* Frameworks */,
 				EA7425A41C49223E001CA461 /* Resources */,
-				34A6C6414E0172F86E8F6488 /* [CP] Embed Pods Frameworks */,
 				C934FB4FD63E76E28BF8EB69 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -513,7 +524,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = codefirst;
 				TargetAttributes = {
 					EA01F31E1AB7161400CF5691 = {
@@ -522,6 +533,9 @@
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -662,22 +676,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		34A6C6414E0172F86E8F6488 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		4C386FCFED3D3B94D9E6093D /* [CP] Check Pods Manifest.lock */ = {
@@ -692,7 +691,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		68DB6F7CB300A8C6BA0501D9 /* [CP] Embed Pods Frameworks */ = {
@@ -722,7 +721,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		961E24BA32245611FC2267BF /* [CP] Embed Pods Frameworks */ = {
@@ -909,6 +908,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -923,13 +923,13 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 146;
+				CURRENT_PROJECT_VERSION = 147;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -956,6 +956,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -969,13 +970,13 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 146;
+				CURRENT_PROJECT_VERSION = 147;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -997,13 +998,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AsakusaSatellite/AsakusaSatellite.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite;
 				PRODUCT_NAME = "$(TARGET_NAME)App";
-				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
 				SWIFT_VERSION = 2.3;
 			};
@@ -1015,14 +1013,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AsakusaSatellite/AsakusaSatellite.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				INFOPLIST_FILE = AsakusaSatellite/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite;
 				PRODUCT_NAME = "$(TARGET_NAME)App";
-				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
@@ -1031,6 +1027,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 91C9EC26B01A2A8D8DE26544 /* Pods-AsakusaSatelliteTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1051,12 +1048,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6DA44E90AAFAE609812DBF6A /* Pods-AsakusaSatelliteTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = AsakusaSatelliteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codefirst.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsakusaSatelliteApp.app/AsakusaSatelliteApp";
 			};
@@ -1067,8 +1066,6 @@
 			baseConfigurationReference = 6DB10C3CDF62DE6097BE79FB /* Pods-ShareExtension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
@@ -1076,7 +1073,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 2.3;
 			};
@@ -1087,8 +1083,6 @@
 			baseConfigurationReference = D9C3E053F646309B5F65D01A /* Pods-ShareExtension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
@@ -1096,8 +1090,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
@@ -1106,11 +1100,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit Extension/AsakusaSatellite WatchKit Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1121,7 +1111,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
@@ -1135,21 +1124,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit Extension/AsakusaSatellite WatchKit Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "AsakusaSatellite/Common-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1161,8 +1146,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit App/AsakusaSatellite WatchKit App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1172,7 +1155,6 @@
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 2.3;
@@ -1186,15 +1168,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "AsakusaSatellite WatchKit App/AsakusaSatellite WatchKit App.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "AsakusaSatellite WatchKit App/Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 2.3;

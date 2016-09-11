@@ -9,8 +9,12 @@ target 'AsakusaSatellite' do
   pod 'TUSafariActivity', '~> 1.0'
   pod 'Fabric'
   pod 'Crashlytics'
-
-
+  plugin 'cocoapods-app_group', targets: ['AsakusaSatellite']
+  
+  target 'ShareExtension' do
+    inherit! :search_paths
+  end
+  
   target 'AsakusaSatelliteTests' do
     inherit! :search_paths
     pod 'Quick'
@@ -18,8 +22,12 @@ target 'AsakusaSatellite' do
   end
 end
 
-target 'ShareExtension' do
-  pod 'AsakusaSatellite'
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES'] = 'NO'
+    end
+  end
 end
 
-plugin 'cocoapods-app_group', targets: ['ShareExtension']
