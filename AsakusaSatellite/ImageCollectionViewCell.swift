@@ -10,13 +10,13 @@ import UIKit
 import NorthLayout
 
 class ImageCollectionViewCell: UICollectionViewCell {
-    let imageView = UIImageView(frame: CGRectZero)
+    let imageView = UIImageView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        imageView.frame = CGRectMake(0, 0, frame.width, frame.height)
-        imageView.contentMode = .ScaleAspectFill
+        imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 4
         

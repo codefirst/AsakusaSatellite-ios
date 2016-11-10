@@ -8,6 +8,7 @@
 
 import WatchKit
 import Foundation
+import Ikemen
 
 
 private let kAppGroupID = "group.org.codefirst.asakusasatellite"
@@ -58,7 +59,7 @@ class NotificationController: WKUserNotificationInterfaceController {
                 let body = (separatorLocation != NSNotFound ? (alert as NSString).substringFromIndex(separatorLocation + 3) : alert)
                 
                 let attrs: [String: AnyObject] = [
-                    NSParagraphStyleAttributeName: (NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle).tap { (p: NSMutableParagraphStyle) in
+                    NSParagraphStyleAttributeName: (NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle) ※ { (p: NSMutableParagraphStyle) in
                         // p.firstLineHeadIndent = 16 + 4 // iOS 8.3 + Watch OS 8.2: firstLineHeadIndent cause incorrect line break on the first line. use space characters instead.
                         p.lineBreakMode = NSLineBreakMode.ByWordWrapping
                     }

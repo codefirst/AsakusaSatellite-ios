@@ -9,14 +9,15 @@
 import UIKit
 import WebKit
 import AsakusaSatellite
+import Ikemen
 
 
 private let kContentSize = "contentSize"
 
 
 class InlineMessageWebView: WKWebView {
-    let baseURL: NSURL?
-    var onContentSizeChange: (CGSize -> Void)?
+    let baseURL: URL?
+    var onContentSizeChange: ((CGSize) -> Void)?
     var message: Message? {
         didSet {
             if let m = message {
@@ -28,20 +29,20 @@ class InlineMessageWebView: WKWebView {
             }
         }
     }
-    var contentSize: CGSize = CGSizeZero {
+    var contentSize: CGSize = .zero {
         didSet {
             invalidateIntrinsicContentSize()
             onContentSizeChange?(contentSize)
         }
     }
     
-    init(frame: CGRect, baseURL: NSURL?) {
+    init(frame: CGRect, baseURL: URL?) {
         self.baseURL = baseURL
-        super.init(frame: frame, configuration: WKWebViewConfiguration().tap { c in
+        super.init(frame: frame, configuration: WKWebViewConfiguration() ※ { c in
             c.suppressesIncrementalRendering = true
             })
         
-        scrollView.scrollEnabled = false
+        scrollView.isScrollEnabled = false
         scrollView.addObserver(self, forKeyPath: kContentSize, options: [], context: nil)
     }
 
@@ -53,36 +54,34 @@ class InlineMessageWebView: WKWebView {
         scrollView.removeObserver(self, forKeyPath: kContentSize)
     }
     
-    func loadMessageHTML(message: Message?, baseURL: NSURL?) {
+    func loadMessageHTML(message: Message?, baseURL: URL?) {
         loadHTMLString(message?.html() ?? "", baseURL: baseURL)
     }
 
-    private func checkClientHeight(handler: CGFloat? -> Void) {
+    private func checkClientHeight(handler: @escaping (CGFloat?) -> Void) {
         evaluateJavaScript("document.getElementById(\"AsakusaSatMessageContent\").clientHeight") { (obj, error) in
             handler((obj as? NSNumber).map{CGFloat($0)})
         }
     }
-    
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        if object === scrollView && keyPath == kContentSize {
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if scrollView.isEqual(object) && keyPath == kContentSize {
             checkClientHeight { height in
                 guard let height = height else { return }
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
                     // change contentSize when height is stable
                     // heights of some web contents are unstable after finished loading
                     self.checkClientHeight { heightAfterAWhile in
                         if height == heightAfterAWhile {
-                            self.contentSize = CGSizeMake(self.scrollView.contentSize.width, height)
+                            self.contentSize = CGSize(width: self.scrollView.contentSize.width, height: height)
                         }
                     }
                 }
             }
         } else {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
-    
-    override func intrinsicContentSize() -> CGSize {
-        return contentSize
-    }
+
+    override var intrinsicContentSize: CGSize {return contentSize}
 }

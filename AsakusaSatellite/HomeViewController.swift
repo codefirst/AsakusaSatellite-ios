@@ -30,17 +30,17 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - init
     
     init() {
-        roomsView = UICollectionView(frame: CGRectZero, collectionViewLayout: roomsLayout)
+        roomsView = UICollectionView(frame: .zero, collectionViewLayout: roomsLayout)
         super.init(nibName: nil, bundle: nil)
         
         title = AppFullName
         
-        roomsView.registerClass(RoomCell.self, forCellWithReuseIdentifier: kCellID)
+        roomsView.register(RoomCell.self, forCellWithReuseIdentifier: kCellID)
         roomsView.dataSource = self
         roomsView.delegate = self
         
-        roomsLayout.scrollDirection = .Vertical
-        roomsLayout.itemSize = CGSizeMake(150, 150)
+        roomsLayout.scrollDirection = .vertical
+        roomsLayout.itemSize = CGSize(width: 150, height: 150)
         roomsLayout.minimumInteritemSpacing = 0
         roomsLayout.minimumLineSpacing = 22
         roomsLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10)
@@ -58,20 +58,20 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         view.backgroundColor = Appearance.backgroundColor
         roomsView.backgroundColor = view.backgroundColor
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Sign Out", comment: ""), style: .Plain, target: self, action: "auth:")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Sign Out", comment: ""), style: .plain, target: self, action: #selector(auth(_:)))
         
         let autolayout = view.northLayoutFormat([:], ["rooms": roomsView])
         autolayout("H:|[rooms]|")
         autolayout("V:|[rooms]|")
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         loadCachedRoomList()
@@ -79,7 +79,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         startAnimation()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         stopAnimation()
@@ -98,20 +98,20 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         client = Client(apiKey: UserDefaults.apiKey)
         client?.roomList() { response in
             switch response {
-            case .Success(let many):
+            case .success(let many):
                 self.rooms = many.items
                 CachedRoomList.cacheRoomList(many)
-            case .Failure(let error):
-                let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
-                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
-                self.presentViewController(ac, animated: true, completion: nil)
+            case .failure(let error):
+                let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
+                self.present(ac, animated: true, completion: nil)
             }
         }
     }
     
     // MARK: - Actions
 
-    @objc private func auth(sender: AnyObject?) {
+    @objc private func auth(_ sender: AnyObject?) {
         if UserDefaults.apiKey == nil {
             signin()
         } else {
@@ -136,12 +136,12 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     // MARK: - Animations
     
-    private func startAnimation() {
+    fileprivate func startAnimation() {
         stopAnimation()
         
-        displayLink = CADisplayLink(target: self, selector: "displayLink:")
+        displayLink = CADisplayLink(target: self, selector: #selector(displayLink(_:)))
         displayLink?.frameInterval = 2
-        displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+        displayLink?.add(to: .main, forMode: .commonModes)
     }
     
     private func stopAnimation() {
@@ -149,27 +149,27 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         displayLink = nil
     }
     
-    func displayLink(sender: CADisplayLink) {
+    func displayLink(_ sender: CADisplayLink) {
         for i in 0..<rooms.count {
-            if let cell = roomsView.cellForItemAtIndexPath(NSIndexPath(forItem: i, inSection: 0)) as? RoomCell {
-                cell.sat.displayLink(sender)
+            if let cell = roomsView.cellForItem(at: IndexPath(item: i, section: 0)) as? RoomCell {
+                cell.sat.displayLink(sender: sender)
             }
         }
     }
     
     // MARK: - Collection View
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return rooms.count
     }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = roomsView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! RoomCell
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = roomsView.dequeueReusableCell(withReuseIdentifier: kCellID, for: indexPath) as! RoomCell
         cell.room = rooms[indexPath.item]
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let room = rooms[indexPath.item]
         if let c = client {
             let vc = RoomViewController(client: Client(rootURL: c.rootURL, apiKey: UserDefaults.apiKey), room: room)
@@ -188,7 +188,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
                 sat.imageURLs = (urls.count > 0 ? urls : [kDefaultProfileImageURL]) // default image for public room with no owner
             }
         }
-        let sat = SatelliteImageView(frame: CGRectZero)
+        let sat = SatelliteImageView(frame: .zero)
         let nameLabel = UILabel()
         
         private let defaultImageURL = ""
@@ -197,10 +197,10 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             super.init(frame: frame)
             
             nameLabel.textColor = Appearance.tintColor
-            nameLabel.font = UIFont.systemFontOfSize(14)
+            nameLabel.font = UIFont.systemFont(ofSize: 14)
             nameLabel.numberOfLines = 2
-            nameLabel.textAlignment = .Center
-            nameLabel.lineBreakMode = .ByWordWrapping
+            nameLabel.textAlignment = .center
+            nameLabel.lineBreakMode = .byWordWrapping
             
             let autolayout = contentView.northLayoutFormat(["p": 8], ["sat": sat, "name": nameLabel])
             autolayout("H:|[sat]|")

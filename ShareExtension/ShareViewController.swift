@@ -22,82 +22,84 @@ class ShareViewController: SLComposeServiceViewController {
     
     override func didSelectPost() {
         let completeRequestIfFinished = {
-            self.extensionContext?.completeRequestReturningItems([], completionHandler: nil)
+            self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
         }
 
         let client = Client(apiKey: UserDefaults.apiKey)
-        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] where !inputItems.isEmpty,
+        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem], !inputItems.isEmpty,
             let roomID = UserDefaults.currentRoom?.id else {
                 completeRequestIfFinished()
                 return
         }
 
         gatherValidContents() { text, imageFileURLs, urls in
-            let postText = (urls.flatMap{$0.absoluteString} + [self.contentText] ).joinWithSeparator("\n")
-            client.postMessage(postText, roomID: roomID, files: imageFileURLs.map{$0.path!}) {_ in
+            let postText = (urls.flatMap{$0.absoluteString} + [self.contentText] ).joined(separator: "\n")
+            client.postMessage(postText, roomID: roomID, files: imageFileURLs.map{$0.path}) {_ in
                 completeRequestIfFinished()
             }
         }
     }
 
-    private func gatherValidContents(completion: (text: String, imageFileURLs: [NSURL], urls: [NSURL]) -> Void) {
-        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] else { return completion(text: "", imageFileURLs: [], urls: []) }
+    private func gatherValidContents(completion: @escaping (_ text: String, _ imageFileURLs: [URL], _ urls: [URL]) -> Void) {
+        guard let inputItems = self.extensionContext?.inputItems as? [NSExtensionItem] else { return completion("", [], []) }
 
-        let queue = NSOperationQueue()
+        let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
         let text = contentText
-        var imageFileURLs = [NSURL]()
-        var urls = [NSURL]()
+        var imageFileURLs = [URL]()
+        var urls = [URL]()
 
-        inputItems.flatMap{$0.attachments as? [NSItemProvider]}.flatten().forEach { itemProvider in
+        inputItems.flatMap{$0.attachments as? [NSItemProvider]}.joined().forEach { itemProvider in
             // Images
-            queue.addOperationWithBlock {
-                let sem = dispatch_semaphore_create(0)
+            queue.addOperation {
+                let sem = DispatchSemaphore(value: 0)
 
-                itemProvider.loadItemForTypeIdentifier(kUTTypeImage as String, options: nil) { object, error in
-                    if  let image = self.imageFromObject(object),
-                        let jpegFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent(NSUUID().UUIDString)!.URLByAppendingPathExtension("jpg") as NSURL?
-                        where error == nil && UIImageJPEGRepresentation(image, 0.8)?.writeToURL(jpegFileURL, atomically: true) == true {
+                itemProvider.loadItem(forTypeIdentifier: kUTTypeImage as String, options: nil) { object, error in
+                    if  let image = self.imageFromObject(object: object), error == nil {
+                        let jpegFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(NSUUID().uuidString).appendingPathExtension("jpg")
+                        if let _ = try? UIImageJPEGRepresentation(image, 0.8)?.write(to: jpegFileURL, options: [.atomic]) {
                             imageFileURLs.append(jpegFileURL)
+                        }
                     }
-                    dispatch_semaphore_signal(sem)
+                    sem.signal()
                 }
 
-                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+                _ = sem.wait(timeout: .distantFuture)
             }
 
             // URLs
-            queue.addOperationWithBlock {
-                let sem = dispatch_semaphore_create(0)
+            queue.addOperation {
+                let sem = DispatchSemaphore(value: 0)
 
-                itemProvider.loadItemForTypeIdentifier(kUTTypeURL as String, options: nil) { object, error in
-                    if let url = object as? NSURL where error == nil {
+                itemProvider.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil) { object, error in
+                    if let url = object as? URL, error == nil {
                         urls.append(url)
                     }
-                    dispatch_semaphore_signal(sem)
+                    sem.signal()
                 }
 
-                dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER)
+                _ = sem.wait(timeout: .distantFuture)
             }
         }
 
-        dispatch_async(dispatch_get_global_queue(0, 0)) {
+        DispatchQueue.global().async {
             queue.waitUntilAllOperationsAreFinished()
-            completion(text: text, imageFileURLs: imageFileURLs, urls: urls)
+            completion(text!, imageFileURLs, urls)
         }
     }
 
     private func orientationFixedImage(image: UIImage) -> UIImage {
         UIGraphicsBeginImageContext(image.size)
-        image.drawAtPoint(CGPointZero)
+        image.draw(at: .zero)
         let orientationFixedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return orientationFixedImage!
     }
 
-    override func configurationItems() -> [AnyObject]! {
+    
+    override func configurationItems() -> [Any]! {
         let room = UserDefaults.currentRoom
-        let roomConfigurationItem = SLComposeSheetConfigurationItem()
+        guard let roomConfigurationItem = SLComposeSheetConfigurationItem() else { return [] }
         roomConfigurationItem.title = "To"
         roomConfigurationItem.value = room?.name ?? "(not logged in)"
         
@@ -105,9 +107,9 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     private func imageFromObject(object : AnyObject?) -> UIImage? {
-        if  let imageURL = object as? NSURL where imageURL.fileURL,
+        if  let imageURL = object as? NSURL, imageURL.isFileURL,
             let imageURLPath = imageURL.path {
-                return UIImage(contentsOfFile: imageURLPath).map({self.orientationFixedImage($0)})
+                return UIImage(contentsOfFile: imageURLPath).map({self.orientationFixedImage(image: $0)})
         } else {
             return object as? UIImage
         }

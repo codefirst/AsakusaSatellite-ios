@@ -17,17 +17,17 @@ class HeadUpImageViewController: UIViewController {
     }
     
     init(imageURL: NSURL) {
-        imageView = UIImageView(frame: CGRectMake(0, 0, 320, 320))
-        imageView.contentMode = .ScaleAspectFit
-        imageView.hidden = true
+        imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 320, height: 320))
+        imageView.contentMode = .scaleAspectFit
+        imageView.isHidden = true
         
         super.init(nibName: nil, bundle: nil)
         
-        modalPresentationStyle = .OverFullScreen
-        modalTransitionStyle = .CrossDissolve
+        modalPresentationStyle = .overFullScreen
+        modalTransitionStyle = .crossDissolve
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        imageView.hnk_setImageFromURL(imageURL, success: {self.image = $0})
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        imageView.hnk_setImageFromURL(imageURL as URL, success: {self.image = $0})
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -38,57 +38,57 @@ class HeadUpImageViewController: UIViewController {
         super.loadView()
         
         view.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "close:"))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close(_:))))
         
         let autolayout = view.northLayoutFormat([:], ["image": imageView])
         autolayout("H:|[image]|")
         autolayout("V:|[image]|")
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showImageView()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         hideImageView()
         imageView.hnk_cancelSetImage()
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
     func showImageView() {
         if image == nil { return }
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         imageView.image = image
-        imageView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+        imageView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
         imageView.alpha = 0.0
-        imageView.hidden = false
-        UIView.animateWithDuration(0.5,
+        imageView.isHidden = false
+        UIView.animate(withDuration: 0.5,
             delay: 0.0,
             usingSpringWithDamping: 0.8,
             initialSpringVelocity: 0.0,
             options: [],
             animations: { () -> Void in
-                self.imageView.transform = CGAffineTransformIdentity
+                self.imageView.transform = .identity
                 self.imageView.alpha = 1.0
             }, completion: nil)
     }
     
     func hideImageView() {
-        UIView.animateWithDuration(0.5,
+        UIView.animate(withDuration: 0.5,
             delay: 0.0,
             usingSpringWithDamping: 0.8,
             initialSpringVelocity: 0.0,
             options: [],
             animations: { () -> Void in
-                self.imageView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                self.imageView.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
                 self.imageView.alpha = 0.0
             }, completion: nil)
     }
     
-    func close(sender: UITapGestureRecognizer) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func close(_ sender: UITapGestureRecognizer) {
+        dismiss(animated: true, completion: nil)
     }
 }

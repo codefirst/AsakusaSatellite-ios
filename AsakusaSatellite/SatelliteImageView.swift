@@ -19,25 +19,25 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         didSet {
             layout.invalidateLayout()
             collectionView.reloadData()
-            orbitView.hidden = imageURLs.count < 2
+            orbitView.isHidden = imageURLs.count < 2
         }
     }
     
     let collectionView: UICollectionView
     private let layout = Layout()
-    private let orbitView = OrbitView(frame: CGRectZero)
+    private let orbitView = OrbitView(frame: .zero)
     
     // MARK: - init
     
     override init(frame: CGRect) {
-        collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: kCellID)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(Cell.self, forCellWithReuseIdentifier: kCellID)
         super.init(frame: frame)
         
         clipsToBounds = false
         collectionView.clipsToBounds = false
         backgroundColor = Appearance.backgroundColor
-        collectionView.userInteractionEnabled = false // through taps
+        collectionView.isUserInteractionEnabled = false // through taps
         
         orbitView.backgroundColor = backgroundColor
         collectionView.backgroundColor = backgroundColor
@@ -57,19 +57,19 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     
     // MARK: - CollectionView
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageURLs.count
     }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! Cell
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCellID, for: indexPath) as! Cell
         let url = imageURLs[indexPath.item]
         cell.imageView.hnk_cancelSetImage()
         cell.imageView.image = nil
-        cell.imageView.hnk_setImageFromURL(url)
+        cell.imageView.hnk_setImageFromURL(url as URL)
         
         // for layer animation
-        cell.layer.rasterizationScale = UIScreen.mainScreen().scale
+        cell.layer.rasterizationScale = UIScreen.main.scale
         
         return cell
     }
@@ -77,13 +77,13 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     // MARK: - Cell
     
     private class Cell: UICollectionViewCell {
-        let imageView = UIImageView(frame: CGRectZero)
+        let imageView = UIImageView(frame: .zero)
         
         override init(frame: CGRect) {
             super.init(frame: frame)
             
             imageView.clipsToBounds = true
-            imageView.frame = (CGRectIsEmpty(frame) ? CGRectMake(0, 0, 44, 44) : frame) // haneke requires initial non-zero rect
+            imageView.frame = (frame.isEmpty ? CGRect(x: 0, y: 0, width: 44, height: 44) : frame) // haneke requires initial non-zero rect
             
             let autolayout = contentView.northLayoutFormat([:], ["iv": imageView])
             autolayout("H:|[iv]|")
@@ -94,7 +94,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             fatalError("init(coder:) has not been implemented")
         }
         
-        private override func applyLayoutAttributes(layoutAttributes: UICollectionViewLayoutAttributes) {
+        fileprivate override func apply(_ layoutAttributes: UICollectionViewLayoutAttributes) {
             imageView.layer.cornerRadius = layoutAttributes.size.width / 2
         }
     }
@@ -116,24 +116,24 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         let xScale = CGFloat(0.20)
         let yScale = CGFloat(0.25)
         for i in 0..<imageURLs.count {
-            let indexPath = NSIndexPath(forItem: i, inSection: 0)
-            if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
-                var t = CGAffineTransformIdentity
+            let indexPath = IndexPath(item: i, section: 0)
+            if let cell = collectionView.cellForItem(at: indexPath) {
+                var t = CGAffineTransform.identity
                 
                 let animatedCenter = layout.centerForItemAt(percentage: time / periodInSeconds + CGFloat(i) / CGFloat(imageURLs.count), radiusScale: 1.25)
-                t = CGAffineTransformTranslate(t, animatedCenter.x - cell.center.x, animatedCenter.y - cell.center.y)
+                t = t.translatedBy(x: animatedCenter.x - cell.center.x, y: animatedCenter.y - cell.center.y)
                 
                 let xOffset = animatedCenter.x - layout.contentSizeSide / 2
                 let yOffset = animatedCenter.y - layout.contentSizeSide / 2
-                t = CGAffineTransformTranslate(t, 0, -(xOffset * xScale + yOffset * yScale))
+                t = t.translatedBy(x: 0, y: -(xOffset * xScale + yOffset * yScale))
                 cell.layer.zPosition = animatedCenter.x * xScale + animatedCenter.y * yScale
                 cell.transform = t
             }
         }
         
-        var t = CGAffineTransformIdentity
-        t = CGAffineTransformRotate(t, -CGFloat(M_PI_2) * xScale)
-        t = CGAffineTransformScale(t, 1, 2.5 * yScale)
+        var t = CGAffineTransform.identity
+        t = t.rotated(by: -CGFloat(M_PI_2) * xScale)
+        t = t.scaledBy(x: 1, y: 2.5 * yScale)
         orbitView.transform = t
     }
     
@@ -142,40 +142,40 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     private class Layout: UICollectionViewLayout {
         var contentSizeSide = CGFloat(0)
         var itemSide: CGFloat { return contentSizeSide / 3 }
-        var itemSize: CGSize { return CGSizeMake(itemSide, itemSide) }
+        var itemSize: CGSize { return CGSize(width: itemSide, height: itemSide) }
         let section = 0
-        var numberOfItems: Int { return collectionView?.numberOfItemsInSection(section) ?? 0 }
+        var numberOfItems: Int { return collectionView?.numberOfItems(inSection: section) ?? 0 }
         var radius: CGFloat { return numberOfItems > 1 ? (contentSizeSide - itemSide) / 2 : 0 }
         
-        private override func prepareLayout() {
-            let contentSize = collectionView?.bounds.size ?? CGSizeZero
+        fileprivate override func prepare() {
+            let contentSize = collectionView?.bounds.size ?? .zero
             contentSizeSide = min(contentSize.width, contentSize.height)
         }
         
-        func centerForItemAt(percentage percentage: CGFloat, radiusScale: CGFloat = 1.0) -> CGPoint {
-            let contentSize = collectionView?.bounds.size ?? CGSizeZero
-            let center = CGPointMake(contentSize.width / 2, contentSize.height / 2)
+        func centerForItemAt(percentage: CGFloat, radiusScale: CGFloat = 1.0) -> CGPoint {
+            let contentSize = collectionView?.bounds.size ?? .zero
+            let center = CGPoint(x: contentSize.width / 2, y: contentSize.height / 2)
             
             let angle = CGFloat(-M_PI_2 + 2 * M_PI * Double(percentage))
-            return CGPointMake(
-                center.x + radius * radiusScale * cos(angle),
-                center.y + radius * radiusScale * sin(angle))
+            return CGPoint(
+                x: center.x + radius * radiusScale * cos(angle),
+                y: center.y + radius * radiusScale * sin(angle))
         }
         
-        private override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        fileprivate override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
             let section = 0
-            let numberOfItems = collectionView?.numberOfItemsInSection(section) ?? 0
+            let numberOfItems = collectionView?.numberOfItems(inSection: section) ?? 0
             
             return [Int](0..<numberOfItems).map { n in
-                let la = UICollectionViewLayoutAttributes(forCellWithIndexPath: NSIndexPath(forItem: n, inSection: section))
+                let la = UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: n, section: section))
                 la.center = self.centerForItemAt(percentage: CGFloat(n) / CGFloat(numberOfItems ))
                 la.size = self.itemSize
                 return la
             }
         }
-        
-        private override func collectionViewContentSize() -> CGSize {
-            return CGSizeMake(contentSizeSide, contentSizeSide)
+
+        fileprivate override var collectionViewContentSize: CGSize {
+            return CGSize(width: contentSizeSide, height: contentSizeSide)
         }
     }
     
@@ -183,10 +183,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     
     private class ShapeLayerView: UIView {
         var shapeLayer: CAShapeLayer { return layer as! CAShapeLayer }
-        override class func layerClass() -> AnyClass {
-            return CAShapeLayer.self
-        }
-        
+        override class var layerClass: AnyClass {return CAShapeLayer.self}
     }
     
     private class OrbitView: ShapeLayerView {
@@ -201,8 +198,8 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         override init(frame: CGRect) {
             super.init(frame: frame)
             
-            shapeLayer.lineWidth = 1.0 / UIScreen.mainScreen().scale
-            shapeLayer.strokeColor = Appearance.asakusaRed.colorWithAlphaComponent(0.25).CGColor
+            shapeLayer.lineWidth = 1.0 / UIScreen.main.scale
+            shapeLayer.strokeColor = Appearance.asakusaRed.withAlphaComponent(0.25).cgColor
             shapeLayer.fillColor = nil
         }
 
@@ -210,11 +207,11 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             fatalError("init(coder:) has not been implemented")
         }
         
-        private override func layoutSubviews() {
+        fileprivate override func layoutSubviews() {
             super.layoutSubviews()
             
-            let center = CGPointMake(bounds.width / 2, bounds.height / 2)
-            shapeLayer.path = UIBezierPath(ovalInRect: CGRectMake(center.x - radius, center.y - radius, radius * 2, radius * 2)).CGPath
+            let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+            shapeLayer.path = UIBezierPath(ovalIn: CGRect(x: center.x - radius, y: center.y - radius, width: radius * 2, height: radius * 2)).cgPath
         }
     }
 }

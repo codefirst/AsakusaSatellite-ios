@@ -7,17 +7,17 @@
 //
 
 import UIKit
-
+import Ikemen
 
 private let kCellID = "Cell"
 
 
 class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     let textField = UITextField()
-    private let postAccessoryView = PostAccessoryView(frame: CGRectZero)
+    private let postAccessoryView = PostAccessoryView(frame: .zero)
     let sendButton = Appearance.roundRectButtonOnBackgroundColor(NSLocalizedString("Send", comment: ""))
     
-    typealias Attachment = (data: NSData, ext: String)
+    typealias Attachment = (data: Data, ext: String)
     var attachments: [Attachment] = [] {
         didSet {
             postAccessoryView.attachmentsView.reloadData()
@@ -25,33 +25,33 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         }
     }
     
-    var onPost: ((text: String, attachments: [Attachment], completion: (clearField: Bool) -> Void) -> Void)?
+    var onPost: ((_ text: String, _ attachments: [Attachment], _ completion: @escaping (_ clearField: Bool) -> Void) -> Void)?
     weak var containigViewController: UIViewController?
     
     init() {
-        super.init(frame: CGRectMake(0, 0, 320, 50))
-        autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin] // table footer does not support autolayout
+        super.init(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        autoresizingMask = [.flexibleWidth, .flexibleBottomMargin] // table footer does not support autolayout
         
         backgroundColor = Appearance.lightBackgroundColor
         
-        textField.tap { (tf: UITextField) in
+        _ = textField ※ { (tf: UITextField) in
             tf.placeholder = NSLocalizedString("message", comment: "")
             tf.font = Appearance.hiraginoW3(14)
             tf.backgroundColor = Appearance.backgroundColor
-            tf.borderStyle = .RoundedRect
+            tf.borderStyle = .roundedRect
             tf.delegate = self
-            tf.addTarget(self, action: "textChanged:", forControlEvents: .EditingChanged)
-            tf.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
+            tf.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
+            tf.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
 
-            self.postAccessoryView.photoButton.addTarget(self, action: "addPhoto:", forControlEvents: .TouchUpInside)
+            self.postAccessoryView.photoButton.addTarget(self, action: #selector(addPhoto(_:)), for: .touchUpInside)
             self.postAccessoryView.attachmentsView.dataSource = self
             self.postAccessoryView.attachmentsView.delegate = self
-            self.postAccessoryView.attachmentsView.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: kCellID)
+            self.postAccessoryView.attachmentsView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: kCellID)
             tf.inputAccessoryView = self.postAccessoryView
         }
-        sendButton.tap { (b: UIButton) in
-            b.addTarget(self, action: "post:", forControlEvents: .TouchUpInside)
-            b.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Horizontal)
+        _ = sendButton ※ { (b: UIButton) in
+            b.addTarget(self, action: #selector(post(_:)), for: .touchUpInside)
+            b.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         }
         
         let autolayout = northLayoutFormat(["p": 8, "onepx": Appearance.onepx], [
@@ -73,96 +73,91 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     }
     
     func updateViews() {
-        textField.enabled = true
-        sendButton.enabled = !(textField.text?.isEmpty ?? true) || attachments.count > 0
+        textField.isEnabled = true
+        sendButton.isEnabled = !(textField.text?.isEmpty ?? true) || attachments.count > 0
     }
     
-    func textChanged(sender: AnyObject?) {
+    func textChanged(_ sender: AnyObject?) {
         updateViews()
     }
     
-    func post(sender: AnyObject?) {
+    func post(_ sender: AnyObject?) {
         endEditing(true)
-        textField.enabled = false
-        sendButton.enabled = false
+        textField.isEnabled = false
+        sendButton.isEnabled = false
         
-        onPost?(text: textField.text ?? "", attachments: attachments) { (clearField: Bool) -> Void in
+        onPost?(textField.text ?? "", attachments) { (clearField: Bool) -> Void in
             if clearField {
                 self.textField.text = ""
-                self.attachments.removeAll(keepCapacity: false)
+                self.attachments.removeAll(keepingCapacity: false)
             }
             self.updateViews()
         }
     }
     
-    func addPhoto(sender: AnyObject?) {
+    func addPhoto(_ sender: AnyObject?) {
         let picker = UIImagePickerController()
-        
-        // FIXME: Swift Compiler of Xcode 7b2 fails to compile on "Early Performance Inliner"
-//        picker.delegate = self
-        typealias P = protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>?
-        picker.delegate = unsafeBitCast(PostView?.Some(self), P.self)
-        
-        picker.sourceType = .PhotoLibrary
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
         picker.allowsEditing = true
-        containigViewController?.presentViewController(picker, animated: true, completion: nil)
+        containigViewController?.present(picker, animated: true, completion: nil)
     }
     
     // MARK: - UIImagePickerControllerDelegate
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]) {
-        picker.dismissViewControllerAnimated(true) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        picker.dismiss(animated: true) {
             if  let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage,
-                let jpegData = image.jpegData(1 * 1024 * 1024) {
+                let jpegData = image.jpegData(maxSize: 1 * 1024 * 1024) {
                 self.attachments.append((data: jpegData, ext: "jpg"))
                 self.textField.becomeFirstResponder()
             }
         }
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        picker.dismissViewControllerAnimated(true){}
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true){}
         self.textField.becomeFirstResponder()
     }
     
     // MARK: - Collection View
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return attachments.count
     }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! ImageCollectionViewCell
-        cell.imageView.image = UIImage(data: attachments[indexPath.item].data, scale: UIScreen.mainScreen().scale)
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCellID, for: indexPath) as! ImageCollectionViewCell
+        cell.imageView.image = UIImage(data: attachments[indexPath.item].data, scale: UIScreen.main.scale)
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let ac = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        ac.addAction(UIAlertAction(title: NSLocalizedString("Remove", comment: ""), style: .Destructive) { _ -> Void in
-            self.attachments.removeAtIndex(indexPath.item)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let ac = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: NSLocalizedString("Remove", comment: ""), style: .destructive) { _ -> Void in
+            self.attachments.remove(at: indexPath.item)
             ()
         })
-        ac.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: nil))
-        containigViewController?.presentViewController(ac, animated: true, completion: nil)
+        ac.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+        containigViewController?.present(ac, animated: true, completion: nil)
     }
     
     // MARK: - Input Accessory View
     
     private class PostAccessoryView: UIView {
-        let photoButton = UIButton(type: .System)
-        let attachmentsView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout().tap { (l: UICollectionViewFlowLayout) in
-            l.scrollDirection = .Horizontal
-            l.itemSize = CGSizeMake(256, 44 - 8)
+        let photoButton = UIButton(type: .system)
+        let attachmentsView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout() ※ { (l: UICollectionViewFlowLayout) in
+            l.scrollDirection = .horizontal
+            l.itemSize = CGSize(width: 256, height: 44 - 8)
             l.sectionInset = UIEdgeInsetsMake(0, 0, 0, 8)
         })
         
         override init(frame: CGRect) {
-            super.init(frame: CGRectMake(frame.origin.x, frame.origin.y, frame.width, 44))
-            autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
+            super.init(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: 44))
+            autoresizingMask = [.flexibleWidth, .flexibleBottomMargin]
             
             backgroundColor = Appearance.lightBackgroundColor
-            photoButton.setTitle(NSLocalizedString("Photo", comment: ""), forState: .Normal)
+            photoButton.setTitle(NSLocalizedString("Photo", comment: ""), for: .normal)
             attachmentsView.backgroundColor = backgroundColor
             attachmentsView.showsHorizontalScrollIndicator = false
             attachmentsView.showsVerticalScrollIndicator = false
