@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Ikemen
 
 class RefreshView: UIView, UIScrollViewDelegate {
-    var onRefresh: ((completion: Void -> Void) -> Void)?
+    var onRefresh: ((_ completion: @escaping (Void) -> Void) -> Void)?
     
-    let statusLabel = UILabel(frame: CGRectZero).tap { (l: UILabel) in
-        l.textAlignment = .Center
-        l.font = UIFont.systemFontOfSize(18)
+    let statusLabel = UILabel(frame: .zero) ※ { (l: UILabel) in
+        l.textAlignment = .center
+        l.font = UIFont.systemFont(ofSize: 18)
         l.textColor = Appearance.textColorOnLightDarkBackgroundColor
         return
     }
@@ -59,8 +60,8 @@ class RefreshView: UIView, UIScrollViewDelegate {
     }
     
     func updateState() {
-        UIView.animateWithDuration(
-            0.2,
+        UIView.animate(
+            withDuration: 0.2,
             delay: 0,
             usingSpringWithDamping: 1.0,
             initialSpringVelocity: 0.0,
@@ -79,7 +80,7 @@ class RefreshView: UIView, UIScrollViewDelegate {
         }        
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if state == .Refreshing { return }
         
         let heightForNothing = frame.size.height - statusLabel.frame.origin.y
@@ -104,9 +105,9 @@ class RefreshView: UIView, UIScrollViewDelegate {
         }
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        UIView.animateWithDuration(
-            0.2,
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        UIView.animate(
+            withDuration: 0.2,
             delay: 0,
             usingSpringWithDamping: 1.0,
             initialSpringVelocity: 0.0,

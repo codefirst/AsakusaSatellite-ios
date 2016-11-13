@@ -12,31 +12,31 @@ import AsakusaSatellite
 import SwiftyJSON
 
 
-private let standardDefaults = NSUserDefaults.standardUserDefaults()
-private let appGroupDefaults = AppGroup.userDefaults()
+private let standardDefaults = Foundation.UserDefaults.standard
+private let appGroupDefaults = AppGroup.userDefaults()!
 
 private let kApiKey = "apikey"
 private let kCurrentRoomJsonKey = "currentRoomJson"
 
-private func saveObject(defaults: NSUserDefaults = standardDefaults, value: AnyObject?, forKey: String) {
-    defaults.setObject(value, forKey: forKey)
+private func saveObject(_ defaults: Foundation.UserDefaults = standardDefaults, value: AnyObject?, forKey: String) {
+    defaults.set(value, forKey: forKey)
     defaults.synchronize()
 }
 
 
 struct UserDefaults {
     static var apiKey: String? {
-        get { return appGroupDefaults.stringForKey(kApiKey) }
-        set { saveObject(appGroupDefaults, value: newValue, forKey: kApiKey) }
+        get { return appGroupDefaults.string(forKey: kApiKey) }
+        set { saveObject(appGroupDefaults, value: newValue as AnyObject?, forKey: kApiKey) }
     }
 
     static var currentRoom: Room? {
         get {
-        let jsonData = appGroupDefaults.stringForKey(kCurrentRoomJsonKey)?.dataUsingEncoding(NSUTF8StringEncoding)
+            let jsonData = appGroupDefaults.string(forKey: kCurrentRoomJsonKey)?.data(using: .utf8)
         return jsonData.flatMap{Room(json: JSON(data: $0))}
         }
         set {
-            saveObject(appGroupDefaults, value: newValue?.json.rawString(), forKey: kCurrentRoomJsonKey)
+            saveObject(appGroupDefaults, value: newValue?.json.rawString() as AnyObject?, forKey: kCurrentRoomJsonKey)
         }
     }
 }

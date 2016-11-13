@@ -21,7 +21,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var room: Room
     var messages = [Message]()
 
-    let tableView = UITableView(frame: CGRectZero, style: .Plain)
+    let tableView = UITableView(frame: .zero, style: .plain)
     let refreshView = RefreshView()
     let postView = PostView()
     
@@ -49,20 +49,20 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.backgroundColor = view.backgroundColor
         tableView.backgroundView = refreshView
         
-        tableView.registerClass(TableCell.self, forCellReuseIdentifier: kCellID)
+        tableView.register(TableCell.self, forCellReuseIdentifier: kCellID)
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         
         postView.containigViewController = self
-        postView.onPost = { (text, attachments, completion) in
-            self.postMessage(text, attachments: attachments) { success in
-                completion(clearField: success)
+        postView.onPost = { text, attachments, completion in
+            self.postMessage(text: text, attachments: attachments) { success in
+                completion(success)
             }
         }
         
         refreshView.onRefresh = { completion in
-            self.reloadMessages(completion)
+            self.reloadMessages(completion: completion)
         }
         
         let keyboardSpacer = KeyboardSpacerView()
@@ -74,7 +74,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         autolayout("V:|[table][keyboard]|")
         keyboardSpacer.installKeyboardHeightConstraint()
         keyboardSpacer.onHeightChange = { [weak self] _ in
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 if let s = self {
                     s.view.layoutIfNeeded()
                     s.tableView.scrollRectToVisible(s.tableView.tableFooterView!.frame, animated: true)
@@ -85,12 +85,12 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         loadCachedMessages()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setToolbarHidden(true, animated: true)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         refreshView.refresh()
@@ -103,47 +103,47 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     private func loadCachedMessages() {
         guard let many = Many<Message>(file: cachedMessagesFile) else { return }
-        appendMessages(many.items)
+        appendMessages(messages: many.items)
     }
     
     private func cacheMessages() {
         let messagesForCache = [Message](messages[max(0, messages.count - kNumberOfCachedMessages)..<messages.count])
-        Many<Message>(items: messagesForCache)?.saveToFile(cachedMessagesFile)
+        _ = Many<Message>(items: messagesForCache)?.saveToFile(cachedMessagesFile)
     }
     
     // MARK: -
     
-    private func reloadMessages(completion: (Void -> Void)? = nil) {
+    private func reloadMessages(completion: ((Void) -> Void)? = nil) {
         client.messagePusher(room.id) { pusher in
             self.pusher = pusher
             pusher?.onMessageCreate = self.onMessageCreate
             pusher?.connect()
         }
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         client.messageList(room.id, count: 20, sinceID: messages.last?.id, untilID: nil, order: .Desc) { r in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             switch r {
-            case .Success(let many):
-                self.appendMessages(many.items.reverse())
-                dispatch_async(dispatch_get_main_queue()) {
+            case .success(let many):
+                self.appendMessages(messages: many.items.reversed())
+                DispatchQueue.main.async {
                     self.scrollToBottom()
                 }
-            case .Failure(let error):
-                let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
-                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
-                self.presentViewController(ac, animated: true, completion: nil)
+            case .failure(let error):
+                let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
+                self.present(ac, animated: true, completion: nil)
             }
             completion?()
         }
     }
     
     private func onMessageCreate(message: Message) {
-        self.appendMessages([message])
+        self.appendMessages(messages: [message])
     }
     
     private func appendMessages(messages: [Message]) {
-        insertMessages(messages, beforeID: nil)
+        insertMessages(messagesToInsert: messages, beforeID: nil)
     }
     
     private func insertMessages(messagesToInsert: [Message], beforeID: String?) {
@@ -151,20 +151,20 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.beginUpdates()
         
         // reload cells with load button
-        let reloadedIndexes = messages.filter{!hasPreviousMessage($0)}.flatMap{m in messages.indexOf{$0.id == m.id}}
-        tableView.reloadRowsAtIndexPaths(reloadedIndexes.map{NSIndexPath(forItem: $0, inSection: 0)}, withRowAnimation: .None)
+        let reloadedIndexes = messages.filter{!hasPreviousMessage(message: $0)}.flatMap{m in messages.index{$0.id == m.id}}
+        tableView.reloadRows(at: reloadedIndexes.map{IndexPath(item: $0, section: 0)}, with: .none)
         
-        var indexToInsert = messages.indexOf{$0.id == beforeID} ?? messages.count
+        var indexToInsert = messages.index{$0.id == beforeID} ?? messages.count
         for m in messagesToInsert {
-            if let cachedIndex = messages.map({$0.id}).indexOf(m.id) {
+            if let cachedIndex = messages.map({$0.id}).index(of: m.id) {
                 // update (m is already loaded into tableView)
                 if messages[cachedIndex].prevID == nil {
                     messages[cachedIndex] = m
                 }
             } else {
                 // insert or append
-                messages.insert(m, atIndex: indexToInsert)
-                tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: indexToInsert, inSection: 0)], withRowAnimation: .None)
+                messages.insert(m, at: indexToInsert)
+                tableView.insertRows(at: [IndexPath(item: indexToInsert, section: 0)], with: .none)
                 indexToInsert += 1
             }
         }
@@ -181,8 +181,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // tableView.setContentOffset(CGPointMake(0, max(0, tableView.contentSize.height - tableView.frame.height)), animated: true)
     }
     
-    private func postMessage(text: String, attachments: [PostView.Attachment], completion: (Bool -> Void)?) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    private func postMessage(text: String, attachments: [PostView.Attachment], completion: @escaping (Bool) -> Void) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         let tmpFolder = NSTemporaryDirectory()
         var filenameIndex = 0
@@ -191,30 +191,30 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             var file = ""
             repeat {
                 file = "\(tmpFolder)/upload-\(filenameIndex).\(a.ext)"
-                ++filenameIndex
-            } while NSFileManager.defaultManager().fileExistsAtPath(file)
-            a.data.writeToFile(file, atomically: true)
+                filenameIndex += 1
+            } while FileManager.default.fileExists(atPath: file)
+            _ = try? a.data.write(to: URL(fileURLWithPath: file), options: .atomic)
             tmpFiles.append(file)
         }
         
         client.postMessage(text, roomID: room.id, files: tmpFiles) { r in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             
             for file in tmpFiles {
                 do {
-                    try NSFileManager.defaultManager().removeItemAtPath(file)
+                    try FileManager.default.removeItem(atPath: file)
                 } catch _ {}
             }
             
             switch r {
-            case .Success(_):
-                self.reloadMessages(nil)
-                completion?(true)
-            case .Failure(let error):
-                let ac = UIAlertController(title: NSLocalizedString("Cannot Send Message", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
-                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(ac, animated: true, completion: nil)
-                completion?(false)
+            case .success(_):
+                self.reloadMessages(completion: nil)
+                completion(true)
+            case .failure(let error):
+                let ac = UIAlertController(title: NSLocalizedString("Cannot Send Message", comment: ""), message: error?.localizedDescription, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(ac, animated: true, completion: nil)
+                completion(false)
             }
         }
     }
@@ -225,58 +225,58 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         guard let prevID = message.prevID else { return false }
         return messages.contains{$0.id == prevID}
     }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let message = messages[indexPath.row]
-        return MessageView.layoutSize(forMessage: message, showsLoadButton: !hasPreviousMessage(message), forWidth: max(tableView.frame.width, 60)).height
+        return MessageView.layoutSize(forMessage: message, showsLoadButton: !hasPreviousMessage(message: message), forWidth: max(tableView.frame.width, 60)).height
     }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellID, forIndexPath: indexPath) as! TableCell
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: kCellID, for: indexPath) as! TableCell
         let message = messages[indexPath.row]
-        cell.messageView.baseURL = NSURL(string: client.rootURL)
+        cell.messageView.baseURL = URL(string: client.rootURL)
         cell.message = message
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         cell.messageView.onLayoutChange = onLayoutChange
         cell.messageView.onLinkTapped = onLinkTapped
-        cell.messageView.onLoadTapped = hasPreviousMessage(message) ? nil : onLoadTapped
+        cell.messageView.onLoadTapped = hasPreviousMessage(message: message) ? nil : onLoadTapped
         return cell
     }
     
     func onLayoutChange(messageView: MessageView) {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }
     }
     
-    func onLinkTapped(messageView: MessageView, url: NSURL) {
+    func onLinkTapped(messageView: MessageView, url: URL) {
         if #available(iOS 9.0, *) {
-            navigationController?.presentViewController(SFSafariViewController(URL: url), animated: true, completion: nil)
+            navigationController?.present(SFSafariViewController(url: url), animated: true, completion: nil)
         } else {
-            UIApplication.sharedApplication().openURL(url)
+            UIApplication.shared.openURL(url)
         }
     }
     
-    func onLoadTapped(messageView: MessageView, completion: (Void) -> Void) {
+    func onLoadTapped(messageView: MessageView, completion: @escaping (Void) -> Void) {
         guard let message = messageView.message else { return }
-        let sinceID = messages.indexOf{$0.id == message.id}.flatMap{$0 > 0 ? messages[$0 - 1].id : nil}
+        let sinceID = messages.index{$0.id == message.id}.flatMap{$0 > 0 ? messages[$0 - 1].id : nil}
         let untilID = message.id
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         client.messageList(room.id, count: 20, sinceID: sinceID, untilID: untilID, order: .Asc) { r in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             switch r {
-            case .Success(let many):
-                self.insertMessages(many.items, beforeID: untilID)
-            case .Failure(let error):
-                let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .Alert)
-                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .Default, handler: nil))
-                self.presentViewController(ac, animated: true, completion: nil)
+            case .success(let many):
+                self.insertMessages(messagesToInsert: many.items, beforeID: untilID)
+            case .failure(let error):
+                let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
+                self.present(ac, animated: true, completion: nil)
             }
             completion()
         }
@@ -284,24 +284,24 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - ScrollView
 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         refreshView.scrollViewDidScroll(scrollView)
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        if scrollView.panGestureRecognizer.velocityInView(scrollView).y > 0 {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if scrollView.panGestureRecognizer.velocity(in: scrollView).y > 0 {
             postView.endEditing(true)
         }
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         refreshView.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
     }
     
     // MARK: - Custom Cell
     
     private class TableCell: UITableViewCell {
-        let messageView = MessageView(frame: CGRectZero)
+        let messageView = MessageView(frame: .zero)
         var message: Message? {
             get {
                 return messageView.message
@@ -323,7 +323,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             fatalError("init(coder:) has not been implemented")
         }
         
-        private override func prepareForReuse() {
+        fileprivate override func prepareForReuse() {
             super.prepareForReuse()
             messageView.prepareForReuse()
         }

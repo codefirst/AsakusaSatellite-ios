@@ -62,7 +62,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     // MARK: - init
     
     override init(frame: CGRect) {
-        collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: kCellID)
         super.init(frame: frame)
         
@@ -97,7 +97,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     // MARK: - Cell
     
     private class Cell: UICollectionViewCell {
-        let imageView = UIImageView(frame: CGRectZero)
+        let imageView = UIImageView(frame: .zero)
         
         override init(frame: CGRect) {
             super.init(frame: frame)

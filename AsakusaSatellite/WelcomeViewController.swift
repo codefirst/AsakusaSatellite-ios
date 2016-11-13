@@ -10,28 +10,27 @@ import UIKit
 import AsakusaSatellite
 import NorthLayout
 import SafariServices
+import Ikemen
 
 
-class WelcomeViewController: UIViewController {
+class WelcomeViewController: UIViewController, OpenURLAuthCallbackDelegate {
     let logoView = UIImageView(image: UIImage(named: "Logo"))
     let signinButton = Appearance.roundRectButtonOnTintColor("Sign in with Twitter")
-    var signinVC: UIViewController?
+    private var auth: Auth?
     
     var displayLink: CADisplayLink?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        edgesForExtendedLayout = .None
+        edgesForExtendedLayout = []
         view.backgroundColor = Appearance.asakusaRed
         
         let alpha = CGFloat(0.9)
-        logoView.contentMode = .ScaleAspectFit
+        logoView.contentMode = .scaleAspectFit
         logoView.alpha = alpha
         signinButton.alpha = alpha
-        signinButton.addTarget(self, action: "signin:", forControlEvents: .TouchUpInside)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""), style: .Plain, target: self, action: "cancelSignin:")
+        signinButton.addTarget(self, action: #selector(signin), for: .touchUpInside)
         
         let autolayout = view.northLayoutFormat([
             "p": 20,
@@ -41,18 +40,16 @@ class WelcomeViewController: UIViewController {
                 "spacerT": AutolayoutMinView(),
                 "spacerB": AutolayoutMinView(),
             ])
-        view.addCenterXConstraint(logoView)
-        view.addCenterXConstraint(signinButton)
-        view.addEqualConstraint(.Width, view: signinButton, toView: logoView)
+        view.addCenterXConstraint(view: logoView)
+        view.addCenterXConstraint(view: signinButton)
+        view.addEqualConstraint(attribute: .width, view: signinButton, toView: logoView)
         autolayout("V:|-p-[spacerT][logo]-p-[signin(==44)][spacerB(==spacerT)]-p-|")
-        logoView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
+        logoView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
     }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
-    
-    override func viewWillAppear(animated: Bool) {
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {return .lightContent}
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -60,7 +57,7 @@ class WelcomeViewController: UIViewController {
         startAnimation()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         stopAnimation()
@@ -68,10 +65,10 @@ class WelcomeViewController: UIViewController {
     
     // MARK: -
     
-    private func startAnimation() {
+    fileprivate func startAnimation() {
         stopAnimation()
-        displayLink = CADisplayLink(target: self, selector: "displayLink:")
-        displayLink?.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+        displayLink = CADisplayLink(target: self, selector: #selector(displayLink(_:)))
+        displayLink?.add(to: .main, forMode: .commonModes)
     }
     
     private func stopAnimation() {
@@ -79,105 +76,40 @@ class WelcomeViewController: UIViewController {
         displayLink = nil
     }
     
-    func displayLink(sender: CADisplayLink) {
+    func displayLink(_ sender: CADisplayLink) {
         let time = CGFloat(NSDate().timeIntervalSince1970)
         let periodInSeconds = CGFloat(5)
         let amplitude = CGFloat(8)
         let offset = amplitude * sin(time * 2 * CGFloat(M_PI) / periodInSeconds)
         
-        logoView.transform = CGAffineTransformMakeTranslation(0, offset)
+        logoView.transform = CGAffineTransform(translationX: 0, y: offset)
     }
+
+    // MARK: - Auth and OpenURLAuthCallbackDelegate
     
-    func signin(sender: AnyObject?) {
+    @objc private func signin() {
+        guard let rootURL = URL(string: Client(apiKey: nil).rootURL) else { return }
         UserDefaults.apiKey = nil
 
-        if #available(iOS 9.0, *) {
-            appDelegate.openURLAuthCallbackDelegate = self
-            let authURL = NSURL(string: "/auth/twitter?callback_scheme=\(kURLSchemeAuthCallback)", relativeToURL:  NSURL(string: Client(apiKey: nil).rootURL)!)!
-            signinVC = SFSafariViewController(URL: authURL).tap { (vc: SFSafariViewController) in
-                vc.delegate = self
-                vc.modalPresentationStyle = .FormSheet
-                presentViewController(vc, animated: true, completion: nil)
+        let auth = Auth()
+        auth.completion = { apiKey in
+            if let apiKey = apiKey {
+                // signed in
+                UserDefaults.apiKey = apiKey
+                appDelegate.registerPushNotification()
+                _ = self.navigationController?.popViewController(animated: false)
+            } else {
+                // not signed in
+                self.navigationController?.setNavigationBarHidden(true, animated: true)
+                self.startAnimation()
             }
-            return
+            self.auth = nil
         }
-        
-        signinVC = TwitterAuthViewController(rootURL: NSURL(string: Client(apiKey: nil).rootURL)!) { apiKey in
-            UserDefaults.apiKey = apiKey
-            self.closeSigninViewController()
-        }
-        
-        
-        addChildViewController(signinVC!)
-        view.addSubview(signinVC!.view)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        
-        signinVC!.view.frame = CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height)
-        signinVC!.view.alpha = 0.5
-        UIView.animateWithDuration(
-            0.5,
-            delay: 0,
-            usingSpringWithDamping: 1.0,
-            initialSpringVelocity: 0.0,
-            options: [],
-            animations: { [weak self] in
-                if let s = self {
-                    s.signinVC?.view.frame = s.view.bounds
-                    s.signinVC?.view.alpha = 1.0
-                    s.signinVC?.didMoveToParentViewController(self)
-                    s.stopAnimation()
-                }
-                return
-        }, completion: nil)
+        auth.presentSignInViewController(on: self, rootURL: rootURL, callbackScheme: kURLSchemeAuthCallback)
+        self.auth = auth
     }
-    
-    func cancelSignin(sender: AnyObject?) {
-        closeSigninViewController()
-    }
-    
-    func closeSigninViewController() {
-        if UserDefaults.apiKey != nil {
-            // signed in
-            appDelegate.registerPushNotification()
-            navigationController?.popViewControllerAnimated(true)
-            return
-        }
-        
-        if let vc = signinVC {
-            vc.willMoveToParentViewController(nil)
-            vc.view.removeFromSuperview()
-            vc.removeFromParentViewController()
-        }
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        startAnimation()
+
+    func open(url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+        return auth?.open(url: url, options: [:]) ?? false
     }
 }
-
-
-extension WelcomeViewController: OpenURLAuthCallbackDelegate, SFSafariViewControllerDelegate {
-    func openURL(url: NSURL, sourceApplication: String?) -> Bool {
-        appDelegate.openURLAuthCallbackDelegate = nil
-
-        let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
-        if let apiKey = components?.queryItems?.filter({$0.name == "api_key"}).first?.value {
-            // signed in
-            UserDefaults.apiKey = apiKey
-            appDelegate.registerPushNotification()
-            navigationController?.popViewControllerAnimated(false)
-        } else {
-            // not signed in
-            self.navigationController?.setNavigationBarHidden(true, animated: true)
-            self.startAnimation()
-        }
-
-        signinVC?.dismissViewControllerAnimated(true, completion: nil)
-        return true
-    }
-
-    @available(iOS 9.0, *)
-    func safariViewControllerDidFinish(controller: SFSafariViewController) {
-        appDelegate.openURLAuthCallbackDelegate = nil
-        signinVC = nil
-    }
-}
-

@@ -10,12 +10,13 @@ import UIKit
 import AsakusaSatellite
 import NorthLayout
 import WebKit
+import Ikemen
 
 
-private let dateFormatter: NSDateFormatter = NSDateFormatter().tap{$0.dateFormat = "yyyy-MM-dd HH:mm"}
+private let dateFormatter: DateFormatter = DateFormatter() ※ {$0.dateFormat = "yyyy-MM-dd HH:mm"}
 private let kCellID = "Cell"
 private let kPadding = CGFloat(8)
-private let kAttachmentsSize = CGSizeMake(256, 64)
+private let kAttachmentsSize = CGSize(width: 256, height: 64)
 
 
 private let kAppGroupID = "group.org.codefirst.asakusasatellite"
@@ -25,40 +26,41 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
     var message: Message? {
         didSet {
             if let u: NSURL = (message.map{NSURL(string: $0.profileImageURL)} ?? nil)  {
-                if CGRectIsEmpty(iconView.frame) {
-                    iconView.frame = CGRectMake(iconView.frame.origin.x, iconView.frame.origin.y, 44, 44) // haneke requires non-zero imageview
+                if iconView.frame.isEmpty {
+                    iconView.frame = CGRect(x: iconView.frame.origin.x, y: iconView.frame.origin.y, width: 44, height: 44) // haneke requires non-zero imageview
                 }
                 
-                iconView.hnk_setImageFromURL(u, success: { image in
+                iconView.hnk_setImageFromURL(u as URL, success: { image in
                     self.iconView.image = image
                     
                     // cache to watch
-                    let fm = NSFileManager.defaultManager()
+                    let fm = FileManager.default
                     if  let cacheKey = self.message?.screenName,
-                        let cachePath = fm.containerURLForSecurityApplicationGroupIdentifier(kAppGroupID)?.path.map({"\($0)/UserIcon/\(cacheKey).png"}) {
-                            do {
-                                try fm.createDirectoryAtPath((cachePath as NSString).stringByDeletingLastPathComponent, withIntermediateDirectories: true, attributes: nil)
-                                let lastModified = try fm.attributesOfItemAtPath(cachePath)[NSFileModificationDate] as? NSDate
-                                
-                                let needsCache = lastModified.map({NSDate().timeIntervalSinceDate($0) > (60 * 60)}) ?? true
-                                if needsCache {
-                                    if let png = UIImagePNGRepresentation(image) {
-                                        NSLog("cache size = \(png.length)")
-                                        png.writeToFile(cachePath, atomically: true)
-                                    }
+                        let containerURL = fm.containerURL(forSecurityApplicationGroupIdentifier: kAppGroupID) {
+                        let cachePath = containerURL.appendingPathComponent("UserIcon").appendingPathComponent("\(cacheKey).png")
+                        do {
+                            try fm.createDirectory(at: cachePath.deletingLastPathComponent(), withIntermediateDirectories: true, attributes: nil)
+                            let lastModified = try fm.attributesOfItem(atPath: cachePath.path)[FileAttributeKey.modificationDate] as? Date
+
+                            let needsCache = lastModified.map({Date().timeIntervalSince($0) > (60 * 60)}) ?? true
+                            if needsCache {
+                                if let png = UIImagePNGRepresentation(image) {
+                                    NSLog("cache size = \(png.count)")
+                                    try png.write(to: cachePath, options: .atomic)
                                 }
-                            } catch _ {
                             }
+                        } catch _ {
+                        }
                     }
                 })
             }
-            
+
             nameLabel.text = message?.name
-            dateLabel.text = message.map{dateFormatter.stringFromDate($0.createdAt)}
+            dateLabel.text = message.map{dateFormatter.string(from: $0.createdAt)}
             bodyLabel.text = message?.body
             attachments = message?.imageAttachments ?? []
 
-            if message?.hasHTML == .Some(true) {
+            if message?.hasHTML == true {
                 let autolayout = northLayoutFormat(["p": kPadding], [
                     "icon": iconView,
                     "web": webView,
@@ -67,8 +69,8 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
                 autolayout("H:|[web]|")
                 autolayout("V:[icon][web(>=1)][attachments]")
                 webView.message = message
-                bringSubviewToFront(webView)
-                bringSubviewToFront(separator)
+                bringSubview(toFront: webView)
+                bringSubview(toFront: separator)
             } else {
                 webView.message = nil
             }
@@ -81,53 +83,53 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         }
     }
     
-    let loadButton = UIButton(type: .System)
+    let loadButton = UIButton(type: .system)
     let loadButtonHeightConstraint: NSLayoutConstraint
-    let iconView = UIImageView(frame: CGRectZero)
+    let iconView = UIImageView(frame: .zero)
     let nameLabel = UILabel()
     let dateLabel = UILabel()
     let bodyLabel = UILabel()
-    let attachmentsView = UICollectionView(frame: CGRectZero, collectionViewLayout: UICollectionViewFlowLayout().tap { (l: UICollectionViewFlowLayout) in
-        l.scrollDirection = .Horizontal
+    let attachmentsView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout() ※ { (l: UICollectionViewFlowLayout) in
+        l.scrollDirection = .horizontal
         l.itemSize = kAttachmentsSize
         l.sectionInset = UIEdgeInsetsMake(0, kPadding, kPadding, kPadding)
     })
     let attachmentsViewConstraint: NSLayoutConstraint
-    var webView: InlineMessageWebView = InlineMessageWebView(frame: CGRectMake(0, 0, 1, 1), baseURL: nil) {
+    var webView: InlineMessageWebView = InlineMessageWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), baseURL: nil) {
         didSet {
-            webView.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
+            webView.setContentCompressionResistancePriority(1000, for: .vertical)
             webView.onContentSizeChange = self.cacheWebViewContentSize
             webView.navigationDelegate = self
         }
     }
     let separator = Appearance.separatorView()
-    var baseURL: NSURL? {
+    var baseURL: URL? {
         didSet {
             if oldValue != baseURL {
-                webView = InlineMessageWebView(frame: CGRectMake(0, 0, 1, 1), baseURL: baseURL)
+                webView = InlineMessageWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), baseURL: baseURL)
             }
         }
     }
-    var onLayoutChange: (MessageView -> Void)?
-    var onLinkTapped: ((MessageView, NSURL) -> Void)?
-    var onLoadTapped: ((MessageView, completion: (Void) -> Void)-> Void)? {
+    var onLayoutChange: ((MessageView) -> Void)?
+    var onLinkTapped: ((MessageView, URL) -> Void)?
+    var onLoadTapped: ((MessageView, _ completion: @escaping (Void) -> Void)-> Void)? {
         didSet {
             let showsLoadButton = (onLoadTapped != nil)
             loadButtonHeightConstraint.constant = showsLoadButton ? 44 : 0
-            loadButton.hidden = !showsLoadButton
+            loadButton.isHidden = !showsLoadButton
         }
     }
     
     override init(frame: CGRect) {
-        loadButtonHeightConstraint = NSLayoutConstraint(item: loadButton, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 0, constant: 0)
-        loadButtonHeightConstraint.active = true
-        attachmentsViewConstraint = NSLayoutConstraint(item: attachmentsView, attribute: .Height, relatedBy: .Equal, toItem: attachmentsView, attribute: .Height, multiplier: 0, constant: 0)
+        loadButtonHeightConstraint = NSLayoutConstraint(item: loadButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 0, constant: 0)
+        loadButtonHeightConstraint.isActive = true
+        attachmentsViewConstraint = NSLayoutConstraint(item: attachmentsView, attribute: .height, relatedBy: .equal, toItem: attachmentsView, attribute: .height, multiplier: 0, constant: 0)
         attachmentsView.addConstraint(attachmentsViewConstraint)
         
         super.init(frame: frame)
         
-        loadButton.setTitle(NSLocalizedString("Load", comment: ""), forState: .Normal)
-        loadButton.addTarget(self, action: "load:", forControlEvents: .TouchUpInside)
+        loadButton.setTitle(NSLocalizedString("Load", comment: ""), for: .normal)
+        loadButton.addTarget(self, action: #selector(load(_:)), for: .touchUpInside)
         loadButton.backgroundColor = Appearance.lightDarkBackgroundColor
         
         let iconSize = CGFloat(32)
@@ -136,23 +138,23 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         
         nameLabel.numberOfLines = 1
         nameLabel.font = Appearance.hiraginoW6(13)
-        nameLabel.textColor = UIColor.blackColor()
-        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
+        nameLabel.textColor = .black
+        nameLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
         
         dateLabel.numberOfLines = 1
         dateLabel.font = Appearance.hiraginoW3(10)
-        dateLabel.textColor = UIColor.grayColor()
-        dateLabel.textAlignment = .Right
-        dateLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
+        dateLabel.textColor = .gray
+        dateLabel.textAlignment = .right
+        dateLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
         
         bodyLabel.numberOfLines = 0
         bodyLabel.font = Appearance.hiraginoW3(Appearance.messageBodyFontSize)
         bodyLabel.textColor = Appearance.messageBodyColor
-        bodyLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, forAxis: .Vertical)
+        bodyLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .vertical)
         
         attachmentsView.dataSource = self
         attachmentsView.delegate = self
-        attachmentsView.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: kCellID)
+        attachmentsView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: kCellID)
         attachmentsView.backgroundColor = Appearance.backgroundColor
         attachmentsView.showsHorizontalScrollIndicator = false
         attachmentsView.showsVerticalScrollIndicator = false
@@ -181,8 +183,8 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         autolayout("V:[load]-sp-[date]")
         autolayout("V:[load]-p-[icon(==iconSize)]-p-[body]-p-[attachments]|")
         autolayout("V:[separator(==onepx)]|")
-        addEqualConstraint(.CenterY, view: nameLabel, toView: iconView)
-        bringSubviewToFront(separator)
+        addEqualConstraint(attribute: .centerY, view: nameLabel, toView: iconView)
+        bringSubview(toFront: separator)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -191,17 +193,17 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
     
     // MARK: - Actions
     
-    @objc private func load(sender: AnyObject?) {
-        loadButton.enabled = false
+    @objc private func load(_ sender: AnyObject?) {
+        loadButton.isEnabled = false
         onLoadTapped?(self) {
-            self.loadButton.enabled = true
+            self.loadButton.isEnabled = true
         }
     }
     
     // MARK: - Layout Size
     
     struct LayoutStatic {
-        static let view = MessageView(frame: CGRectZero)
+        static let view = MessageView(frame: .zero)
         static var webViewHeightsCache = [String: CGFloat]() // map: message.id -> height
     }
     
@@ -213,12 +215,12 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         
         // we cannot calculate webview height synchronously.
         // add webview height after once loaded and cached the webview height
-        let size = v.systemLayoutSizeFittingSize(CGSizeMake(w, 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50)
+        let size = v.systemLayoutSizeFitting(CGSize(width: w, height: 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50)
         if let h = LayoutStatic.webViewHeightsCache[m.id] {
             // NSLog("%@", "cache hit for \(m.body), height = \(h)")
-            let bodyLabelHeight = v.bodyLabel.systemLayoutSizeFittingSize(CGSizeMake(w - 2 * kPadding, 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50).height
+            let bodyLabelHeight = v.bodyLabel.systemLayoutSizeFitting(CGSize(width: w - 2 * kPadding, height: 70), withHorizontalFittingPriority: 1000, verticalFittingPriority: 50).height
             let increments: CGFloat = h - bodyLabelHeight - 2 * kPadding
-            return CGSizeMake(size.width, size.height + max(0, increments))
+            return CGSize(width: size.width, height: size.height + max(0, increments))
         }
         
         return size
@@ -253,15 +255,15 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
     
     // MARK: - CollectionView
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return attachments.count
     }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellID, forIndexPath: indexPath) as! ImageCollectionViewCell
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCellID, for: indexPath) as! ImageCollectionViewCell
 
         if let url = NSURL(string: attachments[indexPath.item].url) {
-            cell.imageView.hnk_setImageFromURL(url)
+            cell.imageView.hnk_setImageFromURL(url as URL)
         } else {
             cell.imageView.hnk_cancelSetImage()
             cell.imageView.image = nil
@@ -270,10 +272,10 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let url = NSURL(string: attachments[indexPath.item].url) {
             let vc = HeadUpImageViewController(imageURL: url)
-            appDelegate.root.topViewController!.presentViewController(vc, animated: true, completion: nil)
+            appDelegate.root.topViewController!.present(vc, animated: true, completion: nil)
         }
     }
 }
@@ -281,12 +283,12 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
 
 // MARK: WKNavigationDelegate
 extension MessageView: WKNavigationDelegate {
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        if navigationAction.navigationType == .LinkActivated {
-            if let u = navigationAction.request.URL { onLinkTapped?(self, u) }
-            decisionHandler(.Cancel)
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated {
+            if let u = navigationAction.request.url { onLinkTapped?(self, u) }
+            decisionHandler(.cancel)
         } else {
-            decisionHandler(.Allow)
+            decisionHandler(.allow)
         }
     }
 }
