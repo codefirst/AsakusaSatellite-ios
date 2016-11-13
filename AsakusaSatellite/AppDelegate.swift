@@ -24,7 +24,7 @@ private let kStringReply = NSLocalizedString("Reply", comment: "")
 let kURLSchemeAuthCallback = "org.codefirst.asakusasatellite"
 
 protocol OpenURLAuthCallbackDelegate: class {
-    func openURL(url: URL, sourceApplication: String?) -> Bool
+    func open(url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool
 }
 
 @UIApplicationMain
@@ -33,8 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
     let root: UINavigationController
     let home: HomeViewController
     var welcome: WelcomeViewController?
-
-    weak var openURLAuthCallbackDelegate: OpenURLAuthCallbackDelegate?
     
     override init() {
         home = HomeViewController()
@@ -66,10 +64,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
 
     // MARK: - URL Scheme
 
-    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         switch url.scheme {
         case kURLSchemeAuthCallback?:
-            return openURLAuthCallbackDelegate?.openURL(url: url, sourceApplication: sourceApplication) ?? false
+            return (root.topViewController as? OpenURLAuthCallbackDelegate)?.open(url: url, options: options) ?? false
         default:
             return false
         }

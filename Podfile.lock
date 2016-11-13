@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.0.1)
   - AppGroup (1.0.0)
-  - AsakusaSatellite (0.5.0):
+  - AsakusaSatellite (0.6.0):
     - Alamofire (~> 4.0)
     - Socket.IO-Client-Swift (~> 8.0)
     - SwiftyJSON (~> 3.1)
@@ -13,7 +13,7 @@ PODS:
   - Nimble (5.1.1)
   - NorthLayout (3.0.0)
   - Quick (0.10.0)
-  - Socket.IO-Client-Swift (8.1.1)
+  - Socket.IO-Client-Swift (8.1.2)
   - SwiftyJSON (3.1.1)
   - TUSafariActivity (1.0.4)
   - UTIKit (2.0.0)
@@ -46,14 +46,14 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   AppGroup: ba0c3626371b5b0f23815f7ae68d14f1061df19f
-  AsakusaSatellite: 3fa49795c540f07dcf4fffb108cca63891e2a964
+  AsakusaSatellite: 2b4d6323b00ce7898a1d9979158eaee98c9b167f
   Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   HanekeSwift: 4113367892828e7700d24a384027de6ebc79aad1
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   NorthLayout: 28db8bfa49b861b4e972cc8e7c683c8ba819ff88
   Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
-  Socket.IO-Client-Swift: 5c18fa2af9df8a19d20e4df815141103c1f7079b
+  Socket.IO-Client-Swift: 542d82e6708f9901b3f6c1d134fb60fa0d09d4d1
   SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   UTIKit: 64898406d417db64495ad4677c89e08eff564d5b
