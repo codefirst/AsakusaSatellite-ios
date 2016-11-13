@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "33D84875490DA0A88CA6E5CE21DD44FC"
+               BlueprintIdentifier = "60820134E2DCD4089677F6D44E4DCEDA"
                BuildableName = "Pods_AsakusaSatellite.framework"
                BlueprintName = "Pods-AsakusaSatellite"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">

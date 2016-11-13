@@ -11,15 +11,15 @@ target 'AsakusaSatellite' do
   pod 'Fabric'
   pod 'Crashlytics'
   
-  target 'ShareExtension' do
-    inherit! :search_paths
-  end
-  
   target 'AsakusaSatelliteTests' do
     inherit! :search_paths
     pod 'Quick'
     pod 'Nimble'
   end
+end
+
+target 'ShareExtension' do
+  pod 'AsakusaSatellite'
 end
 
 plugin 'cocoapods-app_group'

@@ -176,8 +176,6 @@
 		EABE455B1C4A482900388418 /* RoomList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomList.swift; sourceTree = "<group>"; };
 		EABEF6271BB1644600659F10 /* AsakusaSatellite WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit App.entitlements"; sourceTree = "<group>"; };
 		EAC4F7181D37DBDF002CA7D1 /* AppGroup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppGroup.framework; path = "../../../Library/Developer/Xcode/DerivedData/AsakusaSatellite-ffoahyytqsyeykbdixffgauzuutu/Build/Products/Debug-iphoneos/AppGroup/AppGroup.framework"; sourceTree = "<group>"; };
-		EAC4F71D1D3939A3002CA7D1 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Pods/Crashlytics/iOS/Crashlytics.framework; sourceTree = "<group>"; };
-		EAC4F71F1D3939A6002CA7D1 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Pods/Fabric/iOS/Fabric.framework; sourceTree = "<group>"; };
 		EACA7D9A1AED3BD50073D1A5 /* Common-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Common-Bridging-Header.h"; path = "AsakusaSatellite/Common-Bridging-Header.h"; sourceTree = "<group>"; };
 		EAEAA83A1AECF3D20096D410 /* AsakusaSatellite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = AsakusaSatellite.entitlements; sourceTree = "<group>"; };
 		EAEAA83B1AECF3F00096D410 /* AsakusaSatellite WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "AsakusaSatellite WatchKit Extension.entitlements"; sourceTree = "<group>"; };
@@ -255,8 +253,6 @@
 		EA01F3161AB7161400CF5691 = {
 			isa = PBXGroup;
 			children = (
-				EAC4F71F1D3939A6002CA7D1 /* Fabric.framework */,
-				EAC4F71D1D3939A3002CA7D1 /* Crashlytics.framework */,
 				EA1FA4DE1ABD3FCB00BA1D68 /* AsakusaSatellite.playground */,
 				EACA7D9A1AED3BD50073D1A5 /* Common-Bridging-Header.h */,
 				EA01F3211AB7161400CF5691 /* AsakusaSatellite */,
@@ -1059,6 +1055,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1074,6 +1071,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.codefirst.asakusasatellite.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
