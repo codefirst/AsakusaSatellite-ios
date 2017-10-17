@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A92D3C7E320C284665AB1E9D /* Pods_AsakusaSatelliteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E88CB07A926C15D7B8C9F095 /* Pods_AsakusaSatelliteTests.framework */; };
-		EA00CA481ABEDE0100527848 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = EA00CA471ABEDE0100527848 /* iTunesArtwork */; };
 		EA01F3251AB7161400CF5691 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA01F3241AB7161400CF5691 /* AppDelegate.swift */; };
 		EA01F32C1AB7161400CF5691 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA01F32B1AB7161400CF5691 /* Images.xcassets */; };
 		EA01F32F1AB7161400CF5691 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA01F32D1AB7161400CF5691 /* LaunchScreen.xib */; };
@@ -131,7 +130,6 @@
 		D9C3E053F646309B5F65D01A /* Pods-ShareExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShareExtension/Pods-ShareExtension.release.xcconfig"; sourceTree = "<group>"; };
 		DFC6ADDD8194B5FDEC3B6A41 /* Pods_AsakusaSatellite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsakusaSatellite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E88CB07A926C15D7B8C9F095 /* Pods_AsakusaSatelliteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsakusaSatelliteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA00CA471ABEDE0100527848 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		EA01F31F1AB7161400CF5691 /* AsakusaSatelliteApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsakusaSatelliteApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA01F3231AB7161400CF5691 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA01F3241AB7161400CF5691 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -303,7 +301,6 @@
 			isa = PBXGroup;
 			children = (
 				EA01F3231AB7161400CF5691 /* Info.plist */,
-				EA00CA471ABEDE0100527848 /* iTunesArtwork */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -593,7 +590,6 @@
 			files = (
 				EA01F32F1AB7161400CF5691 /* LaunchScreen.xib in Resources */,
 				EAAE26391B258C91004FAEB7 /* Localizable.strings in Resources */,
-				EA00CA481ABEDE0100527848 /* iTunesArtwork in Resources */,
 				EA01F32C1AB7161400CF5691 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
