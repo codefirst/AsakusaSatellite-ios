@@ -64,6 +64,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         autolayout("V:|-p-[text]-p-|")
         autolayout("V:|-p-[send]-p-|")
         autolayout("V:[border(==onepx)]|")
+        sendButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         
         updateViews()
     }
