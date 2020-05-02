@@ -243,7 +243,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.selectionStyle = .none
         cell.messageView.onLayoutChange = onLayoutChange
         cell.messageView.onLinkTapped = onLinkTapped
-        cell.messageView.onLoadTapped = hasPreviousMessage(message: message) ? nil : onLoadTapped
+        cell.messageView.onLoadTapped = hasPreviousMessage(message: message) ? nil : onLoadTapped as ((MessageView, @escaping () -> Void) -> Void)
+
         return cell
     }
     
@@ -262,7 +263,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func onLoadTapped(messageView: MessageView, completion: @escaping (Void) -> Void) {
+    func onLoadTapped(messageView: MessageView, completion: @escaping () -> ()) {
         guard let message = messageView.message else { return }
         let sinceID = messages.index{$0.id == message.id}.flatMap{$0 > 0 ? messages[$0 - 1].id : nil}
         let untilID = message.id

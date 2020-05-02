@@ -60,6 +60,7 @@ struct Appearance {
         ]
         UINavigationBar.appearance().setBackgroundImage(UIImage.colorImage(color: navBarColor, size: CGSize(width: 1, height: 1)), for: .any, barMetrics: .default) // no shadow
         UINavigationBar.appearance().shadowImage = UIImage() // no shadow
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: textColorOnTintColor], for: .normal)
         
         UIToolbar.appearance().barTintColor = backgroundColor
         UIToolbar.appearance().tintColor = tintColor

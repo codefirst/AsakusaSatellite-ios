@@ -47,7 +47,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
             self.postAccessoryView.attachmentsView.dataSource = self
             self.postAccessoryView.attachmentsView.delegate = self
             self.postAccessoryView.attachmentsView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: kCellID)
-            tf.inputAccessoryView = self.postAccessoryView
+//            tf.inputAccessoryView = self.postAccessoryView
         }
         _ = sendButton ※ { (b: UIButton) in
             b.addTarget(self, action: #selector(post(_:)), for: .touchUpInside)
@@ -64,6 +64,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         autolayout("V:|-p-[text]-p-|")
         autolayout("V:|-p-[send]-p-|")
         autolayout("V:[border(==onepx)]|")
+        sendButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
         
         updateViews()
     }
