@@ -9,6 +9,8 @@ target 'AsakusaSatellite' do
   pod 'Kingfisher'
   pod 'TUSafariActivity', '~> 1.0'
   pod 'Firebase/Crashlytics'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Performance'
   
   target 'AsakusaSatelliteTests' do
     inherit! :search_paths
