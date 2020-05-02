@@ -8,8 +8,8 @@
 
 import UIKit
 import AsakusaSatellite
-import Fabric
-import Crashlytics
+import FirebaseCrashlytics
+import Firebase
 import Ikemen
 
 
@@ -24,7 +24,7 @@ private let kStringReply = NSLocalizedString("Reply", comment: "")
 let kURLSchemeAuthCallback = "org.codefirst.asakusasatellite"
 
 protocol OpenURLAuthCallbackDelegate: class {
-    func open(url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool
+    func open(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool
 }
 
 @UIApplicationMain
@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         }
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
+    internal func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         Appearance.install()
         
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -57,14 +57,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         
         registerPushNotification()
 
-        Fabric.with([Crashlytics.self])
+        FirebaseApp.configure()
         
         return true
     }
 
     // MARK: - URL Scheme
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         switch url.scheme {
         case kURLSchemeAuthCallback?:
             return (root.topViewController as? OpenURLAuthCallbackDelegate)?.open(url: url, options: options) ?? false
@@ -76,31 +76,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
     // MARK: - Push Notification
     
     func registerPushNotification() {
-        let createMessageCategory = UIMutableUserNotificationCategory() ※ { (c: UIMutableUserNotificationCategory) in
+        let createMessageCategory = UIMutableUserNotificationCategory() ※ { c in
             c.identifier = "CREATE_MESSAGE"
             
-            let star = UIMutableUserNotificationAction() ※ { (a: UIMutableUserNotificationAction) in
+            let star = UIMutableUserNotificationAction() ※ { a in
                 a.identifier = "star"
                 a.title = "⭐️"
                 a.activationMode = .background
                 a.isAuthenticationRequired = false
             }
             
-            let disagree = UIMutableUserNotificationAction() ※ { (a: UIMutableUserNotificationAction) in
+            let disagree = UIMutableUserNotificationAction() ※ { a in
                 a.identifier = "disagree"
                 a.title = kStringHuh
                 a.activationMode = .background
                 a.isAuthenticationRequired = false
             }
             
-            let agree = UIMutableUserNotificationAction() ※ { (a: UIMutableUserNotificationAction) in
+            let agree = UIMutableUserNotificationAction() ※ { a in
                 a.identifier = "agree"
                 a.title = kStringExactly
                 a.activationMode = .background
                 a.isAuthenticationRequired = false
             }
             
-            let reply = UIMutableUserNotificationAction() ※ { (a: UIMutableUserNotificationAction) in
+            let reply = UIMutableUserNotificationAction() ※ { a in
                 a.identifier = "reply"
                 a.title = kStringReply
                 a.activationMode = .foreground
@@ -154,7 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
     
     // MARK: - Custom Navigation Animation
     
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    internal func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if operation == .pop && fromVC is WelcomeViewController {
             return self
         }

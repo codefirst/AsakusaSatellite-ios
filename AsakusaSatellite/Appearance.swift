@@ -56,11 +56,11 @@ struct Appearance {
         UINavigationBar.appearance().barTintColor = navBarColor
         UINavigationBar.appearance().tintColor = textColorOnTintColor
         UINavigationBar.appearance().titleTextAttributes = [
-            NSForegroundColorAttributeName: textColorOnTintColor,
+            NSAttributedString.Key.foregroundColor: textColorOnTintColor,
         ]
         UINavigationBar.appearance().setBackgroundImage(UIImage.colorImage(color: navBarColor, size: CGSize(width: 1, height: 1)), for: .any, barMetrics: .default) // no shadow
         UINavigationBar.appearance().shadowImage = UIImage() // no shadow
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: textColorOnTintColor], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor: textColorOnTintColor], for: .normal)
         
         UIToolbar.appearance().barTintColor = backgroundColor
         UIToolbar.appearance().tintColor = tintColor
@@ -87,14 +87,14 @@ struct Appearance {
     }
     
     static func roundRectButton(title: String, titleColor: UIColor, backgroundColor: UIColor, highlightedColor: UIColor) -> UIButton {
-        return UIButton() ※ { (b: UIButton) in
+        return UIButton() ※ { b in
             b.clipsToBounds = true
             b.layer.cornerRadius = 4
             b.setTitle(title, for: .normal)
             b.setTitleColor(titleColor, for: .normal)
             b.setBackgroundImage(UIImage.colorImage(color: backgroundColor, size: CGSize(width: 1, height: 1)), for: .normal)
             b.setBackgroundImage(UIImage.colorImage(color: highlightedColor, size: CGSize(width: 1, height: 1)), for: .highlighted)
-            b.contentEdgeInsets = UIEdgeInsetsMake(4, 4, 4, 4)
+            b.contentEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
         }
     }
     

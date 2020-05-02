@@ -44,7 +44,7 @@ class WelcomeViewController: UIViewController, OpenURLAuthCallbackDelegate {
         view.addCenterXConstraint(view: signinButton)
         view.addEqualConstraint(attribute: .width, view: signinButton, toView: logoView)
         autolayout("V:|-p-[spacerT][logo]-p-[signin(==44)][spacerB(==spacerT)]-p-|")
-        logoView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
+        logoView.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {return .lightContent}
@@ -68,7 +68,7 @@ class WelcomeViewController: UIViewController, OpenURLAuthCallbackDelegate {
     fileprivate func startAnimation() {
         stopAnimation()
         displayLink = CADisplayLink(target: self, selector: #selector(displayLink(_:)))
-        displayLink?.add(to: .main, forMode: .commonModes)
+        displayLink?.add(to: .main, forMode: .common)
     }
     
     private func stopAnimation() {
@@ -76,11 +76,11 @@ class WelcomeViewController: UIViewController, OpenURLAuthCallbackDelegate {
         displayLink = nil
     }
     
-    func displayLink(_ sender: CADisplayLink) {
+    @objc func displayLink(_ sender: CADisplayLink) {
         let time = CGFloat(NSDate().timeIntervalSince1970)
         let periodInSeconds = CGFloat(5)
         let amplitude = CGFloat(8)
-        let offset = amplitude * sin(time * 2 * CGFloat(M_PI) / periodInSeconds)
+        let offset = amplitude * sin(time * 2 * CGFloat.pi / periodInSeconds)
         
         logoView.transform = CGAffineTransform(translationX: 0, y: offset)
     }
@@ -109,7 +109,7 @@ class WelcomeViewController: UIViewController, OpenURLAuthCallbackDelegate {
         self.auth = auth
     }
 
-    func open(url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+    func open(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         return auth?.open(url: url, options: [:]) ?? false
     }
 }

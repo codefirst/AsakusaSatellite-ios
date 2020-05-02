@@ -9,7 +9,6 @@
 import Foundation
 import AppGroup
 import AsakusaSatellite
-import SwiftyJSON
 
 
 private let standardDefaults = Foundation.UserDefaults.standard
@@ -33,10 +32,10 @@ struct UserDefaults {
     static var currentRoom: Room? {
         get {
             let jsonData = appGroupDefaults.string(forKey: kCurrentRoomJsonKey)?.data(using: .utf8)
-        return jsonData.flatMap{Room(json: JSON(data: $0))}
+            return jsonData.flatMap{try? Room.decoder.decode(Room.self, from: $0)}
         }
         set {
-            saveObject(appGroupDefaults, value: newValue?.json.rawString() as AnyObject?, forKey: kCurrentRoomJsonKey)
+            saveObject(appGroupDefaults, value: newValue.flatMap {try? Room.encoder.encode($0)}.flatMap {String(data: $0, encoding: .utf8)} as AnyObject?, forKey: kCurrentRoomJsonKey)
         }
     }
 }

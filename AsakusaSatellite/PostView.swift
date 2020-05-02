@@ -34,14 +34,14 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         
         backgroundColor = Appearance.lightBackgroundColor
         
-        _ = textField ※ { (tf: UITextField) in
+        _ = textField ※ { tf in
             tf.placeholder = NSLocalizedString("message", comment: "")
             tf.font = Appearance.hiraginoW3(14)
             tf.backgroundColor = Appearance.backgroundColor
             tf.borderStyle = .roundedRect
             tf.delegate = self
             tf.addTarget(self, action: #selector(textChanged(_:)), for: .editingChanged)
-            tf.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+            tf.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .horizontal)
 
             self.postAccessoryView.photoButton.addTarget(self, action: #selector(addPhoto(_:)), for: .touchUpInside)
             self.postAccessoryView.attachmentsView.dataSource = self
@@ -49,9 +49,9 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
             self.postAccessoryView.attachmentsView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: kCellID)
 //            tf.inputAccessoryView = self.postAccessoryView
         }
-        _ = sendButton ※ { (b: UIButton) in
+        _ = sendButton ※ { b in
             b.addTarget(self, action: #selector(post(_:)), for: .touchUpInside)
-            b.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+            b.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .horizontal)
         }
         
         let autolayout = northLayoutFormat(["p": 8, "onepx": Appearance.onepx], [
@@ -64,7 +64,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         autolayout("V:|-p-[text]-p-|")
         autolayout("V:|-p-[send]-p-|")
         autolayout("V:[border(==onepx)]|")
-        sendButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .horizontal)
+        sendButton.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         
         updateViews()
     }
@@ -78,11 +78,11 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         sendButton.isEnabled = !(textField.text?.isEmpty ?? true) || attachments.count > 0
     }
     
-    func textChanged(_ sender: AnyObject?) {
+    @objc func textChanged(_ sender: AnyObject?) {
         updateViews()
     }
     
-    func post(_ sender: AnyObject?) {
+    @objc func post(_ sender: AnyObject?) {
         endEditing(true)
         textField.isEnabled = false
         sendButton.isEnabled = false
@@ -96,7 +96,7 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
         }
     }
     
-    func addPhoto(_ sender: AnyObject?) {
+    @objc func addPhoto(_ sender: AnyObject?) {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .photoLibrary
@@ -106,9 +106,9 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     // MARK: - UIImagePickerControllerDelegate
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true) {
-            if  let image = info[UIImagePickerControllerEditedImage] as? UIImage ?? info[UIImagePickerControllerOriginalImage] as? UIImage,
+            if  let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage,
                 let jpegData = image.jpegData(maxSize: 1 * 1024 * 1024) {
                 self.attachments.append((data: jpegData, ext: "jpg"))
                 self.textField.becomeFirstResponder()
@@ -147,10 +147,10 @@ class PostView: UIView, UITextFieldDelegate, UIImagePickerControllerDelegate, UI
     
     private class PostAccessoryView: UIView {
         let photoButton = UIButton(type: .system)
-        let attachmentsView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout() ※ { (l: UICollectionViewFlowLayout) in
+        let attachmentsView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout() ※ { l in
             l.scrollDirection = .horizontal
             l.itemSize = CGSize(width: 256, height: 44 - 8)
-            l.sectionInset = UIEdgeInsetsMake(0, 0, 0, 8)
+            l.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
         })
         
         override init(frame: CGRect) {

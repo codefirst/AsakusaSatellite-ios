@@ -12,7 +12,7 @@ import AsakusaSatellite
 extension Message {
     var hasHTML: Bool {
         let simplyTranslated = body.replacingOccurrences(of: "\n", with: "<br/>")
-        return simplyTranslated != htmlBody
+        return simplyTranslated != html_body
     }
     func html(bodyFontSize: CGFloat = Appearance.messageBodyFontSize, bodyColor: UIColor = Appearance.messageBodyColor) -> String {
         let bodyColorCSS = bodyColor.cssString ?? "black"
@@ -23,7 +23,7 @@ extension Message {
         + "<link href=\"assets/application.css\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\">"
         + "<style>body{font-family: 'Hiragino Kaku Gothic ProN'; font-size: \(bodyFontSize)px; color: \(bodyColorCSS); margin:0; padding:0; background-color: white;} iframe{margin-left:-5px;} .thumbnail img {max-width: 100%;}</style>"
         + "</head>"
-        + "<body><div id=\"AsakusaSatMessageContent\" style=\"padding: 8px;\">\(htmlBody)</div></body>"
+        + "<body><div id=\"AsakusaSatMessageContent\" style=\"padding: 8px;\">\(html_body)</div></body>"
         + "</html>"
     }
 }

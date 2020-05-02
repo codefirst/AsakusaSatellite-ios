@@ -102,18 +102,18 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     private var cachedMessagesFile: String { return "\(NSHomeDirectory())/Library/Caches/\(room.id)-messages.json" }
     
     private func loadCachedMessages() {
-        guard let many = Many<Message>(file: cachedMessagesFile) else { return }
-        appendMessages(messages: many.items)
+        guard let messages = try? [Message](file: cachedMessagesFile) else { return }
+        appendMessages(messages: messages)
     }
     
     private func cacheMessages() {
         let messagesForCache = [Message](messages[max(0, messages.count - kNumberOfCachedMessages)..<messages.count])
-        _ = Many<Message>(items: messagesForCache)?.saveToFile(cachedMessagesFile)
+        _ = messagesForCache.saveToFile(cachedMessagesFile)
     }
     
     // MARK: -
     
-    private func reloadMessages(completion: ((Void) -> Void)? = nil) {
+    private func reloadMessages(completion: (() -> Void)? = nil) {
         client.messagePusher(room.id) { pusher in
             self.pusher = pusher
             pusher?.onMessageCreate = self.onMessageCreate
@@ -124,8 +124,8 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         client.messageList(room.id, count: 20, sinceID: messages.last?.id, untilID: nil, order: .Desc) { r in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             switch r {
-            case .success(let many):
-                self.appendMessages(messages: many.items.reversed())
+            case .success(let messages):
+                self.appendMessages(messages: messages.reversed())
                 DispatchQueue.main.async {
                     self.scrollToBottom()
                 }
@@ -151,14 +151,14 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.beginUpdates()
         
         // reload cells with load button
-        let reloadedIndexes = messages.filter{!hasPreviousMessage(message: $0)}.flatMap{m in messages.index{$0.id == m.id}}
+        let reloadedIndexes = messages.filter{!hasPreviousMessage(message: $0)}.compactMap {m in messages.firstIndex{$0.id == m.id}}
         tableView.reloadRows(at: reloadedIndexes.map{IndexPath(item: $0, section: 0)}, with: .none)
         
-        var indexToInsert = messages.index{$0.id == beforeID} ?? messages.count
+        var indexToInsert = messages.firstIndex{$0.id == beforeID} ?? messages.count
         for m in messagesToInsert {
-            if let cachedIndex = messages.map({$0.id}).index(of: m.id) {
+            if let cachedIndex = messages.map({$0.id}).firstIndex(of: m.id) {
                 // update (m is already loaded into tableView)
-                if messages[cachedIndex].prevID == nil {
+                if messages[cachedIndex].prev_id == nil {
                     messages[cachedIndex] = m
                 }
             } else {
@@ -222,7 +222,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: - TableView
     
     private func hasPreviousMessage(message: Message) -> Bool {
-        guard let prevID = message.prevID else { return false }
+        guard let prevID = message.prev_id else { return false }
         return messages.contains{$0.id == prevID}
     }
 
@@ -265,15 +265,15 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func onLoadTapped(messageView: MessageView, completion: @escaping () -> ()) {
         guard let message = messageView.message else { return }
-        let sinceID = messages.index{$0.id == message.id}.flatMap{$0 > 0 ? messages[$0 - 1].id : nil}
+        let sinceID = messages.firstIndex{$0.id == message.id}.flatMap{$0 > 0 ? messages[$0 - 1].id : nil}
         let untilID = message.id
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         client.messageList(room.id, count: 20, sinceID: sinceID, untilID: untilID, order: .Asc) { r in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             switch r {
-            case .success(let many):
-                self.insertMessages(messagesToInsert: many.items, beforeID: untilID)
+            case .success(let messages):
+                self.insertMessages(messagesToInsert: messages, beforeID: untilID)
             case .failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Cannot Load Messages", comment: ""), message: error?.localizedDescription, preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
@@ -312,7 +312,7 @@ class RoomViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         
-        override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
             
             let autolayout = contentView.northLayoutFormat([:], ["v": messageView])

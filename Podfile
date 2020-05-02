@@ -6,10 +6,9 @@ target 'AsakusaSatellite' do
   pod 'AsakusaSatellite'
   pod 'NorthLayout'
   pod '※ikemen'
-  pod 'HanekeSwift'
+  pod 'Kingfisher'
   pod 'TUSafariActivity', '~> 1.0'
-  pod 'Fabric'
-  pod 'Crashlytics'
+  pod 'Firebase/Crashlytics'
   
   target 'AsakusaSatelliteTests' do
     inherit! :search_paths

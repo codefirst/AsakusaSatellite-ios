@@ -22,10 +22,10 @@ extension UIImage {
     
     func jpegData(maxSize: Int) -> Data? {
         var quality = CGFloat(0.9)
-        var jpg = UIImageJPEGRepresentation(self, quality)
+        var jpg = self.jpegData(compressionQuality: quality)
         while (jpg != nil && jpg!.count > maxSize && quality > 0.1) {
             quality -= 0.1
-            jpg = UIImageJPEGRepresentation(self, quality)
+            jpg = self.jpegData(compressionQuality: quality)
         }
         return jpg
     }
@@ -33,7 +33,7 @@ extension UIImage {
 
 #if os(iOS)
     extension UIView {
-        func addEqualConstraint(attribute: NSLayoutAttribute, view: UIView, toView: UIView) {
+        func addEqualConstraint(attribute: NSLayoutConstraint.Attribute, view: UIView, toView: UIView) {
             addConstraint(NSLayoutConstraint(item: view, attribute: attribute, relatedBy: .equal, toItem: toView, attribute: attribute, multiplier: 1, constant: 0))
         }
         
@@ -60,25 +60,25 @@ extension UIImage {
         
         func installKeyboardHeightConstraint() {
             keyboardHeightConstraint = NSLayoutConstraint(item: self,
-                attribute: NSLayoutAttribute.height,
-                relatedBy: NSLayoutRelation.equal,
+                                                          attribute: .height,
+                                                          relatedBy: .equal,
                 toItem: superview,
-                attribute: NSLayoutAttribute.height,
+                attribute: .height,
                 multiplier: 0,
                 constant: 0)
-            keyboardHeightConstraint?.priority = 1000
+            keyboardHeightConstraint?.priority = UILayoutPriority(rawValue: 1000)
             addConstraint(keyboardHeightConstraint!)
             
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil, queue: nil) { (n: Notification) -> Void in
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillChangeFrameNotification, object: nil, queue: nil) { (n: Notification) -> Void in
                 if let userInfo = n.userInfo {
-                    if let f = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+                    if let f = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
                         self.keyboardHeightConstraint?.constant = f.size.height
                         self.onHeightChange?(f.size.height)
                     }
                 }
             }
             
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.UIKeyboardWillHide, object: nil, queue: nil) { (n: Notification) -> Void in
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { (n: Notification) -> Void in
                 self.keyboardHeightConstraint?.constant = 0
                 self.onHeightChange?(0)
             }
