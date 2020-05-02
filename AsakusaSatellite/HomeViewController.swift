@@ -43,7 +43,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         roomsLayout.itemSize = CGSize(width: 150, height: 150)
         roomsLayout.minimumInteritemSpacing = 0
         roomsLayout.minimumLineSpacing = 22
-        roomsLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10)
+        roomsLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -88,8 +88,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - Caches
 
     private func loadCachedRoomList() {
-        guard let items = CachedRoomList.loadCachedRoomList() else { return }
-        rooms = items
+        rooms = CachedRoomList.loadCachedRoomList() ?? []
     }
     
     // MARK: -
@@ -98,14 +97,14 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         client = Client(apiKey: UserDefaults.apiKey)
         client?.roomList() { response in
             switch response {
-            case .success(let many):
-                self.rooms = many.items
-                CachedRoomList.cacheRoomList(many)
+            case .success(let rooms):
+                CachedRoomList.cacheRoomList(rooms)
             case .failure(let error):
                 let ac = UIAlertController(title: NSLocalizedString("Offline", comment: ""), message: error?.localizedDescription, preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default, handler: nil))
                 self.present(ac, animated: true, completion: nil)
             }
+            self.loadCachedRoomList()
         }
     }
     
@@ -141,7 +140,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         displayLink = CADisplayLink(target: self, selector: #selector(displayLink(_:)))
         displayLink?.frameInterval = 2
-        displayLink?.add(to: .main, forMode: .commonModes)
+        displayLink?.add(to: .main, forMode: .common)
     }
     
     private func stopAnimation() {
@@ -149,7 +148,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         displayLink = nil
     }
     
-    func displayLink(_ sender: CADisplayLink) {
+    @objc func displayLink(_ sender: CADisplayLink) {
         for i in 0..<rooms.count {
             if let cell = roomsView.cellForItem(at: IndexPath(item: i, section: 0)) as? RoomCell {
                 cell.sat.displayLink(sender: sender)
@@ -184,7 +183,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         var room: Room? {
             didSet {
                 nameLabel.text = room?.name
-                let urls = (room?.ownerAndMembers ?? []).map{NSURL(string: $0.profileImageURL) ?? kDefaultProfileImageURL}
+                let urls = (room?.ownerAndMembers ?? []).map{NSURL(string: $0.profile_image_url) ?? kDefaultProfileImageURL}
                 sat.imageURLs = (urls.count > 0 ? urls : [kDefaultProfileImageURL]) // default image for public room with no owner
             }
         }

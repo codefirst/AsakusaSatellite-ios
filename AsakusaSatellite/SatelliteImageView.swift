@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Haneke
+import Kingfisher
 import NorthLayout
 
 
@@ -64,9 +64,9 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCellID, for: indexPath) as! Cell
         let url = imageURLs[indexPath.item]
-        cell.imageView.hnk_cancelSetImage()
+        cell.imageView.kf.cancelDownloadTask()
         cell.imageView.image = nil
-        cell.imageView.hnk_setImageFromURL(url as URL)
+        cell.imageView.kf.setImage(with: url as URL)
         
         // for layer animation
         cell.layer.rasterizationScale = UIScreen.main.scale
@@ -132,7 +132,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
         }
         
         var t = CGAffineTransform.identity
-        t = t.rotated(by: -CGFloat(M_PI_2) * xScale)
+        t = t.rotated(by: -CGFloat.pi / 2 * xScale)
         t = t.scaledBy(x: 1, y: 2.5 * yScale)
         orbitView.transform = t
     }
@@ -156,7 +156,7 @@ class SatelliteImageView: UIView, UICollectionViewDataSource, UICollectionViewDe
             let contentSize = collectionView?.bounds.size ?? .zero
             let center = CGPoint(x: contentSize.width / 2, y: contentSize.height / 2)
             
-            let angle = CGFloat(-M_PI_2 + 2 * M_PI * Double(percentage))
+            let angle = CGFloat(-.pi / 2 + 2 * .pi * Double(percentage))
             return CGPoint(
                 x: center.x + radius * radiusScale * cos(angle),
                 y: center.y + radius * radiusScale * sin(angle))

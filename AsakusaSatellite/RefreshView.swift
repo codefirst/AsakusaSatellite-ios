@@ -10,9 +10,9 @@ import UIKit
 import Ikemen
 
 class RefreshView: UIView, UIScrollViewDelegate {
-    var onRefresh: ((_ completion: @escaping (Void) -> Void) -> Void)?
+    var onRefresh: ((_ completion: @escaping () -> Void) -> Void)?
     
-    let statusLabel = UILabel(frame: .zero) ※ { (l: UILabel) in
+    let statusLabel = UILabel(frame: .zero) ※ { l in
         l.textAlignment = .center
         l.font = UIFont.systemFont(ofSize: 18)
         l.textColor = Appearance.textColorOnLightDarkBackgroundColor
@@ -98,7 +98,7 @@ class RefreshView: UIView, UIScrollViewDelegate {
             
             var t = CATransform3DIdentity
             t.m34 = -1.0 / 100
-            t = CATransform3DRotate(t, ratio * CGFloat(M_PI_2), 1, 0, 0)
+            t = CATransform3DRotate(t, ratio * CGFloat.pi / 2, 1, 0, 0)
             statusLabel.layer.transform = t
         } else {
             statusLabel.layer.transform = CATransform3DIdentity

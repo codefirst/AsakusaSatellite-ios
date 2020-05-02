@@ -27,7 +27,7 @@ class HeadUpImageViewController: UIViewController {
         modalTransitionStyle = .crossDissolve
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        imageView.hnk_setImageFromURL(imageURL as URL, success: {self.image = $0})
+        imageView.kf.setImage(with: imageURL as URL) {image, _, _, _ in self.image = image}
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -53,7 +53,7 @@ class HeadUpImageViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         hideImageView()
-        imageView.hnk_cancelSetImage()
+        imageView.kf.cancelDownloadTask()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
@@ -88,7 +88,7 @@ class HeadUpImageViewController: UIViewController {
             }, completion: nil)
     }
     
-    func close(_ sender: UITapGestureRecognizer) {
+    @objc func close(_ sender: UITapGestureRecognizer) {
         dismiss(animated: true, completion: nil)
     }
 }

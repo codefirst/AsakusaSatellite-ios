@@ -60,7 +60,7 @@ class InlineMessageWebView: WKWebView {
 
     private func checkClientHeight(handler: @escaping (CGFloat?) -> Void) {
         evaluateJavaScript("document.getElementById(\"AsakusaSatMessageContent\").clientHeight") { (obj, error) in
-            handler((obj as? NSNumber).map{CGFloat($0)})
+            handler((obj as? NSNumber).map{CGFloat(truncating: $0)})
         }
     }
 

@@ -11,16 +11,16 @@ import AppGroup
 import AsakusaSatellite
 
 
-private let cachedRoomListFile = AppGroup.path(forResource: "Caches/rooms.json")
+private let cachedRoomListFile = AppGroup.path(forResource: "Library/Caches/rooms.json")
 
 // FIXME: need more design
 struct CachedRoomList {
     static func loadCachedRoomList() -> [Room]? {
-        guard let f = cachedRoomListFile, let many = Many<Room>(file: f) else { return nil }
-        return many.items
+        guard let f = cachedRoomListFile else { return nil }
+        return try? [Room](file: f)
     }
 
-    static func cacheRoomList(_ many: Many<Room>) {
+    static func cacheRoomList(_ many: [Room]) {
         guard let f = cachedRoomListFile else { return }
         _ = many.saveToFile(f)
     }

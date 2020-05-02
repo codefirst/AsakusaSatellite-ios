@@ -33,7 +33,7 @@ class ShareViewController: SLComposeServiceViewController {
         }
 
         gatherValidContents() { text, imageFileURLs, urls in
-            let postText = (urls.flatMap{$0.absoluteString} + [self.contentText] ).joined(separator: "\n")
+            let postText = (urls.compactMap{$0.absoluteString} + [self.contentText] ).joined(separator: "\n")
             client.postMessage(postText, roomID: roomID, files: imageFileURLs.map{$0.path}) {_ in
                 completeRequestIfFinished()
             }
@@ -49,7 +49,7 @@ class ShareViewController: SLComposeServiceViewController {
         var imageFileURLs = [URL]()
         var urls = [URL]()
 
-        inputItems.flatMap{$0.attachments as? [NSItemProvider]}.joined().forEach { itemProvider in
+        inputItems.compactMap{$0.attachments}.joined().forEach { itemProvider in
             // Images
             queue.addOperation {
                 let sem = DispatchSemaphore(value: 0)
@@ -57,7 +57,7 @@ class ShareViewController: SLComposeServiceViewController {
                 itemProvider.loadItem(forTypeIdentifier: kUTTypeImage as String, options: nil) { object, error in
                     if  let image = self.imageFromObject(object: object), error == nil {
                         let jpegFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(NSUUID().uuidString).appendingPathExtension("jpg")
-                        if let _ = try? UIImageJPEGRepresentation(image, 0.8)?.write(to: jpegFileURL, options: [.atomic]) {
+                        if let _ = try? image.jpegData(compressionQuality: 0.8)?.write(to: jpegFileURL, options: [.atomic]) {
                             imageFileURLs.append(jpegFileURL)
                         }
                     }

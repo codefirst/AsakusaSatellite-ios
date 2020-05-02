@@ -34,21 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>173</string>
-	<key>Fabric</key>
-	<dict>
-		<key>APIKey</key>
-		<string>f1afa090807acae41dbe14c689db9cdf93d83c1d</string>
-		<key>Kits</key>
-		<array>
-			<dict>
-				<key>KitInfo</key>
-				<dict/>
-				<key>KitName</key>
-				<string>Crashlytics</string>
-			</dict>
-		</array>
-	</dict>
+	<string>176</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>

@@ -1,22 +1,66 @@
 PODS:
   - Alamofire (4.9.1)
   - AppGroup (1.0.0)
-  - AsakusaSatellite (0.6.1):
+  - AsakusaSatellite (0.7.0):
     - Alamofire (~> 4.0)
-    - Socket.IO-Client-Swift (~> 8.0)
-    - SwiftyJSON (~> 3.1)
+    - Socket.IO-Client-Swift (~> 15.0)
     - UTIKit (~> 2.0)
-  - Crashlytics (3.14.0):
-    - Fabric (~> 1.10.2)
-  - Fabric (1.10.2)
+  - Firebase/CoreOnly (6.23.0):
+    - FirebaseCore (= 6.6.7)
+  - Firebase/Crashlytics (6.23.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 4.0.0)
+  - FirebaseAnalyticsInterop (1.5.0)
+  - FirebaseCore (6.6.7):
+    - FirebaseCoreDiagnostics (~> 1.2)
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+  - FirebaseCoreDiagnostics (1.2.4):
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleDataTransportCCTSupport (~> 3.0)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+    - nanopb (~> 0.3.901)
+  - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseCrashlytics (4.0.0):
+    - FirebaseAnalyticsInterop (~> 1.2)
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstallations (~> 1.1)
+    - GoogleDataTransport (~> 6.0)
+    - GoogleDataTransportCCTSupport (~> 3.0)
+    - nanopb (~> 0.3.901)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstallations (1.2.0):
+    - FirebaseCore (~> 6.6)
+    - GoogleUtilities/Environment (~> 6.6)
+    - GoogleUtilities/UserDefaults (~> 6.6)
+    - PromisesObjC (~> 1.2)
   - FootlessParser (0.5.2)
-  - HanekeSwift (0.10.1)
-  - Nimble (8.0.4)
+  - GoogleDataTransport (6.0.0)
+  - GoogleDataTransportCCTSupport (3.0.0):
+    - GoogleDataTransport (~> 6.0)
+    - nanopb (~> 0.3.901)
+  - GoogleUtilities/Environment (6.6.0):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (6.6.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/UserDefaults (6.6.0):
+    - GoogleUtilities/Logger
+  - Kingfisher (4.10.1)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
+  - Nimble (8.0.7)
   - NorthLayout (5.2.0):
     - FootlessParser (~> 0.4)
+  - PromisesObjC (1.2.8)
   - Quick (2.2.0)
-  - Socket.IO-Client-Swift (8.3.3)
-  - SwiftyJSON (3.1.4)
+  - Socket.IO-Client-Swift (15.2.0):
+    - Starscream (~> 3.1)
+  - Starscream (3.1.1)
   - TUSafariActivity (1.0.4)
   - UTIKit (2.0.2)
   - "※ikemen (0.6.0)"
@@ -24,9 +68,8 @@ PODS:
 DEPENDENCIES:
   - AppGroup (from `Pods/CocoaPodsAppGroup/AppGroup.podspec.json`)
   - AsakusaSatellite
-  - Crashlytics
-  - Fabric
-  - HanekeSwift
+  - Firebase/Crashlytics
+  - Kingfisher
   - Nimble
   - NorthLayout
   - Quick
@@ -37,15 +80,25 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AsakusaSatellite
-    - Crashlytics
-    - Fabric
+    - Firebase
+    - FirebaseAnalyticsInterop
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreDiagnosticsInterop
+    - FirebaseCrashlytics
+    - FirebaseInstallations
     - FootlessParser
-    - HanekeSwift
+    - GoogleDataTransport
+    - GoogleDataTransportCCTSupport
+    - GoogleUtilities
+    - Kingfisher
+    - nanopb
     - Nimble
     - NorthLayout
+    - PromisesObjC
     - Quick
     - Socket.IO-Client-Swift
-    - SwiftyJSON
+    - Starscream
     - TUSafariActivity
     - UTIKit
     - "※ikemen"
@@ -57,20 +110,30 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AppGroup: ba0c3626371b5b0f23815f7ae68d14f1061df19f
-  AsakusaSatellite: bceb9f3dec6d3e89b7618ac4be820f556acd228c
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  AsakusaSatellite: ea6f0769e04bd6be138ff05555ddb39ea7362274
+  Firebase: 585ae467b3edda6a5444e788fda6888f024d8d6f
+  FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
+  FirebaseCore: a2788a0d5f6c1dff17b8f79b4a73654a8d4bfdbd
+  FirebaseCoreDiagnostics: b59c024493a409f8aecba02c99928d0d8431d159
+  FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseCrashlytics: 941608d2a3475b48fb7010b998703d07696b8db1
+  FirebaseInstallations: 2119fb3e46b0a88bfdbf12562f855ee3252462fa
   FootlessParser: 521916d592fa6cba06cfca6f4b5d4f5a2d49175a
-  HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
-  Nimble: 18d5360282923225d62b09d781f63abc1a0111fc
+  GoogleDataTransport: 061fe7d9b476710e3cd8ea51e8e07d8b67c2b420
+  GoogleDataTransportCCTSupport: 0f39025e8cf51f168711bd3fb773938d7e62ddb5
+  GoogleUtilities: 39530bc0ad980530298e9c4af8549e991fd033b1
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
   NorthLayout: 308a58a8f7d96f316e6399ff6432f8769321bbdf
+  PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
-  Socket.IO-Client-Swift: a2faffdbde89c63aebc5d631041530c1068b02b8
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
+  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   UTIKit: 38889c0e6e6a3c94e4cd8b41372d2ad791539ea4
   "※ikemen": da47fe6e0acfbe241611221f4d98ade266bf50a2
 
-PODFILE CHECKSUM: 73d6819148c9a18c2a8096106063207722cf4a42
+PODFILE CHECKSUM: c2542ada46743a100e261e0adc599dfb8357d7b4
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

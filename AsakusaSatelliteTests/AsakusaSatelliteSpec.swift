@@ -11,21 +11,22 @@ import Quick
 import Nimble
 import AsakusaSatelliteApp
 import AsakusaSatellite
-import SwiftyJSON
 
 
 class AsakusaSatelliteSpec : QuickSpec {
     
-    private func message(body body: String, htmlBody: String) -> Message? {
-        return Message(json: SwiftyJSON.JSON([
-            "body": body,
-            "html_body": htmlBody,
+    private func message(body: String, htmlBody: String) -> Message? {
+        try? Message.decoder.decode(Message.self, from: """
+            {
+            "body": "\(body.replacingOccurrences(of: "\n", with: "\\n"))",
+            "html_body": "\(htmlBody)",
             "id": "1",
             "name": "nobody",
             "screen_name": "nobody",
             "profile_image_url": "http://localhost/profile.png",
-            "created_at": "2015-12-31 23:59:59 +0900",
-            ]))
+            "created_at": "2015-12-31 23:59:59 +0900"
+            }
+            """.data(using: .utf8)!)
     }
     
     override func spec() {
