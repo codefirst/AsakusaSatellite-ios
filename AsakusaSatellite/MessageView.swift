@@ -112,7 +112,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
     }
     var onLayoutChange: ((MessageView) -> Void)?
     var onLinkTapped: ((MessageView, URL) -> Void)?
-    var onLoadTapped: ((MessageView, _ completion: @escaping (Void) -> Void)-> Void)? {
+    var onLoadTapped: ((MessageView, _ completion: @escaping () -> Void) -> Void)? {
         didSet {
             let showsLoadButton = (onLoadTapped != nil)
             loadButtonHeightConstraint.constant = showsLoadButton ? 44 : 0
@@ -211,7 +211,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         let v = LayoutStatic.view
         v.bodyLabel.text = m.body
         v.attachments = m.attachments
-        v.onLoadTapped = showsLoadButton ? {_ in ()} : nil
+        v.onLoadTapped = showsLoadButton ? {(_: MessageView, _: () -> Void) in} : nil
         
         // we cannot calculate webview height synchronously.
         // add webview height after once loaded and cached the webview height

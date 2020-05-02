@@ -6,7 +6,7 @@ target 'AsakusaSatellite' do
   pod 'AsakusaSatellite'
   pod 'NorthLayout'
   pod '※ikemen'
-  pod 'HanekeSwift', git: 'https://github.com/Haneke/HanekeSwift', branch: 'feature/swift-3'
+  pod 'HanekeSwift'
   pod 'TUSafariActivity', '~> 1.0'
   pod 'Fabric'
   pod 'Crashlytics'
