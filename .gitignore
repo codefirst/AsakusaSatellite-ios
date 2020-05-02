@@ -3,3 +3,4 @@ tmp/
 *.mobileprovision
 .cocoapods_appgroup
 /build/
+/fastlane/report.xml
