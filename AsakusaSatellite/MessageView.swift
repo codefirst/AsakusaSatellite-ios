@@ -116,7 +116,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
                 "link": linkView,
                 "attachments": attachmentsView,
             ])
-            autolayout("H:|[link]-(>=0)-|")
+            autolayout("H:||[link]-(>=0)-||")
             autolayout("V:[icon]-[link(==160)]-[attachments]")
             bringSubviewToFront(linkView)
             bringSubviewToFront(separator)
