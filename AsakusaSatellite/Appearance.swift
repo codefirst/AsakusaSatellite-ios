@@ -39,17 +39,57 @@ extension UIColor {
 
 struct Appearance {
     static let asakusaRed = RGB(200, 2, 2)
-    static let navBarColor = asakusaRed
+    static let navBarColor: UIColor = {
+        guard #available(iOS 13, *) else { return asakusaRed }
+        return UIColor {
+            switch $0.userInterfaceStyle {
+            case .dark: return .systemBackground
+            case .light, .unspecified: return asakusaRed
+            @unknown default: return asakusaRed
+            }
+        }
+    }()
     static let tintColor = asakusaRed
-    static let textColorOnTintColor = UIColor.white
+    static let textColorOnTintColor: UIColor = {
+        guard #available(iOS 13, *) else { return backgroundColor }
+        return UIColor {
+            switch $0.userInterfaceStyle {
+            case .dark: return asakusaRed
+            case .light, .unspecified: return backgroundColor
+            @unknown default: return backgroundColor
+            }
+        }
+    }()
     static let highlightedColor = RGB(100, 1, 1)
-    static let backgroundColor = UIColor.white
-    static let lightBackgroundColor = GRAY(250)
-    static let lightDarkBackgroundColor = GRAY(222)
-    static let textColorOnLightDarkBackgroundColor = GRAY(128)
-    static let darkBackgroundColor = GRAY(96)
+    static let backgroundColor: UIColor = {
+        guard #available(iOS 13, *) else { return .white }
+        return .systemBackground
+    }()
+    static let lightBackgroundColor: UIColor = {
+        guard #available(iOS 13, *) else { return GRAY(250) }
+        return .secondarySystemBackground
+    }()
+    static let lightDarkBackgroundColor: UIColor = {
+        guard #available(iOS 13, *) else { return GRAY(222) }
+        return .tertiarySystemBackground
+    }()
+    static let textColorOnLightDarkBackgroundColor: UIColor = {
+        guard #available(iOS 13, *) else { return GRAY(128) }
+        return .tertiaryLabel
+    }()
+    static let darkBackgroundColor: UIColor = {
+        guard #available(iOS 13, *) else { return GRAY(96) }
+        return .secondarySystemGroupedBackground
+    }()
     static let onepx = 1 / UIScreen.main.scale
-    static let messageBodyColor = GRAY(51)
+    static let messageBodyColor: UIColor = {
+        guard #available(iOS 13, *) else { return GRAY(51) }
+        return .label
+    }()
+    static let messageDateColor: UIColor = {
+        guard #available(iOS 13, *) else { return GRAY(127) }
+        return .secondaryLabel
+    }()
     static let messageBodyFontSize = CGFloat(14)
     
     static func install() {
@@ -58,7 +98,6 @@ struct Appearance {
         UINavigationBar.appearance().titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: textColorOnTintColor,
         ]
-        UINavigationBar.appearance().setBackgroundImage(UIImage.colorImage(color: navBarColor, size: CGSize(width: 1, height: 1)), for: .any, barMetrics: .default) // no shadow
         UINavigationBar.appearance().shadowImage = UIImage() // no shadow
         UIBarButtonItem.appearance().setTitleTextAttributes([.foregroundColor: textColorOnTintColor], for: .normal)
         
@@ -66,8 +105,6 @@ struct Appearance {
         UIToolbar.appearance().tintColor = tintColor
         
         UIButton.appearance().tintColor = tintColor
-
-        UIApplication.shared.statusBarStyle = .lightContent
     }
     
     static func hiraginoW3(_ size: CGFloat) -> UIFont {
@@ -83,7 +120,7 @@ struct Appearance {
     }
     
     static func roundRectButtonOnBackgroundColor(_ title: String) -> UIButton {
-        return roundRectButton(title: title, titleColor: self.textColorOnTintColor, backgroundColor: self.tintColor, highlightedColor: self.highlightedColor)
+        return roundRectButton(title: title, titleColor: self.backgroundColor, backgroundColor: self.tintColor, highlightedColor: self.highlightedColor)
     }
     
     static func roundRectButton(title: String, titleColor: UIColor, backgroundColor: UIColor, highlightedColor: UIColor) -> UIButton {
@@ -99,6 +136,11 @@ struct Appearance {
     }
     
     static func separatorView() -> UIView {
-        return UIView() ※ {$0.backgroundColor = UIColor(white: 0.9, alpha: 1.0)}
+        return UIView() ※ {
+            $0.backgroundColor = {
+                guard #available(iOS 13, *) else { return UIColor(white: 0.9, alpha: 1.0) }
+                return .separator
+            }()
+        }
     }
 }

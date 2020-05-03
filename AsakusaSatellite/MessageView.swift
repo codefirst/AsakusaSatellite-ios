@@ -131,7 +131,7 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         
         loadButton.setTitle(NSLocalizedString("Load", comment: ""), for: .normal)
         loadButton.addTarget(self, action: #selector(load(_:)), for: .touchUpInside)
-        loadButton.backgroundColor = Appearance.lightDarkBackgroundColor
+        loadButton.backgroundColor = Appearance.lightBackgroundColor
         
         let iconSize = CGFloat(32)
         iconView.layer.cornerRadius = iconSize / 2
@@ -139,12 +139,12 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         
         nameLabel.numberOfLines = 1
         nameLabel.font = Appearance.hiraginoW6(13)
-        nameLabel.textColor = .black
+        nameLabel.textColor = Appearance.messageBodyColor
         nameLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
         dateLabel.numberOfLines = 1
         dateLabel.font = Appearance.hiraginoW3(10)
-        dateLabel.textColor = .gray
+        dateLabel.textColor = Appearance.messageDateColor
         dateLabel.textAlignment = .right
         dateLabel.setContentCompressionResistancePriority(UILayoutPriority.defaultHigh, for: .vertical)
         
