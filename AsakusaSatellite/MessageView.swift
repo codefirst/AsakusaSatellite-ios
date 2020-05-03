@@ -11,6 +11,7 @@ import AsakusaSatellite
 import NorthLayout
 import WebKit
 import Ikemen
+import LinkPresentation
 
 
 private let dateFormatter: DateFormatter = DateFormatter() ※ {$0.dateFormat = "yyyy-MM-dd HH:mm"}
@@ -59,9 +60,13 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
             nameLabel.text = message?.name
             dateLabel.text = message.map{dateFormatter.string(from: $0.created_at)}
             bodyLabel.text = message?.body
+            bodyLabel.alpha = 1
             attachments = message?.imageAttachments ?? []
 
-            if message?.hasHTML == true {
+            if let simpleURL = message?.simpleURLInBody, #available(iOS 13, *) {
+                linkPreviewURL = simpleURL
+                bodyLabel.alpha = 0.1
+            } else if message?.hasHTML == true {
                 let autolayout = northLayoutFormat(["p": kPadding], [
                     "icon": iconView,
                     "web": webView,
@@ -96,6 +101,34 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         l.sectionInset = UIEdgeInsets(top: 0, left: kPadding, bottom: kPadding, right: kPadding)
     })
     let attachmentsViewConstraint: NSLayoutConstraint
+    @available(iOS 13, *)
+    private lazy var linkView: LPLinkView? = nil
+    var linkPreviewURL: URL? {
+        didSet {
+            guard #available(iOS 13, *) else { return }
+            linkView?.removeFromSuperview() // remove constraints
+            guard let url = linkPreviewURL else { return }
+            let linkView = LPLinkView(url: url)
+            self.linkView = linkView
+
+            let autolayout = northLayoutFormat([:], [
+                "icon": iconView,
+                "link": linkView,
+                "attachments": attachmentsView,
+            ])
+            autolayout("H:|[link]-(>=0)-|")
+            autolayout("V:[icon]-[link(==160)]-[attachments]")
+            bringSubviewToFront(linkView)
+            bringSubviewToFront(separator)
+
+            (LPMetadataProvider() ※ {$0.shouldFetchSubresources = true}).startFetchingMetadata(for: url) { [weak linkView] metadata, error in
+                DispatchQueue.main.async {
+                    guard let metadata = metadata else { return }
+                    linkView?.metadata = metadata
+                }
+            }
+        }
+    }
     var webView: InlineMessageWebView = InlineMessageWebView(frame: CGRect(x: 0, y: 0, width: 1, height: 1), baseURL: nil) {
         didSet {
             webView.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -211,7 +244,8 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
     class func layoutSize(forMessage m: Message, showsLoadButton: Bool, forWidth w: CGFloat) -> CGSize {
         let v = LayoutStatic.view
         v.bodyLabel.text = m.body
-        v.attachments = m.attachments ?? []
+        v.attachments = m.imageAttachments
+        v.linkPreviewURL = m.simpleURLInBody
         v.onLoadTapped = showsLoadButton ? {(_: MessageView, _: () -> Void) in} : nil
         
         // we cannot calculate webview height synchronously.
@@ -252,6 +286,11 @@ class MessageView: UIView, UICollectionViewDataSource, UICollectionViewDelegate 
         
         webView.message = nil // clear content
         webView.removeFromSuperview() // remove constraints
+
+        if #available(iOS 13, *) {
+            linkView?.removeFromSuperview()
+            linkView = nil
+        }
     }
     
     // MARK: - CollectionView

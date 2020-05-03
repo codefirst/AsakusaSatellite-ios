@@ -44,6 +44,7 @@ class InlineMessageWebView: WKWebView {
         
         scrollView.isScrollEnabled = false
         scrollView.addObserver(self, forKeyPath: kContentSize, options: [], context: nil)
+        isOpaque = false
     }
 
     required init?(coder: NSCoder) {

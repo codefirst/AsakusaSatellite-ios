@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.9.1)
   - AppGroup (1.0.0)
-  - AsakusaSatellite (0.7.0):
+  - AsakusaSatellite (0.7.1):
     - Alamofire (~> 4.0)
     - Socket.IO-Client-Swift (~> 15.0)
     - UTIKit (~> 2.0)
@@ -193,7 +193,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AppGroup: ba0c3626371b5b0f23815f7ae68d14f1061df19f
-  AsakusaSatellite: ea6f0769e04bd6be138ff05555ddb39ea7362274
+  AsakusaSatellite: e914938c4662fe64ee27a137c4d115e24d2f92c8
   Firebase: 585ae467b3edda6a5444e788fda6888f024d8d6f
   FirebaseABTesting: 821a3a3e4a145987e80fee3657c4de1cb9adf693
   FirebaseAnalytics: 558f7a03d19de451093032c806f39d5f9dff096e
